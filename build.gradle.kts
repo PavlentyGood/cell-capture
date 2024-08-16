@@ -2,6 +2,7 @@ plugins {
     kotlin("plugin.spring") version Version.kotlin
     kotlin("plugin.jpa") version Version.kotlin
     id(Plugin.jvm) version Version.kotlin apply false
+    id(Plugin.detekt) version Version.detekt
     id("org.springframework.boot") version "3.3.2"
     id("io.spring.dependency-management") version "1.1.6"
 }
@@ -17,6 +18,15 @@ subprojects {
         plugin("java")
         plugin("jacoco")
         plugin(Plugin.jvm)
+        plugin(Plugin.detekt)
+    }
+
+    detekt {
+        buildUponDefaultConfig = true
+
+        dependencies {
+            detektPlugins("${Plugin.detektFormatting}:${Version.detekt}")
+        }
     }
 
     tasks {
