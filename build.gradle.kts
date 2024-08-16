@@ -6,8 +6,35 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
 }
 
-group = "ru.pavlentygood"
-version = "0.0.1-SNAPSHOT"
+subprojects {
+    group = "ru.pavlentygood.cellcapture"
+
+    apply {
+        plugin("java")
+        plugin("jacoco")
+    }
+
+    tasks {
+        val jacocoTestReport = named<JacocoReport>("jacocoTestReport")
+        val jacocoTestCoverageVerification = named<JacocoCoverageVerification>("jacocoTestCoverageVerification")
+
+        jacocoTestReport {
+            dependsOn(check)
+            finalizedBy(jacocoTestCoverageVerification)
+        }
+
+        jacocoTestCoverageVerification {
+            dependsOn(jacocoTestReport)
+            violationRules {
+                rule {
+                    limit {
+                        minimum = BigDecimal("0.9")
+                    }
+                }
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()
