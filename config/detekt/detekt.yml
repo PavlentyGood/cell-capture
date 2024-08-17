@@ -1,0 +1,4 @@
+performance:
+  SpreadOperator:
+    excludes:
+      - "**/CellCaptureApplication.kt"

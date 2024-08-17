@@ -1,10 +1,27 @@
 object Version {
-    const val kotlin = "1.9.24"
+    const val kotlin = "1.9.23"
     const val detekt = "1.23.6"
+    const val springBoot = "3.3.2"
+    const val springDependencyManagement = "1.1.6"
+    const val jackson = "2.17.2"
+    const val junit = "5.11.0"
+    const val kotest = "5.9"
 }
 
 object Plugin {
     const val jvm = "org.jetbrains.kotlin.jvm"
     const val detekt = "io.gitlab.arturbosch.detekt"
     const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
+    const val springBoot = "org.springframework.boot"
+    const val springDependencyManagement = "io.spring.dependency-management"
+    const val springKotlin = "org.jetbrains.kotlin.plugin.spring"
+}
+
+object Lib {
+    const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Version.kotlin}"
+    const val jacksonKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:${Version.jackson}"
+    const val springBootStarterWeb = "org.springframework.boot:spring-boot-starter-web:${Version.springBoot}"
+    const val springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${Version.springBoot}"
+    const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.junit}"
+    const val kotestJUnit = "io.kotest:kotest-runner-junit5:${Version.kotest}"
 }
