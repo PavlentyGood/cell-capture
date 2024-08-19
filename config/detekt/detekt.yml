@@ -2,3 +2,6 @@ performance:
   SpreadOperator:
     excludes:
       - "**/CellCaptureApplication.kt"
+formatting:
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: false

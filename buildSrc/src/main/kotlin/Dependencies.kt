@@ -5,7 +5,8 @@ object Version {
     const val springDependencyManagement = "1.1.6"
     const val jackson = "2.17.2"
     const val junit = "5.11.0"
-    const val kotest = "5.9"
+    const val kotest = "5.9.0"
+    const val mockk = "1.13.12"
 }
 
 object Plugin {
@@ -24,4 +25,5 @@ object Lib {
     const val springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${Version.springBoot}"
     const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.junit}"
     const val kotestJUnit = "io.kotest:kotest-runner-junit5:${Version.kotest}"
+    const val mockk = "io.mockk:mockk:${Version.mockk}"
 }
