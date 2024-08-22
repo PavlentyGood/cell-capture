@@ -16,7 +16,7 @@ object Plugin {
     const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
     const val springBoot = "org.springframework.boot"
     const val springDependencyManagement = "io.spring.dependency-management"
-    const val springKotlin = "org.jetbrains.kotlin.plugin.spring"
+    const val kotlinSpring = "org.jetbrains.kotlin.plugin.spring"
     const val kotlinJpa = "org.jetbrains.kotlin.plugin.jpa"
 }
 
