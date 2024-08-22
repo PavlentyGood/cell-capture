@@ -1,8 +1,10 @@
 plugins {
     id(Plugin.springKotlin) version Version.kotlin
+    id(Plugin.kotlinJpa) version Version.kotlin
 }
 
 dependencies {
+    implementation(project(":usecase"))
     implementation(project(":domain"))
 
     implementation(Lib.kotlinReflect)
