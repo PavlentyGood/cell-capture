@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import ru.pavlentygood.cellcapture.domain.PartyFactory
-import ru.pavlentygood.cellcapture.persistence.SavePartyToDatabase
+import ru.pavlentygood.cellcapture.persistence.PartyStore
 import ru.pavlentygood.cellcapture.usecase.CreateParty
 
 @Configuration
@@ -18,5 +18,5 @@ class Config {
     fun partyFactory() = PartyFactory()
 
     @Bean
-    fun saveParty() = SavePartyToDatabase()
+    fun saveParty() = PartyStore()
 }
