@@ -5,3 +5,8 @@ performance:
 formatting:
   SpacingBetweenDeclarationsWithAnnotations:
     active: false
+  NoWildcardImports:
+    active: false
+style:
+  WildcardImport:
+    active: false

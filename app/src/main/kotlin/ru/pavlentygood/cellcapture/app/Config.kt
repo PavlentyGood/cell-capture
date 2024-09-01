@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration
 import ru.pavlentygood.cellcapture.domain.PartyFactory
 import ru.pavlentygood.cellcapture.persistence.PartyStore
 import ru.pavlentygood.cellcapture.usecase.CreateParty
+import ru.pavlentygood.cellcapture.usecase.JoinPlayer
 
 @Configuration
 @ComponentScan("ru.pavlentygood.cellcapture.rest")
@@ -19,4 +20,7 @@ class Config {
 
     @Bean
     fun saveParty() = PartyStore()
+
+    @Bean
+    fun joinPlayer() = JoinPlayer()
 }

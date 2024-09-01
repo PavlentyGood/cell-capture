@@ -8,6 +8,8 @@ object Version {
     const val kotest = "5.9.0"
     const val mockk = "1.13.12"
     const val h2 = "2.3.232"
+    const val arrow = "1.2.4"
+    const val kotestArrow = "1.4.0"
 }
 
 object Plugin {
@@ -29,5 +31,7 @@ object Lib {
     const val springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${Version.springBoot}"
     const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.junit}"
     const val kotestJUnit = "io.kotest:kotest-runner-junit5:${Version.kotest}"
+    const val kotestArrow = "io.kotest.extensions:kotest-assertions-arrow-jvm:${Version.kotestArrow}"
+    const val arrow = "io.arrow-kt:arrow-core:${Version.arrow}"
     const val mockk = "io.mockk:mockk:${Version.mockk}"
 }

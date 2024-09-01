@@ -9,6 +9,7 @@ dependencies {
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWeb)
+    implementation(Lib.arrow)
 
     testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
