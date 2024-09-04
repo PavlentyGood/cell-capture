@@ -4,7 +4,7 @@ import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PartyId
 import ru.pavlentygood.cellcapture.usecase.SaveParty
 
-class PartyStore(
+class SavePartyToDatabase(
     val store: MutableMap<PartyId, Party> = mutableMapOf()
 ) : SaveParty {
     override fun invoke(party: Party) {

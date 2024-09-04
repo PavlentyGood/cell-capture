@@ -7,6 +7,7 @@ dependencies {
     testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.mockk)
+    testImplementation(Lib.kotestArrow)
 
     testRuntimeOnly(Lib.junitEngine)
 }

@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.persistence.PartyStore
+import ru.pavlentygood.cellcapture.persistence.SavePartyToDatabase
 import ru.pavlentygood.cellcapture.rest.API_V1_PARTIES
 
 @SpringBootTest
@@ -17,13 +17,13 @@ class CreatePartyComponentTest {
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var partyStore: PartyStore
+    lateinit var savePartyToDatabase: SavePartyToDatabase
 
     @Test
     fun `create party`() {
         mockMvc.post(API_V1_PARTIES)
             .andExpect { status { isCreated() } }
 
-        partyStore.store shouldHaveSize 1
+        savePartyToDatabase.store shouldHaveSize 1
     }
 }

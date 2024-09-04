@@ -6,11 +6,11 @@ import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PartyId
 import java.util.*
 
-class PartyStoreTest {
+class SavePartyToDatabaseTest {
 
     @Test
     fun `save party`() {
-        val saveParty = PartyStore()
+        val saveParty = SavePartyToDatabase()
         val party = Party(PartyId(UUID.randomUUID()))
 
         saveParty(party)
