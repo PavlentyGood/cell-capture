@@ -9,8 +9,8 @@ import ru.pavlentygood.cellcapture.domain.PartyId
 import ru.pavlentygood.cellcapture.domain.PlayerName
 import ru.pavlentygood.cellcapture.usecase.JoinPlayer
 import ru.pavlentygood.cellcapture.usecase.JoinPlayerError
-import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
 import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitExceededUseCaseError
+import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
 import java.util.*
 
 @RestController
