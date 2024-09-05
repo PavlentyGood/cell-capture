@@ -11,9 +11,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.domain.PartyId
+import ru.pavlentygood.cellcapture.domain.partyId
 import ru.pavlentygood.cellcapture.usecase.CreateParty
-import java.util.*
 
 @WebMvcTest
 @ContextConfiguration(classes = [CreatePartyEndpointTest.Config::class, CreatePartyEndpoint::class])
@@ -26,18 +25,19 @@ class CreatePartyEndpointTest {
 
     @Test
     fun `create party`() {
-        val id = UUID.randomUUID()
+        val partyId = partyId()
+        val uuid = partyId.toUUID().toString()
 
-        every { createParty() } returns PartyId(id)
+        every { createParty() } returns partyId
 
         mockMvc.post(API_V1_PARTIES)
             .andExpect {
                 status { isCreated() }
                 content {
                     header {
-                        string(HttpHeaders.LOCATION, "$API_V1_PARTIES/$id")
+                        string(HttpHeaders.LOCATION, "$API_V1_PARTIES/$uuid")
                     }
-                    jsonPath("$.id") { value(id.toString()) }
+                    jsonPath("$.id") { value(uuid) }
                 }
             }
     }

@@ -13,6 +13,7 @@ subprojects {
     apply {
         plugin("java")
         plugin("jacoco")
+        plugin("java-test-fixtures")
         plugin(Plugin.jvm)
         plugin(Plugin.detekt)
     }

@@ -16,4 +16,6 @@ dependencies {
     testImplementation(Lib.mockk)
 
     testRuntimeOnly(Lib.junitEngine)
+
+    testImplementation(testFixtures(project(":domain")))
 }

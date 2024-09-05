@@ -15,12 +15,12 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockHttpServletRequestDsl
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.domain.PartyId
-import ru.pavlentygood.cellcapture.domain.PlayerId
-import ru.pavlentygood.cellcapture.domain.PlayerName
+import ru.pavlentygood.cellcapture.domain.partyId
+import ru.pavlentygood.cellcapture.domain.playerId
+import ru.pavlentygood.cellcapture.domain.playerName
 import ru.pavlentygood.cellcapture.usecase.JoinPlayer
-import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitExceededUseCaseError
 import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
+import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitExceededUseCaseError
 import java.util.*
 
 @WebMvcTest
@@ -34,37 +34,38 @@ class JoinPlayerEndpointTest {
 
     private val mapper = ObjectMapper()
 
-    private val playerName = "Bob"
+    private val playerName = playerName()
+    private val rawPlayerName = playerName.toStringValue()
 
     @Test
     fun `join player`() {
-        val playerId = 1
-        val partyId = rawPartyId()
+        val playerId = playerId()
+        val partyId = partyId()
 
         every {
-            joinPlayer(PartyId(partyId), PlayerName.from(playerName).getOrNull()!!)
-        } returns PlayerId(playerId).right()
+            joinPlayer(partyId, playerName)
+        } returns playerId.right()
 
-        post(partyId) {
+        post(partyId.toUUID()) {
             contentType = MediaType.APPLICATION_JSON
-            content = mapper.writeValueAsString(JoinPlayerRequest(name = playerName))
+            content = mapper.writeValueAsString(JoinPlayerRequest(name = rawPlayerName))
         }.andExpect {
             status { isOk() }
             content {
-                jsonPath("$.id") { value(playerId) }
+                jsonPath("$.id") { value(playerId.toInt()) }
             }
         }
     }
 
     @Test
     fun `join player - party not found`() {
-        val partyId = rawPartyId()
+        val partyId = partyId()
 
-        every { joinPlayer(PartyId(partyId), any()) } returns PartyNotFoundUseCaseError.left()
+        every { joinPlayer(partyId, any()) } returns PartyNotFoundUseCaseError.left()
 
-        post(partyId) {
+        post(partyId.toUUID()) {
             contentType = MediaType.APPLICATION_JSON
-            content = mapper.writeValueAsString(JoinPlayerRequest(name = playerName))
+            content = mapper.writeValueAsString(JoinPlayerRequest(name = rawPlayerName))
         }.andExpect {
             status { isNotFound() }
         }
@@ -83,7 +84,7 @@ class JoinPlayerEndpointTest {
     fun `join player - player name is invalid`() {
         val invalidName = ""
 
-        post(rawPartyId()) {
+        post(UUID.randomUUID()) {
             contentType = MediaType.APPLICATION_JSON
             content = mapper.writeValueAsString(JoinPlayerRequest(name = invalidName))
         }.andExpect {
@@ -93,13 +94,13 @@ class JoinPlayerEndpointTest {
 
     @Test
     fun `join player - player count limit is exceeded`() {
-        val partyId = rawPartyId()
+        val partyId = partyId()
 
-        every { joinPlayer(PartyId(partyId), any()) } returns PlayerCountLimitExceededUseCaseError.left()
+        every { joinPlayer(partyId, any()) } returns PlayerCountLimitExceededUseCaseError.left()
 
-        post(partyId) {
+        post(partyId.toUUID()) {
             contentType = MediaType.APPLICATION_JSON
-            content = mapper.writeValueAsString(JoinPlayerRequest(name = playerName))
+            content = mapper.writeValueAsString(JoinPlayerRequest(name = rawPlayerName))
         }.andExpect {
             status { isUnprocessableEntity() }
         }
@@ -120,5 +121,3 @@ class JoinPlayerEndpointTest {
 
 fun String.with(name: String, value: Any) =
     replace("{$name}", value.toString())
-
-fun rawPartyId() = UUID.randomUUID()!!

@@ -6,6 +6,8 @@ import arrow.core.right
 data class PlayerName internal constructor(
     private val value: String
 ) {
+    fun toStringValue() = value
+
     companion object {
         private const val MIN_LENGTH = 3
         private const val MAX_LENGTH = 20

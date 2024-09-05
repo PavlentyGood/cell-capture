@@ -7,14 +7,13 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PartyFactory
-import ru.pavlentygood.cellcapture.domain.PartyId
-import java.util.*
+import ru.pavlentygood.cellcapture.domain.partyId
 
 class CreatePartyTest {
 
     @Test
     fun `create party`() {
-        val id = PartyId(UUID.randomUUID())
+        val id = partyId()
         val party = Party(id)
 
         val partyFactory = mockk<PartyFactory>()

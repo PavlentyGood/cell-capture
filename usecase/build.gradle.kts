@@ -10,4 +10,6 @@ dependencies {
     testImplementation(Lib.kotestArrow)
 
     testRuntimeOnly(Lib.junitEngine)
+
+    testImplementation(testFixtures(project(":domain")))
 }

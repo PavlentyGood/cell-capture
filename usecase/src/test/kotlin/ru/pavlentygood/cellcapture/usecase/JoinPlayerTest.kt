@@ -12,9 +12,9 @@ import ru.pavlentygood.cellcapture.domain.*
 
 class JoinPlayerTest {
 
-    private val partyId = mockk<PartyId>()
-    private val playerName = mockk<PlayerName>()
-    private val playerId = mockk<PlayerId>()
+    private val partyId = partyId()
+    private val playerName = playerName()
+    private val playerId = playerId()
 
     @Test
     fun `join player to party`() {
