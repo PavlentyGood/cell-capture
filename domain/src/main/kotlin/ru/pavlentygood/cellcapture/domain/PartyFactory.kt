@@ -1,19 +1,14 @@
 package ru.pavlentygood.cellcapture.domain
 
-import arrow.core.Either
 import java.util.*
 
-class Party(
-    val id: PartyId
-) {
-    fun joinPlayer(name: PlayerName): Either<PlayerCountLimitExceeded, PlayerId> {
-        TODO("Not yet implemented")
-    }
-}
-
-object PlayerCountLimitExceeded
+const val DEFAULT_PLAYER_LIMIT = 4
 
 class PartyFactory {
     fun create() =
-        Party(PartyId(UUID.randomUUID()))
+        Party(
+            id = PartyId(UUID.randomUUID()),
+            playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
+            players = mutableListOf()
+        )
 }
