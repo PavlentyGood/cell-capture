@@ -8,7 +8,7 @@ import ru.pavlentygood.cellcapture.usecase.GetParty
 import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
 
 class GetPartyFromDatabase(
-    private val parties: Map<PartyId, Party>
+    val parties: Map<PartyId, Party>
 ) : GetParty {
     override fun invoke(partyId: PartyId) =
         parties[partyId]

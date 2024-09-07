@@ -2,7 +2,6 @@ package ru.pavlentygood.cellcapture.rest
 
 import arrow.core.left
 import arrow.core.right
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
@@ -31,8 +30,6 @@ class JoinPlayerEndpointTest {
     lateinit var mockMvc: MockMvc
     @Autowired
     lateinit var joinPlayer: JoinPlayer
-
-    private val mapper = ObjectMapper()
 
     private val playerName = playerName()
     private val rawPlayerName = playerName.toStringValue()
@@ -118,6 +115,3 @@ class JoinPlayerEndpointTest {
         fun joinPlayer() = mockk<JoinPlayer>()
     }
 }
-
-fun String.with(name: String, value: Any) =
-    replace("{$name}", value.toString())

@@ -16,4 +16,7 @@ dependencies {
     testImplementation(Lib.kotestJUnit)
 
     testRuntimeOnly(Lib.junitEngine)
+
+    testImplementation(testFixtures(project(":rest")))
+    testImplementation(testFixtures(project(":domain")))
 }
