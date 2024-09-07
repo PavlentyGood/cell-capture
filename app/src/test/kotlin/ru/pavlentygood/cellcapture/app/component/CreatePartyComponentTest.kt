@@ -24,6 +24,6 @@ class CreatePartyComponentTest {
         mockMvc.post(API_V1_PARTIES)
             .andExpect { status { isCreated() } }
 
-        savePartyToDatabase.store shouldHaveSize 1
+        savePartyToDatabase.parties shouldHaveSize 1
     }
 }

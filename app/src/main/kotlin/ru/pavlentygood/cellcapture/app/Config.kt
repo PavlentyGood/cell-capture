@@ -27,7 +27,7 @@ class Config {
     fun joinPlayer() = JoinPlayer(getParty(), saveParty(), generatePlayerId())
 
     @Bean
-    fun getParty() = GetPartyFromDatabase()
+    fun getParty() = GetPartyFromDatabase(saveParty().parties)
 
     @Bean
     fun generatePlayerId() = GeneratePlayerIdBySequence()

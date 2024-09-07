@@ -13,6 +13,6 @@ class SavePartyToDatabaseTest {
 
         saveParty(party)
 
-        saveParty.store shouldContain Pair(party.id, party)
+        saveParty.parties shouldContain Pair(party.id, party)
     }
 }
