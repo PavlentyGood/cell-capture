@@ -1,5 +1,6 @@
 package ru.pavlentygood.cellcapture.domain
 
+import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 
@@ -21,6 +22,16 @@ class Party internal constructor(
             players.add(player)
             player.id.right()
         }
+
+    fun start(playerId: PlayerId): Either<Start, Unit> {
+        TODO("Not yet implemented")
+    }
+
+    sealed class Start
+    data object PlayerNotOwner : Start()
+    data object TooFewPlayers : Start()
+    data object AlreadyStarted : Start()
+    data object AlreadyCompleted : Start()
 }
 
-object PlayerCountLimitExceeded
+data object PlayerCountLimitExceeded
