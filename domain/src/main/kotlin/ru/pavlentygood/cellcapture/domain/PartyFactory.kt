@@ -9,6 +9,7 @@ class PartyFactory {
         Party(
             id = PartyId(UUID.randomUUID()),
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
-            players = mutableListOf()
+            players = mutableListOf(),
+            status = Party.Status.NEW
         )
 }

@@ -3,6 +3,8 @@ package ru.pavlentygood.cellcapture.domain
 import arrow.core.left
 import arrow.core.right
 
+const val MIN_PLAYER_COUNT = 2
+
 data class PlayerLimit internal constructor(
     val value: Int
 ) {
@@ -10,10 +12,8 @@ data class PlayerLimit internal constructor(
         playerCount >= value
 
     companion object {
-        private const val MIN = 2
-
         fun from(limit: Int) =
-            if (limit < MIN) {
+            if (limit < MIN_PLAYER_COUNT) {
                 InvalidPlayerLimit.left()
             } else {
                 PlayerLimit(limit).right()
