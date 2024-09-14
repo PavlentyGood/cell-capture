@@ -14,6 +14,8 @@ class Party internal constructor(
     var status = status
         private set
 
+    val ownerId = players.first { it.owner }.id
+
     fun getPlayers() = players.toList()
 
     fun joinPlayer(name: PlayerName, generatePlayerId: GeneratePlayerId) =

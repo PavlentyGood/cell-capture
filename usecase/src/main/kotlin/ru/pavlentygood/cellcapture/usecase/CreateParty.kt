@@ -1,13 +1,24 @@
 package ru.pavlentygood.cellcapture.usecase
 
-import ru.pavlentygood.cellcapture.domain.PartyFactory
+import ru.pavlentygood.cellcapture.domain.*
 
 class CreateParty(
     private val partyFactory: PartyFactory,
     private val saveParty: SaveParty
 ) {
-    operator fun invoke() =
-        partyFactory.create()
+    operator fun invoke(ownerName: PlayerName) =
+        partyFactory.create(ownerName)
             .also { saveParty(it) }
-            .id
+            .toResult()
 }
+
+data class CreatePartyResult(
+    val partyId: PartyId,
+    val ownerId: PlayerId
+)
+
+fun Party.toResult() =
+    CreatePartyResult(
+        partyId = id,
+        ownerId = ownerId
+    )
