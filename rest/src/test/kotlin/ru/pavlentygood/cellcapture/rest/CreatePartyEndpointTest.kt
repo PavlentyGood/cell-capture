@@ -52,7 +52,16 @@ class CreatePartyEndpointTest {
             }
     }
 
-    // create party - invalid owner name
+    @Test
+    fun `create party - invalid owner name`() {
+        val invalidName = "Bo"
+        mockMvc.post(API_V1_PARTIES) {
+            contentType = MediaType.APPLICATION_JSON
+            content = mapper.writeValueAsString(CreatePartyRequest(invalidName))
+        }.andExpect {
+            status { isBadRequest() }
+        }
+    }
 
     @Configuration
     class Config {
