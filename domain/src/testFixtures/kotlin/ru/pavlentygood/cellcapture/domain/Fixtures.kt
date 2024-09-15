@@ -13,26 +13,17 @@ fun playerName() = PlayerName("Bob ${randomInt()}")
 
 fun party(
     id: PartyId = partyId(),
-    playerLimit: Int = 1,
-    players: List<Player> = listOf(),
+    playerLimit: Int = 2,
+    players: List<Player> = listOf(player()),
     status: Party.Status = Party.Status.NEW
-) =
-    Party(
+): Party {
+    val owner = player(owner = true)
+    return Party(
         id = id,
         playerLimit = PlayerLimit(playerLimit),
-        players = players.toMutableList(),
+        players = mutableListOf(owner).apply { addAll(players) },
         status = status
     )
-
-fun partyAndOwner(
-    status: Party.Status = Party.Status.NEW
-): Pair<Party, Player> {
-    val owner = player(owner = true)
-    val party = party(
-        players = listOf(owner, player()),
-        status = status
-    )
-    return Pair(party, owner)
 }
 
 fun player(owner: Boolean = false) =

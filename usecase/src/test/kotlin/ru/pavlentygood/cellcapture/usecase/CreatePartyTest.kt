@@ -6,22 +6,24 @@ import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.PartyFactory
-import ru.pavlentygood.cellcapture.domain.partyAndOwner
+import ru.pavlentygood.cellcapture.domain.party
+import ru.pavlentygood.cellcapture.domain.playerName
 
 class CreatePartyTest {
 
     @Test
     fun `create party`() {
-        val (party, owner) = partyAndOwner()
+        val ownerName = playerName()
+        val party = party()
 
         val partyFactory = mockk<PartyFactory>()
-        every { partyFactory.create(owner.name) } returns party
+        every { partyFactory.create(ownerName) } returns party
 
         val saveParty = mockk<SaveParty>()
         justRun { saveParty(party) }
 
         val createParty = CreateParty(partyFactory, saveParty)
 
-        createParty(owner.name) shouldBe CreatePartyResult(party.id, owner.id)
+        createParty(ownerName) shouldBe CreatePartyResult(party.id, party.ownerId)
     }
 }
