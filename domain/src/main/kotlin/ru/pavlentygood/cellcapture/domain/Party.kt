@@ -53,6 +53,10 @@ class Party internal constructor(
     private fun isEnoughPlayers() =
         players.size >= MIN_PLAYER_COUNT
 
+    fun capture(playerId: PlayerId, area: Area): Either<Capture, Unit> {
+        return Unit.right()
+    }
+
     enum class Status {
         NEW, STARTED, COMPLETED
     }
@@ -62,6 +66,11 @@ class Party internal constructor(
     data object TooFewPlayers : Start()
     data object AlreadyStarted : Start()
     data object AlreadyCompleted : Start()
+
+    sealed class Capture
+    data object PlayerNotCurrent : Capture()
+    data object MismatchedArea : Capture()
+    data object InaccessibleArea : Capture()
 }
 
 data object PlayerCountLimitExceeded
