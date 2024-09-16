@@ -32,3 +32,15 @@ fun player(owner: Boolean = false) =
         name = playerName(),
         owner = owner
     )
+
+fun area() =
+    Area(
+        from = cell(),
+        to = cell()
+    )
+
+fun cell() =
+    Cell(
+        x = randomInt(),
+        y = randomInt()
+    )
