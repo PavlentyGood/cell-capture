@@ -12,7 +12,15 @@ class PartyFactory(
             id = PartyId(UUID.randomUUID()),
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
             players = mutableListOf(createOwner(ownerName)),
-            status = Party.Status.NEW
+            status = Party.Status.NEW,
+            currentPlayerId = null,
+            dicePair = DicePair(
+                first = Dice.nonRolled(),
+                second = Dice.nonRolled()
+            ),
+            field = Field(
+                cells = createCells()
+            )
         )
 
     private fun createOwner(ownerName: PlayerName) =
@@ -21,4 +29,9 @@ class PartyFactory(
             name = ownerName,
             owner = true
         )
+
+    private fun createCells() =
+        Array(Field.HEIGHT) {
+            Array(Field.WIDTH) { Field.nonePlayerId }
+        }
 }

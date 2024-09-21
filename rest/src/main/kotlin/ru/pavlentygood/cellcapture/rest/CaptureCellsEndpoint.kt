@@ -1,13 +1,14 @@
 package ru.pavlentygood.cellcapture.rest
 
+import arrow.core.flatMap
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.domain.Area
-import ru.pavlentygood.cellcapture.domain.Cell
 import ru.pavlentygood.cellcapture.domain.PlayerId
+import ru.pavlentygood.cellcapture.domain.Point
 import ru.pavlentygood.cellcapture.usecase.CaptureCells
 
 @RestController
@@ -19,30 +20,36 @@ class CaptureCellsEndpoint(
         @PathVariable playerId: Int,
         @RequestBody request: Request
     ): ResponseEntity<Unit> =
-        captureCells(PlayerId(playerId), request.toDomain())
-            .fold(
-                { it.toRestError() },
-                { ResponseEntity.ok().build() }
-            )
+        request.toDomain().fold(
+            { ResponseEntity.badRequest().build() },
+            { area ->
+                captureCells(PlayerId(playerId), area)
+                    .fold(
+                        { it.toRestError() },
+                        { ResponseEntity.ok().build() }
+                    )
+            }
+        )
 
     data class Request(
-        val from: Cell,
-        val to: Cell
+        val from: Point,
+        val to: Point
     ) {
-        data class Cell(
+        data class Point(
             val x: Int,
             val y: Int
         )
     }
 
     private fun Request.toDomain() =
-        Area(
-            from = from.toDomain(),
-            to = to.toDomain()
-        )
+        from.toDomain().flatMap { fromPoint ->
+            to.toDomain().map { toPoint ->
+                Area(fromPoint, toPoint)
+            }
+        }
 
-    private fun Request.Cell.toDomain() =
-        Cell(x = x, y = y)
+    private fun Request.Point.toDomain() =
+        Point.from(x = x, y = y)
 
     fun CaptureCells.Error.toRestError(): ResponseEntity<Unit> =
         when (this) {

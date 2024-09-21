@@ -1,10 +1,14 @@
 package ru.pavlentygood.cellcapture.domain
 
+import arrow.core.left
+import arrow.core.right
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Test
 
 class PartyTest {
@@ -110,4 +114,82 @@ class PartyTest {
         party.getPlayers() shouldHaveSize 2
         party.status shouldBe Party.Status.COMPLETED
     }
+
+    @Test
+    fun `capture - player not current`() {
+        val playerId = playerId()
+        val area = area()
+        val party = party(
+            status = Party.Status.STARTED
+        )
+
+        party.capture(playerId, area) shouldBeLeft Party.PlayerNotCurrent
+
+        party.getPlayers() shouldHaveSize 2
+        party.status shouldBe Party.Status.STARTED
+    }
+
+    @Test
+    fun `capture - mismatched area`() {
+        val area = area()
+
+        val dicePair = mockk<DicePair>()
+        every { dicePair.isMatched(area) } returns false
+
+        val party = party(
+            status = Party.Status.STARTED,
+            dicePair = dicePair
+        )
+
+        party.capture(party.currentPlayerId, area) shouldBeLeft Party.MismatchedArea
+
+        party.getPlayers() shouldHaveSize 2
+        party.status shouldBe Party.Status.STARTED
+        party.currentPlayerId shouldBe party.ownerId
+    }
+
+    @Test
+    fun `capture - inaccessible area`() {
+        val area = area()
+        val field = mockk<Field>()
+
+        val party = party(
+            status = Party.Status.STARTED,
+            dicePair = dicePairFor(area),
+            field = field
+        )
+
+        every { field.capture(party.currentPlayerId, area) } returns Party.InaccessibleArea.left()
+
+        party.capture(party.currentPlayerId, area) shouldBeLeft Party.InaccessibleArea
+
+        party.getPlayers() shouldHaveSize 2
+        party.status shouldBe Party.Status.STARTED
+        party.currentPlayerId shouldBe party.ownerId
+    }
+
+    @Test
+    fun `capture cells`() {
+        val area = area()
+        val field = mockk<Field>()
+
+        val party = party(
+            status = Party.Status.STARTED,
+            dicePair = dicePairFor(area),
+            field = field
+        )
+
+        every { field.capture(party.currentPlayerId, area) } returns Unit.right()
+
+        party.capture(party.currentPlayerId, area) shouldBeRight Unit
+
+        party.getPlayers() shouldHaveSize 2
+        party.status shouldBe Party.Status.STARTED
+        party.currentPlayerId shouldBe party.ownerId
+    }
+
+    private fun dicePairFor(area: Area) =
+        mockk<DicePair>().also {
+            every { it.isMatched(area) } returns true
+        }
 }
