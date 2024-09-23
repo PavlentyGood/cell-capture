@@ -23,6 +23,7 @@ class Party internal constructor(
         private set
 
     fun getPlayers() = players.toList()
+    fun getCells() = field.getCells()
 
     fun joinPlayer(name: PlayerName, generatePlayerId: GeneratePlayerId) =
         if (playerLimit.isExceeded(players.size)) {

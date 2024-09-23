@@ -20,7 +20,7 @@ class FieldTest {
         field.getCells()[area.to.y][area.from.x] shouldBe playerId
         field.getCells()[area.to.y][area.to.x] shouldBe playerId
 
-        field.capturedCellCount() shouldBe (area.xDistance() + 1) * (area.yDistance() + 1)
+        field.getCells().capturedCellCount() shouldBe (area.xDistance() + 1) * (area.yDistance() + 1)
     }
 
     @Test
@@ -43,11 +43,6 @@ class FieldTest {
 
         field.capture(playerId(), area) shouldBeLeft Party.InaccessibleArea
 
-        field.capturedCellCount() shouldBe 1
+        field.getCells().capturedCellCount() shouldBe 1
     }
-
-    private fun Field.capturedCellCount() =
-        getCells().sumBy { line ->
-            line.count { id -> id != Field.nonePlayerId }
-        }
 }

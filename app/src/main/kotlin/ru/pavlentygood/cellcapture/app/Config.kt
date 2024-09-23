@@ -8,6 +8,7 @@ import ru.pavlentygood.cellcapture.persistence.GeneratePlayerIdBySequence
 import ru.pavlentygood.cellcapture.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.persistence.GetPartyFromDatabase
 import ru.pavlentygood.cellcapture.persistence.SavePartyToDatabase
+import ru.pavlentygood.cellcapture.usecase.CaptureCells
 import ru.pavlentygood.cellcapture.usecase.CreateParty
 import ru.pavlentygood.cellcapture.usecase.JoinPlayer
 import ru.pavlentygood.cellcapture.usecase.StartParty
@@ -39,4 +40,7 @@ class Config {
 
     @Bean
     fun getPartyByPlayer() = GetPartyByPlayerFromDatabase(saveParty().parties)
+
+    @Bean
+    fun captureCells() = CaptureCells(getPartyByPlayer(), saveParty())
 }

@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PartyId
+import ru.pavlentygood.cellcapture.domain.capturedCellCount
 import ru.pavlentygood.cellcapture.domain.playerName
 import ru.pavlentygood.cellcapture.persistence.GetPartyFromDatabase
 import ru.pavlentygood.cellcapture.rest.*
@@ -25,13 +25,14 @@ class ComponentTest {
     lateinit var getPartyFromDatabase: GetPartyFromDatabase
 
     @Test
-    fun `start party`() {
+    fun `capture cells`() {
         val (partyId, ownerId) = createParty()
         joinPlayer(partyId)
         startParty(ownerId)
+        captureCells(ownerId)
 
         val party = getPartyFromDatabase.parties[PartyId(partyId)]!!
-        party.status shouldBe Party.Status.STARTED
+        party.getCells().capturedCellCount() shouldBe 1
     }
 
     private fun createParty() =
@@ -56,5 +57,16 @@ class ComponentTest {
         mockMvc.post(API_V1_PARTIES_START) {
             queryParam("playerId", playerId.toString())
             contentType = MediaType.APPLICATION_JSON
+        }.andExpect { status { isOk() } }
+
+    private fun captureCells(playerId: Int) =
+        mockMvc.post(API_V1_PLAYERS_CELLS.with("playerId", playerId)) {
+            contentType = MediaType.APPLICATION_JSON
+            content = mapper.writeValueAsString(
+                CaptureCellsEndpoint.Request(
+                    from = CaptureCellsEndpoint.Request.Point(x = 2, y = 3),
+                    to = CaptureCellsEndpoint.Request.Point(x = 2, y = 3)
+                )
+            )
         }.andExpect { status { isOk() } }
 }

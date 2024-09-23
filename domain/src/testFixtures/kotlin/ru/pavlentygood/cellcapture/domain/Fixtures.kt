@@ -80,3 +80,8 @@ fun cells() =
     Array(Field.HEIGHT) {
         Array(Field.WIDTH) { Field.nonePlayerId }
     }
+
+fun Array<Array<PlayerId>>.capturedCellCount() =
+    sumOf { line ->
+        line.count { id -> id != Field.nonePlayerId }
+    }
