@@ -4,35 +4,33 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class DicePairTest {
 
-    @ParameterizedTest
-    @ValueSource(booleans = [true, false])
-    fun `is matched area`(i: Boolean) {
+    @Test
+    fun `is matched area`() {
         val dicePair = dicePair()
 
-        val (first, second) = when (i) {
-            true -> Pair(dicePair.first.value, dicePair.second.value)
-            false -> Pair(dicePair.second.value, dicePair.first.value)
-        }
+        dicePair.checkMatched(dicePair.first, dicePair.second)
+        dicePair.checkMatched(dicePair.second, dicePair.first)
+    }
 
+    private fun DicePair.checkMatched(first: Dice, second: Dice) {
         val area = mockk<Area>()
-        every { area.xDistance() } returns first
-        every { area.yDistance() } returns second
+        every { area.xDistance() } returns first.value - 1
+        every { area.yDistance() } returns second.value - 1
 
-        dicePair.isMatched(area) shouldBe  true
+        isMatched(area) shouldBe true
     }
 
     @Test
     fun `is not matched area`() {
+        val someDistanceForNotMatchedArea = 6
         val dicePair = dicePair()
 
         val area = mockk<Area>()
-        every { area.xDistance() } returns dicePair.first.value + 1
-        every { area.yDistance() } returns dicePair.second.value + 1
+        every { area.xDistance() } returns someDistanceForNotMatchedArea
+        every { area.yDistance() } returns someDistanceForNotMatchedArea
 
         dicePair.isMatched(area) shouldBe false
     }
