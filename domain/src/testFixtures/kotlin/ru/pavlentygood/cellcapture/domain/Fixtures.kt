@@ -24,22 +24,21 @@ fun playerName() =
 fun party(
     id: PartyId = partyId(),
     playerLimit: Int = 2,
-    players: List<Player> = listOf(player()),
+    owner: Player = player(owner = true),
     status: Party.Status = Party.Status.NEW,
     dicePair: DicePair = dicePair(),
-    field: Field = field()
-): Party {
-    val owner = player(owner = true)
-    return Party(
+    field: Field = field(),
+    playerQueue: PlayerQueue = PlayerQueue.create(owner)
+) =
+    Party(
         id = id,
         playerLimit = PlayerLimit(playerLimit),
-        players = mutableListOf(owner).apply { addAll(players) },
         status = status,
-        currentPlayerId = null,
         dicePair = dicePair,
-        field = field
+        field = field,
+        playerQueue = playerQueue,
+        ownerId = owner.id
     )
-}
 
 fun player(owner: Boolean = false) =
     Player(

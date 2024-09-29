@@ -8,21 +8,17 @@ import ru.pavlentygood.cellcapture.domain.Party.Status.*
 class Party internal constructor(
     val id: PartyId,
     val playerLimit: PlayerLimit,
-    private val players: MutableList<Player>,
     status: Status,
-    currentPlayerId: PlayerId?,
-    private val dicePair: DicePair,
-    private val field: Field
+    val dicePair: DicePair,
+    val field: Field,
+    val playerQueue: PlayerQueue,
+    val ownerId: PlayerId
 ) {
     var status = status
         private set
 
-    val ownerId get() = players.first { it.owner }.id
+    val players by playerQueue::players
 
-    var currentPlayerId = currentPlayerId ?: ownerId
-        private set
-
-    fun getPlayers() = players.toList()
     fun getCells() = field.getCells()
 
     fun joinPlayer(name: PlayerName, generatePlayerId: GeneratePlayerId) =
@@ -34,13 +30,13 @@ class Party internal constructor(
                 name = name,
                 owner = false
             )
-            players.add(player)
+            playerQueue.add(player)
             player.id.right()
         }
 
     fun start(playerId: PlayerId): Either<Start, Unit> {
         return if (isEnoughPlayers()) {
-            if (isOwner(playerId)) {
+            if (playerId == ownerId) {
                 when (status) {
                     NEW -> Unit.right().also { status = STARTED }
                     STARTED -> AlreadyStarted.left()
@@ -54,16 +50,14 @@ class Party internal constructor(
         }
     }
 
-    private fun isOwner(playerId: PlayerId) =
-        players.find { it.id == playerId }?.owner ?: false
-
     private fun isEnoughPlayers() =
         players.size >= MIN_PLAYER_COUNT
 
     fun capture(playerId: PlayerId, area: Area): Either<Capture, Unit> =
-        if (playerId == currentPlayerId) {
+        if (playerId == playerQueue.currentPlayerId) {
             if (dicePair.isMatched(area)) {
                 field.capture(playerId, area)
+                    .onRight { playerQueue.changeCurrentPlayer() }
             } else {
                 MismatchedArea.left()
             }

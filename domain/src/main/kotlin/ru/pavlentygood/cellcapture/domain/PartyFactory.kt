@@ -7,21 +7,23 @@ const val DEFAULT_PLAYER_LIMIT = 4
 class PartyFactory(
     private val generatePlayerId: GeneratePlayerId
 ) {
-    fun create(ownerName: PlayerName) =
-        Party(
+    fun create(ownerName: PlayerName): Party {
+        val owner = createOwner(ownerName)
+        return Party(
             id = PartyId(UUID.randomUUID()),
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
-            players = mutableListOf(createOwner(ownerName)),
             status = Party.Status.NEW,
-            currentPlayerId = null,
             dicePair = DicePair(
                 first = Dice.nonRolled(),
                 second = Dice.nonRolled()
             ),
             field = Field(
                 cells = createCells()
-            )
+            ),
+            playerQueue = PlayerQueue.create(firstPlayer = owner),
+            ownerId = owner.id
         )
+    }
 
     private fun createOwner(ownerName: PlayerName) =
         Player(

@@ -10,6 +10,6 @@ class GetPartyByPlayerFromDatabase(
 ) : GetPartyByPlayer {
     override operator fun invoke(playerId: PlayerId) =
         parties.values.find { party ->
-            party.getPlayers().any { it.id == playerId }
+            party.players.any { it.id == playerId }
         }
 }
