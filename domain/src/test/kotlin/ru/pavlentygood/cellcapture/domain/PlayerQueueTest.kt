@@ -46,15 +46,20 @@ class PlayerQueueTest {
     fun `change current player`() {
         val currentPlayer = player()
         val nextPlayer = player()
-        val players = listOf(currentPlayer, nextPlayer)
-        val playerQueue = PlayerQueue.restore(
-            players = players,
-            currentPlayer = currentPlayer
-        ).get()
 
-        playerQueue.changeCurrentPlayer()
+        fun test(players: List<Player>) {
+            val playerQueue = PlayerQueue.restore(
+                players = players,
+                currentPlayer = currentPlayer
+            ).get()
 
-        playerQueue.players shouldContainExactly players
-        playerQueue.currentPlayerId shouldBe nextPlayer.id
+            playerQueue.changeCurrentPlayer()
+
+            playerQueue.players shouldContainExactly players
+            playerQueue.currentPlayerId shouldBe nextPlayer.id
+        }
+
+        test(listOf(currentPlayer, nextPlayer))
+        test(listOf(nextPlayer, currentPlayer))
     }
 }
