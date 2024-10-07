@@ -164,6 +164,7 @@ class PartyTest {
         party.capture(currentPlayerId, area) shouldBeLeft Party.DicesNotRolled
 
         party.status shouldBe Party.Status.STARTED
+        party.dicePair shouldBe null
     }
 
     @Test
@@ -186,6 +187,7 @@ class PartyTest {
         party.capture(currentPlayerId, area) shouldBeLeft Party.MismatchedArea
 
         party.status shouldBe Party.Status.STARTED
+        party.dicePair shouldBe dicePair
     }
 
     @Test
@@ -193,13 +195,14 @@ class PartyTest {
         val area = area()
         val field = mockk<Field>()
         val currentPlayerId = playerId()
+        val dicePair = dicePairFor(area)
 
         val playerQueue = mockk<PlayerQueue>()
         every { playerQueue.currentPlayerId } returns currentPlayerId
 
         val party = party(
             status = Party.Status.STARTED,
-            dicePair = dicePairFor(area),
+            dicePair = dicePair,
             field = field,
             playerQueue = playerQueue
         )
@@ -209,6 +212,7 @@ class PartyTest {
         party.capture(currentPlayerId, area) shouldBeLeft Party.InaccessibleArea
 
         party.status shouldBe Party.Status.STARTED
+        party.dicePair shouldBe dicePair
     }
 
     @Test
@@ -233,6 +237,7 @@ class PartyTest {
         party.capture(currentPlayerId, area) shouldBeRight Unit
 
         party.status shouldBe Party.Status.STARTED
+        party.dicePair shouldBe null
     }
 
     private fun dicePairFor(area: Area) =

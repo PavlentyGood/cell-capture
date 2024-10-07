@@ -9,12 +9,15 @@ class Party internal constructor(
     val id: PartyId,
     val playerLimit: PlayerLimit,
     status: Status,
-    val dicePair: DicePair?,
+    dicePair: DicePair?,
     val field: Field,
     val playerQueue: PlayerQueue,
     val ownerId: PlayerId
 ) {
     var status = status
+        private set
+
+    var dicePair = dicePair
         private set
 
     val players by playerQueue::players
@@ -58,7 +61,10 @@ class Party internal constructor(
             if (dicePair.isRolled()) {
                 if (dicePair!!.isMatched(area)) {
                     field.capture(playerId, area)
-                        .onRight { playerQueue.changeCurrentPlayer() }
+                        .onRight {
+                            dicePair = null
+                            playerQueue.changeCurrentPlayer()
+                        }
                 } else {
                     MismatchedArea.left()
                 }
@@ -69,7 +75,8 @@ class Party internal constructor(
             PlayerNotCurrent.left()
         }
 
-    private fun DicePair?.isRolled() = this != null
+    private fun DicePair?.isRolled() =
+        this != null
 
     enum class Status {
         NEW, STARTED, COMPLETED
