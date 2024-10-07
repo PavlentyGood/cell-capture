@@ -13,10 +13,7 @@ class PartyFactory(
             id = PartyId(UUID.randomUUID()),
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
             status = Party.Status.NEW,
-            dicePair = DicePair(
-                first = Dice.nonRolled(),
-                second = Dice.nonRolled()
-            ),
+            dicePair = null,
             field = Field(
                 cells = createCells()
             ),

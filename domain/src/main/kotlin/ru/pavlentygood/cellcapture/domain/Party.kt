@@ -9,7 +9,7 @@ class Party internal constructor(
     val id: PartyId,
     val playerLimit: PlayerLimit,
     status: Status,
-    val dicePair: DicePair,
+    val dicePair: DicePair?,
     val field: Field,
     val playerQueue: PlayerQueue,
     val ownerId: PlayerId
@@ -55,15 +55,21 @@ class Party internal constructor(
 
     fun capture(playerId: PlayerId, area: Area): Either<Capture, Unit> =
         if (playerId == playerQueue.currentPlayerId) {
-            if (dicePair.isMatched(area)) {
-                field.capture(playerId, area)
-                    .onRight { playerQueue.changeCurrentPlayer() }
+            if (dicePair.isRolled()) {
+                if (dicePair!!.isMatched(area)) {
+                    field.capture(playerId, area)
+                        .onRight { playerQueue.changeCurrentPlayer() }
+                } else {
+                    MismatchedArea.left()
+                }
             } else {
-                MismatchedArea.left()
+                DicesNotRolled.left()
             }
         } else {
             PlayerNotCurrent.left()
         }
+
+    private fun DicePair?.isRolled() = this != null
 
     enum class Status {
         NEW, STARTED, COMPLETED
@@ -77,6 +83,7 @@ class Party internal constructor(
 
     sealed class Capture
     data object PlayerNotCurrent : Capture()
+    data object DicesNotRolled : Capture()
     data object MismatchedArea : Capture()
     data object InaccessibleArea : Capture()
 }

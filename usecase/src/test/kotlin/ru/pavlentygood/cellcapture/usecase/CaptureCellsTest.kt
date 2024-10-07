@@ -51,6 +51,7 @@ class CaptureCellsTest {
     fun `capture cells - domain errors`() {
         mapOf(
             Party.PlayerNotCurrent to CaptureCells.PlayerNotCurrent,
+            Party.DicesNotRolled to CaptureCells.DicesNotRolled,
             Party.MismatchedArea to CaptureCells.MismatchedArea,
             Party.InaccessibleArea to CaptureCells.InaccessibleArea
         ).forEach { (domainError, useCaseError) ->

@@ -148,6 +148,25 @@ class PartyTest {
     }
 
     @Test
+    fun `capture - dices not rolled`() {
+        val area = area()
+        val currentPlayerId = playerId()
+
+        val playerQueue = mockk<PlayerQueue>()
+        every { playerQueue.currentPlayerId } returns currentPlayerId
+
+        val party = party(
+            status = Party.Status.STARTED,
+            dicePair = null,
+            playerQueue = playerQueue
+        )
+
+        party.capture(currentPlayerId, area) shouldBeLeft Party.DicesNotRolled
+
+        party.status shouldBe Party.Status.STARTED
+    }
+
+    @Test
     fun `capture - mismatched area`() {
         val area = area()
         val currentPlayerId = playerId()

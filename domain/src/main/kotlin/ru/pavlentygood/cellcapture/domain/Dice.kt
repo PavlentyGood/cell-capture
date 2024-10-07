@@ -16,9 +16,6 @@ data class Dice internal constructor(
             } else {
                 InvalidValue.left()
             }
-
-        fun nonRolled() =
-            Dice(1)
     }
 
     data object InvalidValue

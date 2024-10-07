@@ -21,6 +21,7 @@ class CaptureCells(
     private fun Party.Capture.toUseCaseError() =
         when (this) {
             Party.PlayerNotCurrent -> PlayerNotCurrent
+            Party.DicesNotRolled -> DicesNotRolled
             Party.MismatchedArea -> MismatchedArea
             Party.InaccessibleArea -> InaccessibleArea
         }
@@ -28,6 +29,7 @@ class CaptureCells(
     sealed interface Error
     data object PlayerNotFound : Error
     data object PlayerNotCurrent : Error
+    data object DicesNotRolled : Error
     data object MismatchedArea : Error
     data object InaccessibleArea : Error
 }

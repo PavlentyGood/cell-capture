@@ -55,6 +55,7 @@ class CaptureCellsEndpoint(
         when (this) {
             CaptureCells.PlayerNotFound -> ResponseEntity.notFound().build()
             CaptureCells.PlayerNotCurrent,
+            CaptureCells.DicesNotRolled,
             CaptureCells.InaccessibleArea,
             CaptureCells.MismatchedArea -> ResponseEntity.unprocessableEntity().build()
         }

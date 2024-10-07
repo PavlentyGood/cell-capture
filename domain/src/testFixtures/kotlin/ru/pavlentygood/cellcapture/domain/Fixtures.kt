@@ -26,7 +26,7 @@ fun party(
     playerLimit: Int = 2,
     owner: Player = player(owner = true),
     status: Party.Status = Party.Status.NEW,
-    dicePair: DicePair = dicePair(),
+    dicePair: DicePair? = dicePair(),
     field: Field = field(),
     playerQueue: PlayerQueue = PlayerQueue.create(owner)
 ) =
