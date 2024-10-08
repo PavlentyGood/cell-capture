@@ -8,10 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.domain.PartyId
-import ru.pavlentygood.cellcapture.domain.capturedCellCount
-import ru.pavlentygood.cellcapture.domain.playerName
+import ru.pavlentygood.cellcapture.domain.*
 import ru.pavlentygood.cellcapture.persistence.GetPartyFromDatabase
+import ru.pavlentygood.cellcapture.persistence.SavePartyToDatabase
 import ru.pavlentygood.cellcapture.rest.*
 import java.util.*
 
@@ -23,15 +22,41 @@ class ComponentTest {
     lateinit var mockMvc: MockMvc
     @Autowired
     lateinit var getPartyFromDatabase: GetPartyFromDatabase
+    @Autowired
+    lateinit var savePartyToDatabase: SavePartyToDatabase
 
     @Test
-    fun `capture cells`() {
+    fun `start party`() {
         val (partyId, ownerId) = createParty()
         joinPlayer(partyId)
         startParty(ownerId)
-        captureCells(ownerId)
 
         val party = getPartyFromDatabase.parties[PartyId(partyId)]!!
+        party.status shouldBe Party.Status.STARTED
+    }
+
+    @Test
+    fun `capture cells`() {
+        val currentPlayer = player(owner = true)
+
+        val dice = dice(1)
+        val dicePair = DicePair(
+            first = dice,
+            second = dice
+        )
+
+        val party = party(
+            owner = currentPlayer,
+            otherPlayers = listOf(player()),
+            status = Party.Status.STARTED,
+            dicePair = dicePair,
+            field = field()
+        )
+
+        savePartyToDatabase(party)
+
+        captureCells(currentPlayer.id.toInt())
+
         party.getCells().capturedCellCount() shouldBe 1
     }
 

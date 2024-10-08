@@ -25,10 +25,14 @@ fun party(
     id: PartyId = partyId(),
     playerLimit: Int = 2,
     owner: Player = player(owner = true),
+    otherPlayers: List<Player> = listOf(),
     status: Party.Status = Party.Status.NEW,
     dicePair: DicePair? = dicePair(),
     field: Field = field(),
-    playerQueue: PlayerQueue = PlayerQueue.create(owner)
+    playerQueue: PlayerQueue = playerQueue(
+        owner = owner,
+        otherPlayers = otherPlayers
+    )
 ) =
     Party(
         id = id,
@@ -65,9 +69,9 @@ fun dicePair() =
         second = dice()
     )
 
-fun dice() =
+fun dice(value: Int = randomInt(from = 1, until = 7)) =
     Dice.from(
-        value = randomInt(from = 1, until = 7)
+        value = value
     ).get()
 
 fun field() =
@@ -84,3 +88,12 @@ fun Array<Array<PlayerId>>.capturedCellCount() =
     sumOf { line ->
         line.count { id -> id != Field.nonePlayerId }
     }
+
+fun playerQueue(
+    owner: Player,
+    otherPlayers: List<Player>
+) =
+    PlayerQueue.restore(
+        players = otherPlayers.toMutableList().apply { add(owner) },
+        currentPlayer = owner
+    ).get()
