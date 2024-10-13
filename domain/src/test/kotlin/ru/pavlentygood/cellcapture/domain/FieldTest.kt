@@ -15,7 +15,7 @@ class FieldTest {
         val cells = cells()
         cells[area.from.y][area.from.x - 1] = playerId
 
-        val field = Field(cells = cells)
+        val field = field(cells = cells)
 
         field.capture(playerId, area) shouldBeRight Unit
 
@@ -43,7 +43,7 @@ class FieldTest {
         val cells = cells()
         cells[y][x] = otherPlayerId
 
-        val field = Field(cells = cells)
+        val field = field(cells = cells)
 
         field.capture(playerId(), area) shouldBeLeft Party.InaccessibleArea
 
@@ -61,7 +61,7 @@ class FieldTest {
         cells[area.to.y][area.to.x + 2] = playerId
         cells[area.to.y + 2][area.to.x] = playerId
 
-        val field = Field(cells = cells)
+        val field = field(cells = cells)
 
         field.capture(playerId, area) shouldBeLeft Party.InaccessibleArea
     }

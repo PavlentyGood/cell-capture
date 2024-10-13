@@ -2,8 +2,6 @@ package ru.pavlentygood.cellcapture.domain
 
 import arrow.core.left
 import arrow.core.right
-import kotlin.math.max
-import kotlin.math.min
 
 class Field(
    private val cells: Array<Array<PlayerId>>
@@ -51,13 +49,10 @@ class Field(
     }
 
     private fun Area.rangeByX() =
-        rangeBy { it.x }
+        from.x..to.x
 
     private fun Area.rangeByY() =
-        rangeBy { it.y }
-
-    private fun Area.rangeBy(coord: (Point) -> Int) =
-        (min(coord(from), coord(to)) .. max(coord(from), coord(to)))
+        from.y..to.y
 
     private fun rangeBySingle(value: Int, maxUntil: Int) =
         if (value in Point.MIN until maxUntil) {
