@@ -62,8 +62,8 @@ class CaptureCellsEndpointTest {
             contentType = MediaType.APPLICATION_JSON
             content = mapper.writeValueAsString(
                 CaptureCellsEndpoint.Request(
-                    from = CaptureCellsEndpoint.Request.Point(area.from.x, area.from.y),
-                    to = CaptureCellsEndpoint.Request.Point(area.to.x, area.to.y)
+                    first = CaptureCellsEndpoint.Request.Point(area.from.x, area.from.y),
+                    second = CaptureCellsEndpoint.Request.Point(area.to.x, area.to.y)
                 )
             )
         }

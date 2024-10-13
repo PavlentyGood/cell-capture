@@ -45,19 +45,22 @@ class ComponentTest {
             second = dice
         )
 
+        val cells = cells()
+        cells[3][1] = currentPlayer.id
+
         val party = party(
             owner = currentPlayer,
             otherPlayers = listOf(player()),
             status = Party.Status.STARTED,
             dicePair = dicePair,
-            field = field()
+            field = field(cells)
         )
 
         savePartyToDatabase(party)
 
         captureCells(currentPlayer.id.toInt())
 
-        party.getCells().capturedCellCount() shouldBe 1
+        party.getCells().capturedCellCount() shouldBe 2
     }
 
     private fun createParty() =
@@ -89,8 +92,8 @@ class ComponentTest {
             contentType = MediaType.APPLICATION_JSON
             content = mapper.writeValueAsString(
                 CaptureCellsEndpoint.Request(
-                    from = CaptureCellsEndpoint.Request.Point(x = 2, y = 3),
-                    to = CaptureCellsEndpoint.Request.Point(x = 2, y = 3)
+                    first = CaptureCellsEndpoint.Request.Point(x = 2, y = 3),
+                    second = CaptureCellsEndpoint.Request.Point(x = 2, y = 3)
                 )
             )
         }.andExpect { status { isOk() } }

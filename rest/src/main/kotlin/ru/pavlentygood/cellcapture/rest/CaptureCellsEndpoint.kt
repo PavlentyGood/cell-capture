@@ -32,8 +32,8 @@ class CaptureCellsEndpoint(
         )
 
     data class Request(
-        val from: Point,
-        val to: Point
+        val first: Point,
+        val second: Point
     ) {
         data class Point(
             val x: Int,
@@ -42,9 +42,9 @@ class CaptureCellsEndpoint(
     }
 
     private fun Request.toDomain() =
-        from.toDomain().flatMap { fromPoint ->
-            to.toDomain().map { toPoint ->
-                Area(fromPoint, toPoint)
+        first.toDomain().flatMap { firstPoint ->
+            second.toDomain().map { secondPoint ->
+                Area.from(firstPoint, secondPoint)
             }
         }
 

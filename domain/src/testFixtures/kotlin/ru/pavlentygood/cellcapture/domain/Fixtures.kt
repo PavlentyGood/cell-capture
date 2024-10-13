@@ -51,17 +51,23 @@ fun player(owner: Boolean = false) =
         owner = owner
     )
 
-fun area() =
-    Area(
-        from = point(),
-        to = point()
+fun area(distanceToEdges: Int = 0) =
+    Area.from(
+        first = point(distanceToEdges),
+        second = point(distanceToEdges)
     )
 
-fun point() =
+fun point(x: Int, y: Int) =
     Point.from(
-        x = randomInt(until = Field.WIDTH),
-        y = randomInt(until = Field.HEIGHT)
+        x = x,
+        y = y
     ).get()
+
+fun point(distanceToEdges: Int = 0) =
+    point(
+        x = randomInt(from = distanceToEdges, until = Field.WIDTH - distanceToEdges),
+        y = randomInt(from = distanceToEdges, until = Field.HEIGHT - distanceToEdges)
+    )
 
 fun dicePair() =
     DicePair(
@@ -74,9 +80,9 @@ fun dice(value: Int = randomInt(from = 1, until = 7)) =
         value = value
     ).get()
 
-fun field() =
+fun field(cells: Array<Array<PlayerId>> = cells()) =
     Field(
-        cells = cells()
+        cells = cells
     )
 
 fun cells() =

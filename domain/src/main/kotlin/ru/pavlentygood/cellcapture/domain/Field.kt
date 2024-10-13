@@ -11,7 +11,7 @@ class Field(
     fun getCells() = cells.copyOf()
 
     fun capture(playerId: PlayerId, area: Area) =
-        if (area.isInaccessible()) {
+        if (area.isAnyCellCaptured() || !area.isTouchOwnCell(playerId)) {
             Party.InaccessibleArea.left()
         } else {
             area.capture(playerId).right()
@@ -24,12 +24,31 @@ class Field(
             }
         }
 
-    private fun Area.isInaccessible() =
+    private fun Area.isAnyCellCaptured() =
         rangeByY().any { y ->
             rangeByX().any { x ->
                 cells[y][x] != nonePlayerId
             }
         }
+
+    private fun Area.isTouchOwnCell(playerId: PlayerId): Boolean {
+        fun byRanges(xRange: IntRange, yRange: IntRange) =
+            yRange.any { y ->
+                xRange.any { x ->
+                    cells[y][x] == playerId
+                }
+            }
+
+        fun byXRange(y: Int) = byRanges(rangeByX(), rangeBySingle(y, HEIGHT))
+        fun byYRange(x: Int) = byRanges(rangeBySingle(x, WIDTH), rangeByY())
+
+        fun byTopSide() = byXRange(from.y - 1)
+        fun byBottomSide() = byXRange(to.y + 1)
+        fun byLeftSide() = byYRange(from.x - 1)
+        fun byRightSide() = byYRange(to.x + 1)
+
+        return byTopSide() || byBottomSide() || byLeftSide() || byRightSide()
+    }
 
     private fun Area.rangeByX() =
         rangeBy { it.x }
@@ -39,6 +58,13 @@ class Field(
 
     private fun Area.rangeBy(coord: (Point) -> Int) =
         (min(coord(from), coord(to)) .. max(coord(from), coord(to)))
+
+    private fun rangeBySingle(value: Int, maxUntil: Int) =
+        if (value in Point.MIN until maxUntil) {
+            value..value
+        } else {
+            IntRange.EMPTY
+        }
 
     companion object {
         const val WIDTH = 64
