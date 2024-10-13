@@ -60,11 +60,17 @@ class PartyTest {
 
     @Test
     fun `start party`() {
+        val players = listOf(player(), player())
+
         val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns listOf(mockk(), mockk())
+        every { playerQueue.players } returns players
+
+        val field = mockk<Field>()
+        justRun { field.appointStartCells(players.map { it.id }) }
 
         val party = party(
-            playerQueue = playerQueue
+            playerQueue = playerQueue,
+            field = field
         )
 
         party.start(party.ownerId) shouldBeRight Unit

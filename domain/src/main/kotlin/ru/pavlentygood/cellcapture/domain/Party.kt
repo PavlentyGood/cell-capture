@@ -41,7 +41,7 @@ class Party internal constructor(
         return if (isEnoughPlayers()) {
             if (playerId == ownerId) {
                 when (status) {
-                    NEW -> Unit.right().also { status = STARTED }
+                    NEW -> Unit.right().also { start() }
                     STARTED -> AlreadyStarted.left()
                     COMPLETED -> AlreadyCompleted.left()
                 }
@@ -51,6 +51,11 @@ class Party internal constructor(
         } else {
             TooFewPlayers.left()
         }
+    }
+
+    private fun start() {
+        field.appointStartCells(players.map { it.id })
+        status = STARTED
     }
 
     private fun isEnoughPlayers() =

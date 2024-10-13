@@ -2,11 +2,20 @@ package ru.pavlentygood.cellcapture.domain
 
 import arrow.core.left
 import arrow.core.right
+import kotlin.random.Random
 
 class Field(
    private val cells: Array<Array<PlayerId>>
 ) {
     fun getCells() = cells.copyOf()
+
+    fun appointStartCells(playerIds: List<PlayerId>) {
+        playerIds.forEach { id ->
+            val x = Random.nextInt(WIDTH)
+            val y = Random.nextInt(HEIGHT)
+            cells[y][x] = id
+        }
+    }
 
     fun capture(playerId: PlayerId, area: Area) =
         if (area.isAnyCellCaptured() || !area.isTouchOwnCell(playerId)) {

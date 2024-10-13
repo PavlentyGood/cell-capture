@@ -2,10 +2,22 @@ package ru.pavlentygood.cellcapture.domain
 
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class FieldTest {
+
+    @Test
+    fun `appoint start cells`() {
+        val field = field()
+        val playerIds = listOf(playerId(), playerId())
+
+        field.appointStartCells(playerIds)
+
+        field.getCells().capturedCellCount() shouldBe 2
+        field.getCells().flatMap { it.map { id -> id } } shouldContainAll playerIds
+    }
 
     @Test
     fun `capture cells`() {
