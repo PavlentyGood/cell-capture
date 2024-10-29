@@ -15,5 +15,11 @@ data class DicePair(
 
     companion object {
         const val CORRECTION = 1
+
+        fun roll() =
+            DicePair(
+                first = Dice.roll(),
+                second = Dice.roll()
+            )
     }
 }

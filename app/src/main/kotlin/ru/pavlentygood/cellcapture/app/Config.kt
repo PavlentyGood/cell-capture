@@ -8,10 +8,7 @@ import ru.pavlentygood.cellcapture.persistence.GeneratePlayerIdBySequence
 import ru.pavlentygood.cellcapture.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.persistence.GetPartyFromDatabase
 import ru.pavlentygood.cellcapture.persistence.SavePartyToDatabase
-import ru.pavlentygood.cellcapture.usecase.CaptureCells
-import ru.pavlentygood.cellcapture.usecase.CreateParty
-import ru.pavlentygood.cellcapture.usecase.JoinPlayer
-import ru.pavlentygood.cellcapture.usecase.StartParty
+import ru.pavlentygood.cellcapture.usecase.*
 
 @Configuration
 @ComponentScan("ru.pavlentygood.cellcapture.rest")
@@ -43,4 +40,7 @@ class Config {
 
     @Bean
     fun captureCells() = CaptureCells(getPartyByPlayer(), saveParty())
+
+    @Bean
+    fun roll() = Roll(getPartyByPlayer(), saveParty())
 }

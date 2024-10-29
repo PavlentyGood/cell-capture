@@ -61,6 +61,18 @@ class Party internal constructor(
     private fun isEnoughPlayers() =
         players.size >= MIN_PLAYER_COUNT
 
+    fun roll(playerId: PlayerId): Either<Roll, DicePair> =
+        if (playerId == playerQueue.currentPlayerId) {
+            if (!dicePair.isRolled()) {
+                dicePair = DicePair.roll()
+                dicePair!!.right()
+            } else {
+                DicesAlreadyRolled.left()
+            }
+        } else {
+            PlayerNotCurrent.left()
+        }
+
     fun capture(playerId: PlayerId, area: Area): Either<Capture, Unit> =
         if (playerId == playerQueue.currentPlayerId) {
             if (dicePair.isRolled()) {
@@ -93,8 +105,11 @@ class Party internal constructor(
     data object AlreadyStarted : Start()
     data object AlreadyCompleted : Start()
 
+    sealed interface Roll
+    data object DicesAlreadyRolled : Roll
+
     sealed class Capture
-    data object PlayerNotCurrent : Capture()
+    data object PlayerNotCurrent : Capture(), Roll
     data object DicesNotRolled : Capture()
     data object MismatchedArea : Capture()
     data object InaccessibleArea : Capture()

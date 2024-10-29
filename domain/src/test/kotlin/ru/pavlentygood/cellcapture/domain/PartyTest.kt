@@ -5,6 +5,7 @@ import arrow.core.right
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
@@ -134,6 +135,61 @@ class PartyTest {
         party.start(party.ownerId) shouldBeLeft Party.AlreadyCompleted
 
         party.status shouldBe Party.Status.COMPLETED
+    }
+
+    @Test
+    fun `roll - player not current`() {
+        val playerQueue = mockk<PlayerQueue>()
+        every { playerQueue.currentPlayerId } returns playerId()
+
+        val party = party(
+            status = Party.Status.STARTED,
+            playerQueue = playerQueue
+        )
+
+        party.roll(playerId()) shouldBeLeft Party.PlayerNotCurrent
+
+        party.status shouldBe Party.Status.STARTED
+    }
+
+    @Test
+    fun `roll - dices already rolled`() {
+        val currentPlayerId = playerId()
+        val dicePair = dicePair()
+
+        val playerQueue = mockk<PlayerQueue>()
+        every { playerQueue.currentPlayerId } returns currentPlayerId
+
+        val party = party(
+            status = Party.Status.STARTED,
+            dicePair = dicePair,
+            playerQueue = playerQueue
+        )
+
+        party.roll(currentPlayerId) shouldBeLeft Party.DicesAlreadyRolled
+
+        party.status shouldBe Party.Status.STARTED
+        party.dicePair shouldBe party.dicePair
+    }
+
+    @Test
+    fun `roll dices`() {
+        val currentPlayerId = playerId()
+
+        val playerQueue = mockk<PlayerQueue>()
+        every { playerQueue.currentPlayerId } returns currentPlayerId
+
+        val party = party(
+            status = Party.Status.STARTED,
+            dicePair = null,
+            playerQueue = playerQueue
+        )
+
+        val rolledDice = party.roll(currentPlayerId).shouldBeRight()
+
+        party.status shouldBe Party.Status.STARTED
+        party.dicePair shouldNotBe null
+        party.dicePair shouldBe rolledDice
     }
 
     @Test

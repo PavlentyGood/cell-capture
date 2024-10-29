@@ -14,6 +14,8 @@ dependencies {
 
     testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
+    testImplementation(Lib.kotestArrow)
+    testImplementation(Lib.arrow)
 
     testRuntimeOnly(Lib.junitEngine)
 
