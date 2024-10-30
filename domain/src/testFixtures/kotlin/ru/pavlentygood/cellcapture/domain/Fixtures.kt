@@ -13,8 +13,8 @@ fun randomInt(from: Int = 0, until: Int = 1000) =
 fun partyId() =
     PartyId(UUID.randomUUID())
 
-fun playerId() =
-    PlayerId(randomInt())
+fun playerId(until: Int = 1000) =
+    PlayerId(randomInt(until = until))
 
 fun playerName() =
     PlayerName.from(

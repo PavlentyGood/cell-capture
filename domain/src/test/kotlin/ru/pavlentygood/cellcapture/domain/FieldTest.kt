@@ -10,12 +10,15 @@ class FieldTest {
 
     @Test
     fun `appoint start cells`() {
+        val maxCellCount = Field.WIDTH * Field.HEIGHT
         val field = field()
-        val playerIds = listOf(playerId(), playerId())
-
+        val playerIds = generateSequence { playerId(until = 1000000) }
+            .take(maxCellCount)
+            .toList()
+        
         field.appointStartCells(playerIds)
 
-        field.getCells().capturedCellCount() shouldBe 2
+        field.getCells().capturedCellCount() shouldBe maxCellCount
         field.getCells().flatMap { it.map { id -> id } } shouldContainAll playerIds
     }
 
