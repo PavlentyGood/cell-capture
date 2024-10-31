@@ -26,7 +26,7 @@ class Party internal constructor(
 
     fun joinPlayer(name: PlayerName, generatePlayerId: GeneratePlayerId) =
         if (playerLimit.isExceeded(players.size)) {
-            PlayerCountLimitExceeded.left()
+            PlayerCountLimit.left()
         } else {
             val player = Player(
                 id = generatePlayerId(),
@@ -99,20 +99,18 @@ class Party internal constructor(
         NEW, STARTED, COMPLETED
     }
 
-    sealed class Start
-    data object PlayerNotOwner : Start()
-    data object TooFewPlayers : Start()
-    data object AlreadyStarted : Start()
-    data object AlreadyCompleted : Start()
-
+    sealed interface Start
     sealed interface Roll
+    sealed interface Capture
+
+    data object PlayerCountLimit
+    data object PlayerNotOwner : Start
+    data object TooFewPlayers : Start
+    data object AlreadyStarted : Start
+    data object AlreadyCompleted : Start
     data object DicesAlreadyRolled : Roll
-
-    sealed class Capture
-    data object PlayerNotCurrent : Capture(), Roll
-    data object DicesNotRolled : Capture()
-    data object MismatchedArea : Capture()
-    data object InaccessibleArea : Capture()
+    data object PlayerNotCurrent : Capture, Roll
+    data object DicesNotRolled : Capture
+    data object MismatchedArea : Capture
+    data object InaccessibleArea : Capture
 }
-
-data object PlayerCountLimitExceeded

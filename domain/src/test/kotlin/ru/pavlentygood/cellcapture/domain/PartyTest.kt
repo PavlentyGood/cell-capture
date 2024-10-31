@@ -54,7 +54,7 @@ class PartyTest {
 
         val generatePlayerId = { playerId }
 
-        party.joinPlayer(name, generatePlayerId) shouldBeLeft PlayerCountLimitExceeded
+        party.joinPlayer(name, generatePlayerId) shouldBeLeft Party.PlayerCountLimit
 
         party.status shouldBe Party.Status.NEW
     }
