@@ -16,7 +16,7 @@ class JoinPlayer(
         getParty(partyId)
             .flatMap { party ->
                 party.joinPlayer(name, generatePlayerId)
-                    .mapLeft { PlayerCountLimitExceededUseCaseError }
+                    .mapLeft { PlayerCountLimitUseCaseError }
                     .map { playerId ->
                         saveParty(party)
                         playerId
@@ -26,4 +26,4 @@ class JoinPlayer(
 
 sealed class JoinPlayerError
 data object PartyNotFoundUseCaseError : JoinPlayerError()
-data object PlayerCountLimitExceededUseCaseError : JoinPlayerError()
+data object PlayerCountLimitUseCaseError : JoinPlayerError()

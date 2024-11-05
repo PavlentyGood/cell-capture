@@ -48,7 +48,7 @@ class JoinPlayerTest {
     }
 
     @Test
-    fun `join player - player count limit exceeded`() {
+    fun `join player - player count limit reached`() {
         val party = mockk<Party>()
         every { party.joinPlayer(playerName, generatePlayerId) } returns Party.PlayerCountLimit.left()
 
@@ -59,6 +59,6 @@ class JoinPlayerTest {
 
         val joinPlayer = JoinPlayer(getParty, saveParty, generatePlayerId)
 
-        joinPlayer(partyId, playerName) shouldBeLeft PlayerCountLimitExceededUseCaseError
+        joinPlayer(partyId, playerName) shouldBeLeft PlayerCountLimitUseCaseError
     }
 }

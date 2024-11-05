@@ -8,7 +8,7 @@ const val MIN_PLAYER_COUNT = 2
 data class PlayerLimit internal constructor(
     val value: Int
 ) {
-    fun isExceeded(playerCount: Int) =
+    fun isReached(playerCount: Int) =
         playerCount >= value
 
     companion object {

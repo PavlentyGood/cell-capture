@@ -19,7 +19,7 @@ import ru.pavlentygood.cellcapture.domain.playerId
 import ru.pavlentygood.cellcapture.domain.playerName
 import ru.pavlentygood.cellcapture.usecase.JoinPlayer
 import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
-import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitExceededUseCaseError
+import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitUseCaseError
 import java.util.*
 
 @WebMvcTest
@@ -90,10 +90,10 @@ class JoinPlayerEndpointTest {
     }
 
     @Test
-    fun `join player - player count limit is exceeded`() {
+    fun `join player - player count limit is reached`() {
         val partyId = partyId()
 
-        every { joinPlayer(partyId, any()) } returns PlayerCountLimitExceededUseCaseError.left()
+        every { joinPlayer(partyId, any()) } returns PlayerCountLimitUseCaseError.left()
 
         post(partyId.toUUID()) {
             contentType = MediaType.APPLICATION_JSON

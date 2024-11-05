@@ -23,18 +23,18 @@ class PlayerLimitTest {
     }
 
     @Test
-    fun `is exceeded`() {
+    fun `is reached`() {
         val playerCount = randomPlayerCount()
         PlayerLimit.from(playerCount).onRight {
-            it.isExceeded(playerCount) shouldBe true
+            it.isReached(playerCount) shouldBe true
         }
     }
 
     @Test
-    fun `is not exceeded`() {
+    fun `is not reached`() {
         val playerCount = randomPlayerCount()
         PlayerLimit.from(playerCount + 1).onRight {
-            it.isExceeded(playerCount) shouldBe false
+            it.isReached(playerCount) shouldBe false
         }
     }
 

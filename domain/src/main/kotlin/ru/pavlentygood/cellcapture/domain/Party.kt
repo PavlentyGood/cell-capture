@@ -25,7 +25,7 @@ class Party internal constructor(
     fun getCells() = field.getCells()
 
     fun joinPlayer(name: PlayerName, generatePlayerId: GeneratePlayerId) =
-        if (playerLimit.isExceeded(players.size)) {
+        if (playerLimit.isReached(players.size)) {
             PlayerCountLimit.left()
         } else {
             val player = Player(

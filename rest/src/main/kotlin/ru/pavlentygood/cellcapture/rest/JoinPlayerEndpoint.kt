@@ -9,7 +9,7 @@ import ru.pavlentygood.cellcapture.domain.PartyId
 import ru.pavlentygood.cellcapture.domain.PlayerName
 import ru.pavlentygood.cellcapture.usecase.JoinPlayer
 import ru.pavlentygood.cellcapture.usecase.JoinPlayerError
-import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitExceededUseCaseError
+import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitUseCaseError
 import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
 import java.util.*
 
@@ -44,5 +44,5 @@ data class JoinPlayerResponse(
 fun JoinPlayerError.toRestError(): ResponseEntity<Unit> =
     when (this) {
         PartyNotFoundUseCaseError -> ResponseEntity.notFound().build()
-        PlayerCountLimitExceededUseCaseError -> ResponseEntity.unprocessableEntity().build()
+        PlayerCountLimitUseCaseError -> ResponseEntity.unprocessableEntity().build()
     }
