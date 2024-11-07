@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import ru.pavlentygood.cellcapture.domain.PartyFactory
+import ru.pavlentygood.cellcapture.domain.RestoreParty
 import ru.pavlentygood.cellcapture.persistence.GeneratePlayerIdBySequence
 import ru.pavlentygood.cellcapture.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.persistence.GetPartyFromDatabase
@@ -21,6 +22,9 @@ class Config {
     fun partyFactory() = PartyFactory(generatePlayerId())
 
     @Bean
+    fun restoreParty() = RestoreParty()
+
+    @Bean
     fun saveParty() = SavePartyToDatabase()
 
     @Bean
@@ -36,7 +40,7 @@ class Config {
     fun startParty() = StartParty(getPartyByPlayer())
 
     @Bean
-    fun getPartyByPlayer() = GetPartyByPlayerFromDatabase(saveParty().parties)
+    fun getPartyByPlayer() = GetPartyByPlayerFromDatabase(saveParty().parties, restoreParty())
 
     @Bean
     fun captureCells() = CaptureCells(getPartyByPlayer(), saveParty())

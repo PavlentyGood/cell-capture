@@ -23,9 +23,9 @@ class PartyFactoryTest {
         party.playerLimit shouldBe PlayerLimit.from(DEFAULT_PLAYER_LIMIT).getOrNull()!!
         party.status shouldBe Party.Status.NEW
         party.dicePair shouldBe null
-        party.field.getCells() shouldHaveSize Field.HEIGHT
-        party.field.getCells()[0] shouldHaveSize Field.WIDTH
-        party.field.getCells()[0][0] shouldBe Field.nonePlayerId
+        party.getCells() shouldHaveSize Field.HEIGHT
+        party.getCells()[0] shouldHaveSize Field.WIDTH
+        party.getCells()[0][0] shouldBe Field.nonePlayerId
         party.ownerId shouldBe ownerId
         party.players.single().also {
             it.id shouldBe ownerId

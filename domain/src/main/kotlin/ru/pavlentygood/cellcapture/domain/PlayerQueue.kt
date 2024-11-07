@@ -34,12 +34,12 @@ class PlayerQueue internal constructor(
 
         fun restore(
             players: List<Player>,
-            currentPlayer: Player
+            currentPlayerId: PlayerId
         ) =
-            if (players.contains(currentPlayer)) {
+            if (players.map { it.id }.contains(currentPlayerId)) {
                 PlayerQueue(
                     players = players.toMutableList(),
-                    currentPlayerId = currentPlayer.id
+                    currentPlayerId = currentPlayerId
                 ).right()
             } else {
                 InvalidPlayerQueue.left()

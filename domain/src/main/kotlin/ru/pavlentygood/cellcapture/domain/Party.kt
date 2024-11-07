@@ -10,8 +10,8 @@ class Party internal constructor(
     val playerLimit: PlayerLimit,
     status: Status,
     dicePair: DicePair?,
-    val field: Field,
-    val playerQueue: PlayerQueue,
+    private val field: Field,
+    private val playerQueue: PlayerQueue,
     val ownerId: PlayerId
 ) {
     var status = status
@@ -21,6 +21,8 @@ class Party internal constructor(
         private set
 
     val players by playerQueue::players
+
+    val currentPlayerId by playerQueue::currentPlayerId
 
     fun getCells() = field.getCells()
 

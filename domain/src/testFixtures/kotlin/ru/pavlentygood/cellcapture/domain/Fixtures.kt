@@ -101,5 +101,5 @@ fun playerQueue(
 ) =
     PlayerQueue.restore(
         players = otherPlayers.toMutableList().apply { add(owner) },
-        currentPlayer = owner
+        currentPlayerId = owner.id
     ).get()

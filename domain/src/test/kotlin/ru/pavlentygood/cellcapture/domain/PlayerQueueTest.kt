@@ -23,7 +23,7 @@ class PlayerQueueTest {
 
         val result = PlayerQueue.restore(
             players = players,
-            currentPlayer = player
+            currentPlayerId = player.id
         ).shouldBeRight()
 
         result.players shouldContainExactly players
@@ -50,7 +50,7 @@ class PlayerQueueTest {
         fun test(players: List<Player>) {
             val playerQueue = PlayerQueue.restore(
                 players = players,
-                currentPlayer = currentPlayer
+                currentPlayerId = currentPlayer.id
             ).get()
 
             playerQueue.changeCurrentPlayer()
