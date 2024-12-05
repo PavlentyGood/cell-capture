@@ -16,6 +16,7 @@ dependencies {
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
+    testImplementation(Lib.archUnit)
 
     testRuntimeOnly(Lib.junitEngine)
 

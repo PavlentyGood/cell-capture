@@ -10,6 +10,7 @@ object Version {
     const val h2 = "2.3.232"
     const val arrow = "1.2.4"
     const val kotestArrow = "1.4.0"
+    const val archUnit = "1.3.0"
 }
 
 object Plugin {
@@ -34,4 +35,5 @@ object Lib {
     const val kotestArrow = "io.kotest.extensions:kotest-assertions-arrow-jvm:${Version.kotestArrow}"
     const val arrow = "io.arrow-kt:arrow-core:${Version.arrow}"
     const val mockk = "io.mockk:mockk:${Version.mockk}"
+    const val archUnit = "com.tngtech.archunit:archunit-junit5:${Version.archUnit}"
 }
