@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.PartyFactory
 import ru.pavlentygood.cellcapture.domain.party
 import ru.pavlentygood.cellcapture.domain.playerName
+import ru.pavlentygood.cellcapture.usecase.port.SaveParty
 
 class CreatePartyUseCaseTest {
 

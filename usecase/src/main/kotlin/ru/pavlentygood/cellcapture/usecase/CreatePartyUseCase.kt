@@ -1,6 +1,7 @@
 package ru.pavlentygood.cellcapture.usecase
 
 import ru.pavlentygood.cellcapture.domain.*
+import ru.pavlentygood.cellcapture.usecase.port.SaveParty
 
 class CreatePartyUseCase(
     private val partyFactory: PartyFactory,

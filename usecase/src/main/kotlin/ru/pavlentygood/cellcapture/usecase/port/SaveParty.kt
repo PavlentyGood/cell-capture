@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.usecase
+package ru.pavlentygood.cellcapture.usecase.port
 
 import ru.pavlentygood.cellcapture.domain.Party
 

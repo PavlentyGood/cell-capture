@@ -9,6 +9,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.playerId
+import ru.pavlentygood.cellcapture.usecase.port.GetPartyByPlayer
 
 class StartPartyUseCaseTest {
 

@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.dicePair
 import ru.pavlentygood.cellcapture.domain.playerId
+import ru.pavlentygood.cellcapture.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.usecase.port.SaveParty
 
 class RollUseCaseTest {
 

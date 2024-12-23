@@ -5,6 +5,8 @@ import arrow.core.left
 import ru.pavlentygood.cellcapture.domain.Area
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PlayerId
+import ru.pavlentygood.cellcapture.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.usecase.port.SaveParty
 
 class CaptureCellsUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,

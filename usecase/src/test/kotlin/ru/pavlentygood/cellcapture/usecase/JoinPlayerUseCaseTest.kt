@@ -9,6 +9,8 @@ import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.*
+import ru.pavlentygood.cellcapture.usecase.port.GetParty
+import ru.pavlentygood.cellcapture.usecase.port.SaveParty
 
 class JoinPlayerUseCaseTest {
 

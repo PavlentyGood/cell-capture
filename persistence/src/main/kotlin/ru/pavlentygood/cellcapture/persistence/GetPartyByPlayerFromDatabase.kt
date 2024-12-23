@@ -2,7 +2,7 @@ package ru.pavlentygood.cellcapture.persistence
 
 import arrow.core.getOrElse
 import ru.pavlentygood.cellcapture.domain.*
-import ru.pavlentygood.cellcapture.usecase.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.usecase.port.GetPartyByPlayer
 
 class GetPartyByPlayerFromDatabase(
     private val parties: Map<PartyId, Party>,

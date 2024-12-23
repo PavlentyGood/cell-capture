@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PlayerId
+import ru.pavlentygood.cellcapture.usecase.port.GetPartyByPlayer
 
 class StartPartyUseCase(
     private val getPartyByPlayer: GetPartyByPlayer

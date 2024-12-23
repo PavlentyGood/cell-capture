@@ -5,6 +5,8 @@ import arrow.core.left
 import ru.pavlentygood.cellcapture.domain.DicePair
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PlayerId
+import ru.pavlentygood.cellcapture.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.usecase.port.SaveParty
 
 class RollUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,
