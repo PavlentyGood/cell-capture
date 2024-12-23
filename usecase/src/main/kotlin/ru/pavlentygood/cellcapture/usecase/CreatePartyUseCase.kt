@@ -2,7 +2,7 @@ package ru.pavlentygood.cellcapture.usecase
 
 import ru.pavlentygood.cellcapture.domain.*
 
-class CreateParty(
+class CreatePartyUseCase(
     private val partyFactory: PartyFactory,
     private val saveParty: SaveParty
 ) {

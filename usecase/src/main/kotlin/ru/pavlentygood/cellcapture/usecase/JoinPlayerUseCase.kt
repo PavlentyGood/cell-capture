@@ -7,7 +7,7 @@ import ru.pavlentygood.cellcapture.domain.PartyId
 import ru.pavlentygood.cellcapture.domain.PlayerId
 import ru.pavlentygood.cellcapture.domain.PlayerName
 
-class JoinPlayer(
+class JoinPlayerUseCase(
     private val getParty: GetParty,
     private val saveParty: SaveParty,
     private val generatePlayerId: GeneratePlayerId

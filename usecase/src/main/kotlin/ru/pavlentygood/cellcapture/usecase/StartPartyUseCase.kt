@@ -5,7 +5,7 @@ import arrow.core.left
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PlayerId
 
-class StartParty(
+class StartPartyUseCase(
     private val getPartyByPlayer: GetPartyByPlayer
 ) {
     operator fun invoke(playerId: PlayerId): Either<Error, Unit> =

@@ -17,22 +17,22 @@ import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.domain.PlayerId
 import ru.pavlentygood.cellcapture.domain.dicePair
 import ru.pavlentygood.cellcapture.domain.playerId
-import ru.pavlentygood.cellcapture.usecase.Roll
+import ru.pavlentygood.cellcapture.usecase.RollUseCase
 
 @WebMvcTest
-@ContextConfiguration(classes = [RollEndpointTest.Config::class, RollEndpoint::class])
-internal class RollEndpointTest {
+@ContextConfiguration(classes = [RollUseCaseEndpointTest.Config::class, RollEndpoint::class])
+internal class RollUseCaseEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var roll: Roll
+    lateinit var roll: RollUseCase
 
     @Test
     fun `roll - not found`() {
         val playerId = playerId()
 
-        every { roll(playerId) } returns Roll.PlayerNotFound.left()
+        every { roll(playerId) } returns RollUseCase.PlayerNotFound.left()
 
         post(playerId).andExpect { status { isNotFound() } }
     }
@@ -40,8 +40,8 @@ internal class RollEndpointTest {
     @Test
     fun `roll - use case errors`() {
         listOf(
-            row(Roll.PlayerNotCurrent),
-            row(Roll.DicesAlreadyRolled)
+            row(RollUseCase.PlayerNotCurrent),
+            row(RollUseCase.DicesAlreadyRolled)
         ).forAll { (useCaseError) ->
             val playerId = playerId()
 
@@ -75,6 +75,6 @@ internal class RollEndpointTest {
     @Configuration
     class Config {
         @Bean
-        fun roll() = mockk<Roll>()
+        fun roll() = mockk<RollUseCase>()
     }
 }

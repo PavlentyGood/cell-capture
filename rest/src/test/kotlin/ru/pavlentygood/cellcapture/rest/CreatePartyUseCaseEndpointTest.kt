@@ -16,17 +16,17 @@ import ru.pavlentygood.cellcapture.domain.PlayerId
 import ru.pavlentygood.cellcapture.domain.partyId
 import ru.pavlentygood.cellcapture.domain.playerName
 import ru.pavlentygood.cellcapture.domain.randomInt
-import ru.pavlentygood.cellcapture.usecase.CreateParty
+import ru.pavlentygood.cellcapture.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.usecase.CreatePartyResult
 
 @WebMvcTest
-@ContextConfiguration(classes = [CreatePartyEndpointTest.Config::class, CreatePartyEndpoint::class])
-class CreatePartyEndpointTest {
+@ContextConfiguration(classes = [CreatePartyUseCaseEndpointTest.Config::class, CreatePartyEndpoint::class])
+class CreatePartyUseCaseEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var createParty: CreateParty
+    lateinit var createParty: CreatePartyUseCase
 
     @Test
     fun `create party`() {
@@ -66,6 +66,6 @@ class CreatePartyEndpointTest {
     @Configuration
     class Config {
         @Bean
-        fun createParty() = mockk<CreateParty>()
+        fun createParty() = mockk<CreatePartyUseCase>()
     }
 }

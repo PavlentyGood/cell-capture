@@ -10,7 +10,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.*
 
-class JoinPlayerTest {
+class JoinPlayerUseCaseTest {
 
     private val partyId = partyId()
     private val playerName = playerName()
@@ -30,7 +30,7 @@ class JoinPlayerTest {
         val saveParty = mockk<SaveParty>()
         justRun { saveParty(party) }
 
-        val joinPlayer = JoinPlayer(getParty, saveParty, generatePlayerId)
+        val joinPlayer = JoinPlayerUseCase(getParty, saveParty, generatePlayerId)
 
         joinPlayer(partyId, playerName) shouldBeRight playerId
     }
@@ -42,7 +42,7 @@ class JoinPlayerTest {
 
         val saveParty = mockk<SaveParty>()
 
-        val joinPlayer = JoinPlayer(getParty, saveParty, generatePlayerId)
+        val joinPlayer = JoinPlayerUseCase(getParty, saveParty, generatePlayerId)
 
         joinPlayer(partyId, playerName) shouldBeLeft PartyNotFoundUseCaseError
     }
@@ -57,7 +57,7 @@ class JoinPlayerTest {
 
         val saveParty = mockk<SaveParty>()
 
-        val joinPlayer = JoinPlayer(getParty, saveParty, generatePlayerId)
+        val joinPlayer = JoinPlayerUseCase(getParty, saveParty, generatePlayerId)
 
         joinPlayer(partyId, playerName) shouldBeLeft PlayerCountLimitUseCaseError
     }

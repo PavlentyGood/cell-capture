@@ -16,7 +16,7 @@ import ru.pavlentygood.cellcapture.usecase.*
 class Config {
 
     @Bean
-    fun createParty() = CreateParty(partyFactory(), saveParty())
+    fun createParty() = CreatePartyUseCase(partyFactory(), saveParty())
 
     @Bean
     fun partyFactory() = PartyFactory(generatePlayerId())
@@ -28,7 +28,7 @@ class Config {
     fun saveParty() = SavePartyToDatabase()
 
     @Bean
-    fun joinPlayer() = JoinPlayer(getParty(), saveParty(), generatePlayerId())
+    fun joinPlayer() = JoinPlayerUseCase(getParty(), saveParty(), generatePlayerId())
 
     @Bean
     fun getParty() = GetPartyFromDatabase(saveParty().parties)
@@ -37,14 +37,14 @@ class Config {
     fun generatePlayerId() = GeneratePlayerIdBySequence()
 
     @Bean
-    fun startParty() = StartParty(getPartyByPlayer())
+    fun startParty() = StartPartyUseCase(getPartyByPlayer())
 
     @Bean
     fun getPartyByPlayer() = GetPartyByPlayerFromDatabase(saveParty().parties, restoreParty())
 
     @Bean
-    fun captureCells() = CaptureCells(getPartyByPlayer(), saveParty())
+    fun captureCells() = CaptureCellsUseCase(getPartyByPlayer(), saveParty())
 
     @Bean
-    fun roll() = Roll(getPartyByPlayer(), saveParty())
+    fun roll() = RollUseCase(getPartyByPlayer(), saveParty())
 }

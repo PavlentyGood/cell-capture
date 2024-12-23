@@ -12,7 +12,7 @@ import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.area
 import ru.pavlentygood.cellcapture.domain.playerId
 
-class CaptureCellsTest {
+class CaptureCellsUseCaseTest {
 
     @Test
     fun `capture cells`() {
@@ -28,7 +28,7 @@ class CaptureCellsTest {
         val saveParty = mockk<SaveParty>()
         justRun { saveParty(party) }
 
-        val captureCells = CaptureCells(getPartyByPlayer, saveParty)
+        val captureCells = CaptureCellsUseCase(getPartyByPlayer, saveParty)
 
         captureCells(playerId, area) shouldBeRight Unit
     }
@@ -42,18 +42,18 @@ class CaptureCellsTest {
 
         val saveParty = mockk<SaveParty>()
 
-        val captureCells = CaptureCells(getPartyByPlayer, saveParty)
+        val captureCells = CaptureCellsUseCase(getPartyByPlayer, saveParty)
 
-        captureCells(playerId, area()) shouldBeLeft CaptureCells.PlayerNotFound
+        captureCells(playerId, area()) shouldBeLeft CaptureCellsUseCase.PlayerNotFound
     }
 
     @Test
     fun `capture cells - domain errors`() {
         mapOf(
-            Party.PlayerNotCurrent to CaptureCells.PlayerNotCurrent,
-            Party.DicesNotRolled to CaptureCells.DicesNotRolled,
-            Party.MismatchedArea to CaptureCells.MismatchedArea,
-            Party.InaccessibleArea to CaptureCells.InaccessibleArea
+            Party.PlayerNotCurrent to CaptureCellsUseCase.PlayerNotCurrent,
+            Party.DicesNotRolled to CaptureCellsUseCase.DicesNotRolled,
+            Party.MismatchedArea to CaptureCellsUseCase.MismatchedArea,
+            Party.InaccessibleArea to CaptureCellsUseCase.InaccessibleArea
         ).forEach { (domainError, useCaseError) ->
             val playerId = playerId()
             val area = area()
@@ -66,7 +66,7 @@ class CaptureCellsTest {
 
             val saveParty = mockk<SaveParty>()
 
-            val captureCells = CaptureCells(getPartyByPlayer, saveParty)
+            val captureCells = CaptureCellsUseCase(getPartyByPlayer, saveParty)
 
             captureCells(playerId, area) shouldBeLeft useCaseError
         }

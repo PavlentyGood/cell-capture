@@ -12,7 +12,7 @@ import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.dicePair
 import ru.pavlentygood.cellcapture.domain.playerId
 
-class RollTest {
+class RollUseCaseTest {
 
     @Test
     fun `roll - player not found`() = with { roll, getPartyByPlayer, _ ->
@@ -20,14 +20,14 @@ class RollTest {
 
         every { getPartyByPlayer(playerId) } returns null
 
-        roll(playerId) shouldBeLeft Roll.PlayerNotFound
+        roll(playerId) shouldBeLeft RollUseCase.PlayerNotFound
     }
 
     @Test
     fun `roll - domain errors`() {
         listOf(
-            row(Party.PlayerNotCurrent, Roll.PlayerNotCurrent),
-            row(Party.DicesAlreadyRolled, Roll.DicesAlreadyRolled)
+            row(Party.PlayerNotCurrent, RollUseCase.PlayerNotCurrent),
+            row(Party.DicesAlreadyRolled, RollUseCase.DicesAlreadyRolled)
         ).forAll { (domainError, useCaseError) ->
             with { roll, getPartyByPlayer, _ ->
                 val playerId = playerId()
@@ -54,10 +54,10 @@ class RollTest {
         roll(playerId) shouldBeRight dicePair
     }
 
-    private fun with(test: (Roll, GetPartyByPlayer, SaveParty) -> Unit) {
+    private fun with(test: (RollUseCase, GetPartyByPlayer, SaveParty) -> Unit) {
         val getPartyByPlayer = mockk<GetPartyByPlayer>()
         val saveParty = mockk<SaveParty>()
-        val roll = Roll(getPartyByPlayer, saveParty)
+        val roll = RollUseCase(getPartyByPlayer, saveParty)
         test(roll, getPartyByPlayer, saveParty)
     }
 }

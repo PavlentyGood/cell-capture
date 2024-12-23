@@ -9,7 +9,7 @@ import ru.pavlentygood.cellcapture.domain.PartyFactory
 import ru.pavlentygood.cellcapture.domain.party
 import ru.pavlentygood.cellcapture.domain.playerName
 
-class CreatePartyTest {
+class CreatePartyUseCaseTest {
 
     @Test
     fun `create party`() {
@@ -22,7 +22,7 @@ class CreatePartyTest {
         val saveParty = mockk<SaveParty>()
         justRun { saveParty(party) }
 
-        val createParty = CreateParty(partyFactory, saveParty)
+        val createParty = CreatePartyUseCase(partyFactory, saveParty)
 
         createParty(ownerName) shouldBe CreatePartyResult(party.id, party.ownerId)
     }

@@ -15,16 +15,16 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.domain.area
 import ru.pavlentygood.cellcapture.domain.playerId
-import ru.pavlentygood.cellcapture.usecase.CaptureCells
+import ru.pavlentygood.cellcapture.usecase.CaptureCellsUseCase
 
 @WebMvcTest
-@ContextConfiguration(classes = [CaptureCellsEndpointTest.Config::class, CaptureCellsEndpoint::class])
-class CaptureCellsEndpointTest {
+@ContextConfiguration(classes = [CaptureCellsUseCaseEndpointTest.Config::class, CaptureCellsEndpoint::class])
+class CaptureCellsUseCaseEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var captureCells: CaptureCells
+    lateinit var captureCells: CaptureCellsUseCase
 
     private val area = area()
 
@@ -41,7 +41,7 @@ class CaptureCellsEndpointTest {
     fun `capture cells - player not found`() {
         val playerId = playerId()
 
-        every { captureCells(playerId, area) } returns CaptureCells.PlayerNotFound.left()
+        every { captureCells(playerId, area) } returns CaptureCellsUseCase.PlayerNotFound.left()
 
         post(playerId.toInt()).andExpect { status { isNotFound() } }
     }
@@ -50,7 +50,7 @@ class CaptureCellsEndpointTest {
     fun `capture cells - player not current`() {
         val playerId = playerId()
 
-        every { captureCells(playerId, area) } returns CaptureCells.PlayerNotCurrent.left()
+        every { captureCells(playerId, area) } returns CaptureCellsUseCase.PlayerNotCurrent.left()
 
         post(playerId.toInt()).andExpect { status { isUnprocessableEntity() } }
     }
@@ -71,6 +71,6 @@ class CaptureCellsEndpointTest {
     @Configuration
     class Config {
         @Bean
-        fun captureCells() = mockk<CaptureCells>()
+        fun captureCells() = mockk<CaptureCellsUseCase>()
     }
 }

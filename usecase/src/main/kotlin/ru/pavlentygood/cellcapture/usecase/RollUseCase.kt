@@ -6,7 +6,7 @@ import ru.pavlentygood.cellcapture.domain.DicePair
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PlayerId
 
-class Roll(
+class RollUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,
     private val saveParty: SaveParty
 ) {

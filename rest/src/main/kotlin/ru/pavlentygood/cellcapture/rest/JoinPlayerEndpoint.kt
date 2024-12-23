@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.domain.PartyId
 import ru.pavlentygood.cellcapture.domain.PlayerName
-import ru.pavlentygood.cellcapture.usecase.JoinPlayer
+import ru.pavlentygood.cellcapture.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.usecase.JoinPlayerError
 import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitUseCaseError
 import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
@@ -15,7 +15,7 @@ import java.util.*
 
 @RestController
 class JoinPlayerEndpoint(
-    private val joinPlayer: JoinPlayer
+    private val joinPlayer: JoinPlayerUseCase
 ) {
     @PostMapping(API_V1_PARTIES_PLAYERS)
     fun invoke(

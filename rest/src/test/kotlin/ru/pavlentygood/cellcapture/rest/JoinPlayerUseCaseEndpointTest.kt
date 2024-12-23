@@ -17,19 +17,19 @@ import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.domain.partyId
 import ru.pavlentygood.cellcapture.domain.playerId
 import ru.pavlentygood.cellcapture.domain.playerName
-import ru.pavlentygood.cellcapture.usecase.JoinPlayer
+import ru.pavlentygood.cellcapture.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
 import ru.pavlentygood.cellcapture.usecase.PlayerCountLimitUseCaseError
 import java.util.*
 
 @WebMvcTest
-@ContextConfiguration(classes = [JoinPlayerEndpointTest.Config::class, JoinPlayerEndpoint::class])
-class JoinPlayerEndpointTest {
+@ContextConfiguration(classes = [JoinPlayerUseCaseEndpointTest.Config::class, JoinPlayerEndpoint::class])
+class JoinPlayerUseCaseEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var joinPlayer: JoinPlayer
+    lateinit var joinPlayer: JoinPlayerUseCase
 
     private val playerName = playerName()
     private val rawPlayerName = playerName.toStringValue()
@@ -112,6 +112,6 @@ class JoinPlayerEndpointTest {
     @Configuration
     class Config {
         @Bean
-        fun joinPlayer() = mockk<JoinPlayer>()
+        fun joinPlayer() = mockk<JoinPlayerUseCase>()
     }
 }

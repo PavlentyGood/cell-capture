@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.domain.PlayerId
-import ru.pavlentygood.cellcapture.usecase.StartParty
+import ru.pavlentygood.cellcapture.usecase.StartPartyUseCase
 
 @RestController
 class StartPartyEndpoint(
-    private val startParty: StartParty
+    private val startParty: StartPartyUseCase
 ) {
     @PostMapping(API_V1_PARTIES_START)
     fun invoke(@RequestParam playerId: Int): ResponseEntity<Unit> =
@@ -21,11 +21,11 @@ class StartPartyEndpoint(
             )
 }
 
-fun StartParty.Error.toRestError(): ResponseEntity<Unit> =
+fun StartPartyUseCase.Error.toRestError(): ResponseEntity<Unit> =
     when (this) {
-        StartParty.PlayerNotFound -> ResponseEntity.notFound().build()
-        StartParty.PlayerNotOwner -> ResponseEntity.status(HttpStatus.FORBIDDEN).build()
-        StartParty.TooFewPlayers,
-        StartParty.AlreadyCompleted,
-        StartParty.AlreadyStarted -> ResponseEntity.unprocessableEntity().build()
+        StartPartyUseCase.PlayerNotFound -> ResponseEntity.notFound().build()
+        StartPartyUseCase.PlayerNotOwner -> ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+        StartPartyUseCase.TooFewPlayers,
+        StartPartyUseCase.AlreadyCompleted,
+        StartPartyUseCase.AlreadyStarted -> ResponseEntity.unprocessableEntity().build()
     }

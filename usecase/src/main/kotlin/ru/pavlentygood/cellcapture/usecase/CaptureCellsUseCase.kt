@@ -6,7 +6,7 @@ import ru.pavlentygood.cellcapture.domain.Area
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.PlayerId
 
-class CaptureCells(
+class CaptureCellsUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,
     private val saveParty: SaveParty
 ) {

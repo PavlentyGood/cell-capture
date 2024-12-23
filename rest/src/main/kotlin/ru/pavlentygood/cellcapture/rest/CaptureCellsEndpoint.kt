@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.domain.Area
 import ru.pavlentygood.cellcapture.domain.PlayerId
 import ru.pavlentygood.cellcapture.domain.Point
-import ru.pavlentygood.cellcapture.usecase.CaptureCells
+import ru.pavlentygood.cellcapture.usecase.CaptureCellsUseCase
 
 @RestController
 class CaptureCellsEndpoint(
-    private val captureCells: CaptureCells
+    private val captureCells: CaptureCellsUseCase
 ) {
     @PostMapping(API_V1_PLAYERS_CELLS)
     fun invoke(
@@ -51,12 +51,12 @@ class CaptureCellsEndpoint(
     private fun Request.Point.toDomain() =
         Point.from(x = x, y = y)
 
-    fun CaptureCells.Error.toRestError(): ResponseEntity<Unit> =
+    fun CaptureCellsUseCase.Error.toRestError(): ResponseEntity<Unit> =
         when (this) {
-            CaptureCells.PlayerNotFound -> ResponseEntity.notFound().build()
-            CaptureCells.PlayerNotCurrent,
-            CaptureCells.DicesNotRolled,
-            CaptureCells.InaccessibleArea,
-            CaptureCells.MismatchedArea -> ResponseEntity.unprocessableEntity().build()
+            CaptureCellsUseCase.PlayerNotFound -> ResponseEntity.notFound().build()
+            CaptureCellsUseCase.PlayerNotCurrent,
+            CaptureCellsUseCase.DicesNotRolled,
+            CaptureCellsUseCase.InaccessibleArea,
+            CaptureCellsUseCase.MismatchedArea -> ResponseEntity.unprocessableEntity().build()
         }
 }

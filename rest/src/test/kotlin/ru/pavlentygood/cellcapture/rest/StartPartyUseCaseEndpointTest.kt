@@ -14,16 +14,16 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.domain.PlayerId
 import ru.pavlentygood.cellcapture.domain.playerId
-import ru.pavlentygood.cellcapture.usecase.StartParty
+import ru.pavlentygood.cellcapture.usecase.StartPartyUseCase
 
 @WebMvcTest
-@ContextConfiguration(classes = [StartPartyEndpointTest.Config::class, StartPartyEndpoint::class])
-class StartPartyEndpointTest {
+@ContextConfiguration(classes = [StartPartyUseCaseEndpointTest.Config::class, StartPartyEndpoint::class])
+class StartPartyUseCaseEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var startParty: StartParty
+    lateinit var startParty: StartPartyUseCase
 
     @Test
     fun `start party`() {
@@ -40,7 +40,7 @@ class StartPartyEndpointTest {
     fun `start party - any client error`() {
         val playerId = playerId()
 
-        every { startParty(playerId) } returns StartParty.PlayerNotFound.left()
+        every { startParty(playerId) } returns StartPartyUseCase.PlayerNotFound.left()
 
         post(playerId).andExpect {
             status { isNotFound() }
@@ -55,6 +55,6 @@ class StartPartyEndpointTest {
     @Configuration
     class Config {
         @Bean
-        fun startParty() = mockk<StartParty>()
+        fun startParty() = mockk<StartPartyUseCase>()
     }
 }

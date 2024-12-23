@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.Party
 import ru.pavlentygood.cellcapture.domain.playerId
 
-class StartPartyTest {
+class StartPartyUseCaseTest {
 
     @Test
     fun `start party`() {
@@ -22,7 +22,7 @@ class StartPartyTest {
         val getPartyByPlayer = mockk<GetPartyByPlayer>()
         every { getPartyByPlayer(playerId) } returns party
 
-        val startParty = StartParty(getPartyByPlayer)
+        val startParty = StartPartyUseCase(getPartyByPlayer)
 
         startParty(playerId) shouldBeRight Unit
     }
@@ -34,17 +34,17 @@ class StartPartyTest {
         val getPartyByPlayer = mockk<GetPartyByPlayer>()
         every { getPartyByPlayer(playerId) } returns null
 
-        val startParty = StartParty(getPartyByPlayer)
+        val startParty = StartPartyUseCase(getPartyByPlayer)
 
-        startParty(playerId) shouldBeLeft StartParty.PlayerNotFound
+        startParty(playerId) shouldBeLeft StartPartyUseCase.PlayerNotFound
     }
 
     @Test
     fun `start party - domain errors`() {
         mapOf(
-            Party.PlayerNotOwner to StartParty.PlayerNotOwner,
-            Party.AlreadyStarted to StartParty.AlreadyStarted,
-            Party.AlreadyCompleted to StartParty.AlreadyCompleted
+            Party.PlayerNotOwner to StartPartyUseCase.PlayerNotOwner,
+            Party.AlreadyStarted to StartPartyUseCase.AlreadyStarted,
+            Party.AlreadyCompleted to StartPartyUseCase.AlreadyCompleted
         ).forEach { (domainError, useCaseError) ->
             val playerId = playerId()
 
@@ -54,7 +54,7 @@ class StartPartyTest {
             val getPartyByPlayer = mockk<GetPartyByPlayer>()
             every { getPartyByPlayer(playerId) } returns party
 
-            val startParty = StartParty(getPartyByPlayer)
+            val startParty = StartPartyUseCase(getPartyByPlayer)
 
             startParty(playerId) shouldBeLeft useCaseError
         }

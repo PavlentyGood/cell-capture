@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.domain.DicePair
 import ru.pavlentygood.cellcapture.domain.PlayerId
-import ru.pavlentygood.cellcapture.usecase.Roll
+import ru.pavlentygood.cellcapture.usecase.RollUseCase
 
 @RestController
 class RollEndpoint(
-    private val roll: Roll
+    private val roll: RollUseCase
 ) {
     @PostMapping(API_V1_PLAYERS_DICES)
     fun invoke(@PathVariable playerId: Int): Any? =
@@ -35,10 +35,10 @@ class RollEndpoint(
     private fun DicePair.toResponse() =
         DicePairResponse(first.value, second.value)
 
-    private fun Roll.Error.toError(): ResponseEntity<Unit> =
+    private fun RollUseCase.Error.toError(): ResponseEntity<Unit> =
         when (this) {
-            Roll.PlayerNotCurrent,
-            Roll.DicesAlreadyRolled -> ResponseEntity.unprocessableEntity().build()
-            Roll.PlayerNotFound -> ResponseEntity.notFound().build()
+            RollUseCase.PlayerNotCurrent,
+            RollUseCase.DicesAlreadyRolled -> ResponseEntity.unprocessableEntity().build()
+            RollUseCase.PlayerNotFound -> ResponseEntity.notFound().build()
         }
 }
