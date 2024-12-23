@@ -1,11 +1,9 @@
 package ru.pavlentygood.cellcapture.persistence
 
-import io.kotest.assertions.arrow.core.shouldBeLeft
-import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.domain.party
 import ru.pavlentygood.cellcapture.domain.partyId
-import ru.pavlentygood.cellcapture.usecase.PartyNotFoundUseCaseError
 
 class GetPartyFromDatabaseTest {
 
@@ -14,11 +12,11 @@ class GetPartyFromDatabaseTest {
 
     @Test
     fun `get party`() {
-        getParty(party.id) shouldBeRight party
+        getParty(party.id) shouldBe party
     }
 
     @Test
     fun `get party - not found`() {
-        getParty(partyId()) shouldBeLeft PartyNotFoundUseCaseError
+        getParty(partyId()) shouldBe null
     }
 }

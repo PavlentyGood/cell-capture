@@ -1,7 +1,7 @@
 package ru.pavlentygood.cellcapture.usecase
 
 import arrow.core.Either
-import arrow.core.flatMap
+import arrow.core.left
 import ru.pavlentygood.cellcapture.domain.GeneratePlayerId
 import ru.pavlentygood.cellcapture.domain.PartyId
 import ru.pavlentygood.cellcapture.domain.PlayerId
@@ -14,14 +14,14 @@ class JoinPlayerUseCase(
 ) {
     operator fun invoke(partyId: PartyId, name: PlayerName): Either<JoinPlayerError, PlayerId> =
         getParty(partyId)
-            .flatMap { party ->
+            ?.let { party ->
                 party.joinPlayer(name, generatePlayerId)
                     .mapLeft { PlayerCountLimitUseCaseError }
                     .map { playerId ->
                         saveParty(party)
                         playerId
                     }
-            }
+            } ?: PartyNotFoundUseCaseError.left()
 }
 
 sealed class JoinPlayerError

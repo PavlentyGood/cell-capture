@@ -25,7 +25,7 @@ class JoinPlayerUseCaseTest {
         every { party.joinPlayer(playerName, generatePlayerId) } returns playerId.right()
 
         val getParty = mockk<GetParty>()
-        every { getParty(partyId) } returns party.right()
+        every { getParty(partyId) } returns party
 
         val saveParty = mockk<SaveParty>()
         justRun { saveParty(party) }
@@ -38,7 +38,7 @@ class JoinPlayerUseCaseTest {
     @Test
     fun `join player - party not found`() {
         val getParty = mockk<GetParty>()
-        every { getParty(partyId) } returns PartyNotFoundUseCaseError.left()
+        every { getParty(partyId) } returns null
 
         val saveParty = mockk<SaveParty>()
 
@@ -53,7 +53,7 @@ class JoinPlayerUseCaseTest {
         every { party.joinPlayer(playerName, generatePlayerId) } returns Party.PlayerCountLimit.left()
 
         val getParty = mockk<GetParty>()
-        every { getParty(partyId) } returns party.right()
+        every { getParty(partyId) } returns party
 
         val saveParty = mockk<SaveParty>()
 
