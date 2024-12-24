@@ -1,15 +1,17 @@
+@file:Suppress("HasPlatformType")
+
 package ru.pavlentygood.cellcapture.app.fitness
 
 import com.tngtech.archunit.core.importer.ImportOption
 import com.tngtech.archunit.core.importer.Location
 import com.tngtech.archunit.junit.AnalyzeClasses
 import com.tngtech.archunit.junit.ArchTest
-import com.tngtech.archunit.lang.syntax.ArchRuleDefinition
-import com.tngtech.archunit.library.Architectures
-import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses
+import com.tngtech.archunit.library.Architectures.onionArchitecture
+import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
 import org.springframework.web.bind.annotation.RestController
 
-@Suppress("HasPlatformType")
 @AnalyzeClasses(
     packages = ["ru.pavlentygood.cellcapture"],
     importOptions = [Fitness.DoNotIncludeAppPackage::class]
@@ -21,25 +23,33 @@ class Fitness {
             !location.contains("ru/pavlentygood/cellcapture/app/")
     }
 
+    /**
+     * Остерегаемся структур с циклическими зависимостями
+     */
     @ArchTest
     val noCycleDependencies =
-        SlicesRuleDefinition.slices()
+        slices()
             .matching("ru.pavlentygood.cellcapture.(**)")
             .should().beFreeOfCycles()
 
+    /**
+     * Базовый паттерн для Чистой архитектуры
+     */
     @ArchTest
     val onionArchitecture =
-        Architectures
-            .onionArchitecture()
+        onionArchitecture()
             .domainModels("..domain..")
             .domainServices("..domain..")
             .applicationServices("..usecase..")
             .adapter("rest", "..rest..")
             .adapter("persistence", "..persistence..")
 
+    /**
+     * Доменный слой имеет минимальное количество зависимостей
+     */
     @ArchTest
     val domainDependencies =
-        ArchRuleDefinition.classes()
+        classes()
             .that().resideInAnyPackage("..domain..")
             .should().onlyDependOnClassesThat()
             .resideInAnyPackage(
@@ -50,9 +60,12 @@ class Fitness {
                 "org.jetbrains.annotations.."
             )
 
+    /**
+     * Юскейсы имеют минимальное количество зависимостей
+     */
     @ArchTest
     val useCaseDependencies =
-        ArchRuleDefinition.classes()
+        classes()
             .that().resideInAnyPackage("..usecase..")
             .should().onlyDependOnClassesThat()
             .resideInAnyPackage(
@@ -64,16 +77,22 @@ class Fitness {
                 "org.jetbrains.annotations.."
             )
 
+    /**
+     * Классы эндпоинтов имеют определенный постфикс
+     */
     @ArchTest
     val endpointNaming =
-        ArchRuleDefinition.classes()
+        classes()
             .that().resideInAPackage("..rest..")
             .and().areAnnotatedWith(RestController::class.java)
             .should().haveSimpleNameEndingWith("Endpoint")
 
+    /**
+     * Юскейсы не вызывают другие юскейсы
+     */
     @ArchTest
     val useCasesShouldNotBeAccessedFromUseCases =
-        ArchRuleDefinition.noClasses()
+        noClasses()
             .that().haveSimpleNameEndingWith("UseCase")
             .should().dependOnClassesThat().haveSimpleNameEndingWith("UseCase")
 }
