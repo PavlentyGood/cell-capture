@@ -70,4 +70,10 @@ class Fitness {
             .that().resideInAPackage("..rest..")
             .and().areAnnotatedWith(RestController::class.java)
             .should().haveSimpleNameEndingWith("Endpoint")
+
+    @ArchTest
+    val useCasesShouldNotBeAccessedFromUseCases =
+        ArchRuleDefinition.noClasses()
+            .that().haveSimpleNameEndingWith("UseCase")
+            .should().dependOnClassesThat().haveSimpleNameEndingWith("UseCase")
 }
