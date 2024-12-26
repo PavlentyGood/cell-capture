@@ -20,10 +20,9 @@ class PartyTest {
 
         val playerQueue = mockk<PlayerQueue>()
         justRun {
-            playerQueue.add(match {
-                it.id == playerId &&
-                        it.name == name
-            })
+            playerQueue.add(
+                match { it.id == playerId && it.name == name }
+            )
         }
         every { playerQueue.players } returns listOf(mockk())
 

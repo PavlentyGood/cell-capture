@@ -19,6 +19,7 @@ class ComponentTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
+
     @Autowired
     lateinit var getPartyFromDatabase: GetPartyFromDatabase
 
@@ -79,7 +80,7 @@ class ComponentTest {
     private fun captureCells(
         playerId: Int,
         dicePair: RollEndpoint.DicePairResponse,
-        startCell: Cell
+        startCell: Cell,
     ) {
         val x1 = startCell.x + 1
         val x2 = x1 + dicePair.first - 1
@@ -136,6 +137,6 @@ class ComponentTest {
     data class Cell(
         val playerId: PlayerId,
         val x: Int,
-        val y: Int
+        val y: Int,
     )
 }

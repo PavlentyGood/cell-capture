@@ -16,8 +16,8 @@ import ru.pavlentygood.cellcapture.domain.PlayerId
 import ru.pavlentygood.cellcapture.domain.partyId
 import ru.pavlentygood.cellcapture.domain.playerName
 import ru.pavlentygood.cellcapture.domain.randomInt
-import ru.pavlentygood.cellcapture.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.usecase.CreatePartyResult
+import ru.pavlentygood.cellcapture.usecase.CreatePartyUseCase
 
 @WebMvcTest
 @ContextConfiguration(classes = [CreatePartyUseCaseEndpointTest.Config::class, CreatePartyEndpoint::class])

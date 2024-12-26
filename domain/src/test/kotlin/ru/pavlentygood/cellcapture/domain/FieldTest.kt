@@ -15,7 +15,7 @@ class FieldTest {
         val playerIds = generateSequence { playerId(until = 1000000) }
             .take(maxCellCount)
             .toList()
-        
+
         field.appointStartCells(playerIds)
 
         field.getCells().capturedCellCount() shouldBe maxCellCount
