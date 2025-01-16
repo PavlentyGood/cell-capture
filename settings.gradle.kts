@@ -5,3 +5,5 @@ include("rest")
 include("usecase")
 include("domain")
 include("persistence")
+
+include("lobby:domain")
