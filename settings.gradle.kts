@@ -8,3 +8,4 @@ include("persistence")
 
 include("lobby:domain")
 include("lobby:usecase")
+include("lobby:rest")
