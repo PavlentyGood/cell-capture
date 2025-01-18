@@ -8,37 +8,37 @@ class AreaTest {
 
     @Test
     fun `create area - sort points`() {
-        val p1 = ru.pavlentygood.cellcapture.party.domain.point(3, 5)
-        val p2 = ru.pavlentygood.cellcapture.party.domain.point(7, 5)
-        val p3 = ru.pavlentygood.cellcapture.party.domain.point(7, 9)
-        val p4 = ru.pavlentygood.cellcapture.party.domain.point(3, 9)
+        val p1 = point(3, 5)
+        val p2 = point(7, 5)
+        val p3 = point(7, 9)
+        val p4 = point(3, 9)
 
-        ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(
+        Area.from(
             p1,
             p3
-        ) shouldBe ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(p3, p1)
-        ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(
+        ) shouldBe Area.from(p3, p1)
+        Area.from(
             p2,
             p4
-        ) shouldBe ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(p4, p2)
-        ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(
+        ) shouldBe Area.from(p4, p2)
+        Area.from(
             p2,
             p4
-        ) shouldBe ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(p1, p3)
+        ) shouldBe Area.from(p1, p3)
     }
 
     @Test
     fun `x distance`() {
-        val x = ru.pavlentygood.cellcapture.party.domain.randomInt()
-        val distance = ru.pavlentygood.cellcapture.party.domain.randomInt(from = -1000)
-        val area = ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(
-            first = ru.pavlentygood.cellcapture.party.domain.Point(
+        val x = randomInt()
+        val distance = randomInt(from = -1000)
+        val area = Area.from(
+            first = Point(
                 x = x + distance,
-                y = ru.pavlentygood.cellcapture.party.domain.randomInt()
+                y = randomInt()
             ),
-            second = ru.pavlentygood.cellcapture.party.domain.Point(
+            second = Point(
                 x = x,
-                y = ru.pavlentygood.cellcapture.party.domain.randomInt()
+                y = randomInt()
             )
         )
 
@@ -47,15 +47,15 @@ class AreaTest {
 
     @Test
     fun `y distance`() {
-        val y = ru.pavlentygood.cellcapture.party.domain.randomInt()
-        val distance = ru.pavlentygood.cellcapture.party.domain.randomInt(from = -1000)
-        val area = ru.pavlentygood.cellcapture.party.domain.Area.Companion.from(
-            first = ru.pavlentygood.cellcapture.party.domain.Point(
-                x = ru.pavlentygood.cellcapture.party.domain.randomInt(),
+        val y = randomInt()
+        val distance = randomInt(from = -1000)
+        val area = Area.from(
+            first = Point(
+                x = randomInt(),
                 y = y
             ),
-            second = ru.pavlentygood.cellcapture.party.domain.Point(
-                x = ru.pavlentygood.cellcapture.party.domain.randomInt(),
+            second = Point(
+                x = randomInt(),
                 y = y + distance
             )
         )

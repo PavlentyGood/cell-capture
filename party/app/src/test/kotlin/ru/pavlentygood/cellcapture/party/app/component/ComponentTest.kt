@@ -9,7 +9,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.party.domain.*
-import ru.pavlentygood.cellcapture.party.rest.*
 import ru.pavlentygood.cellcapture.party.persistence.GetPartyFromDatabase
 import ru.pavlentygood.cellcapture.party.rest.*
 import java.util.*

@@ -18,13 +18,13 @@ class Field(
 
     private tailrec fun generateStartCells(
         playerIds: List<PlayerId>,
-        cells: List<ru.pavlentygood.cellcapture.party.domain.Cell> = listOf()
-    ): List<ru.pavlentygood.cellcapture.party.domain.Cell> =
+        cells: List<Cell> = listOf()
+    ): List<Cell> =
         if (playerIds.isEmpty()) {
             cells
         } else {
             val cell = generateSequence {
-                ru.pavlentygood.cellcapture.party.domain.Cell(
+                Cell(
                     playerId = playerIds.first(),
                     x = Random.nextInt(WIDTH),
                     y = Random.nextInt(HEIGHT)

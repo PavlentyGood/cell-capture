@@ -10,9 +10,9 @@ class FieldTest {
 
     @Test
     fun `appoint start cells`() {
-        val maxCellCount = ru.pavlentygood.cellcapture.party.domain.Field.Companion.WIDTH * ru.pavlentygood.cellcapture.party.domain.Field.Companion.HEIGHT
-        val field = ru.pavlentygood.cellcapture.party.domain.field()
-        val playerIds = generateSequence { ru.pavlentygood.cellcapture.party.domain.playerId(until = 1000000) }
+        val maxCellCount = Field.WIDTH * Field.HEIGHT
+        val field = field()
+        val playerIds = generateSequence { playerId(until = 1000000) }
             .take(maxCellCount)
             .toList()
 
@@ -24,13 +24,13 @@ class FieldTest {
 
     @Test
     fun `capture cells`() {
-        val playerId = ru.pavlentygood.cellcapture.party.domain.playerId()
-        val area = ru.pavlentygood.cellcapture.party.domain.area(distanceToEdges = 1)
+        val playerId = playerId()
+        val area = area(distanceToEdges = 1)
 
-        val cells = ru.pavlentygood.cellcapture.party.domain.cells()
+        val cells = cells()
         cells[area.from.y][area.from.x - 1] = playerId
 
-        val field = ru.pavlentygood.cellcapture.party.domain.field(cells = cells)
+        val field = field(cells = cells)
 
         field.capture(playerId, area) shouldBeRight Unit
 
@@ -44,7 +44,7 @@ class FieldTest {
 
     @Test
     fun `capture - inaccessible area when cell already captured`() {
-        val area = ru.pavlentygood.cellcapture.party.domain.area()
+        val area = area()
 
         checkCaptureWithInaccessibleArea(area, area.from.x, area.from.y)
         checkCaptureWithInaccessibleArea(area, area.from.x, area.to.y)
@@ -52,32 +52,32 @@ class FieldTest {
         checkCaptureWithInaccessibleArea(area, area.to.x, area.to.y)
     }
 
-    private fun checkCaptureWithInaccessibleArea(area: ru.pavlentygood.cellcapture.party.domain.Area, x: Int, y: Int) {
-        val otherPlayerId = ru.pavlentygood.cellcapture.party.domain.playerId()
+    private fun checkCaptureWithInaccessibleArea(area: Area, x: Int, y: Int) {
+        val otherPlayerId = playerId()
 
-        val cells = ru.pavlentygood.cellcapture.party.domain.cells()
+        val cells = cells()
         cells[y][x] = otherPlayerId
 
-        val field = ru.pavlentygood.cellcapture.party.domain.field(cells = cells)
+        val field = field(cells = cells)
 
-        field.capture(ru.pavlentygood.cellcapture.party.domain.playerId(), area) shouldBeLeft ru.pavlentygood.cellcapture.party.domain.Party.InaccessibleArea
+        field.capture(playerId(), area) shouldBeLeft Party.InaccessibleArea
 
         field.getCells().capturedCellCount() shouldBe 1
     }
 
     @Test
     fun `capture - inaccessible area when not touch own cell`() {
-        val playerId = ru.pavlentygood.cellcapture.party.domain.playerId()
-        val area = ru.pavlentygood.cellcapture.party.domain.area(distanceToEdges = 2)
+        val playerId = playerId()
+        val area = area(distanceToEdges = 2)
 
-        val cells = ru.pavlentygood.cellcapture.party.domain.cells()
+        val cells = cells()
         cells[area.from.y][area.from.x - 2] = playerId
         cells[area.from.y - 2][area.from.x] = playerId
         cells[area.to.y][area.to.x + 2] = playerId
         cells[area.to.y + 2][area.to.x] = playerId
 
-        val field = ru.pavlentygood.cellcapture.party.domain.field(cells = cells)
+        val field = field(cells = cells)
 
-        field.capture(playerId, area) shouldBeLeft ru.pavlentygood.cellcapture.party.domain.Party.InaccessibleArea
+        field.capture(playerId, area) shouldBeLeft Party.InaccessibleArea
     }
 }
