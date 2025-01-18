@@ -14,141 +14,17 @@ import org.junit.jupiter.api.Test
 class PartyTest {
 
     @Test
-    fun `join player`() {
-        val playerId = playerId()
-        val name = playerName()
-
-        val playerQueue = mockk<PlayerQueue>()
-        justRun {
-            playerQueue.add(
-                match { it.id == playerId && it.name == name }
-            )
-        }
-        every { playerQueue.players } returns listOf(mockk())
-
-        val party = party(
-            playerLimit = 3,
-            playerQueue = playerQueue
-        )
-
-        val generatePlayerId = { playerId }
-
-        party.joinPlayer(name, generatePlayerId) shouldBeRight playerId
-
-        party.status shouldBe Party.Status.NEW
-    }
-
-    @Test
-    fun `join player - limit`() {
-        val playerId = playerId()
-        val name = playerName()
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns listOf(mockk())
-
-        val party = party(
-            playerLimit = 1,
-            playerQueue = playerQueue
-        )
-
-        val generatePlayerId = { playerId }
-
-        party.joinPlayer(name, generatePlayerId) shouldBeLeft Party.PlayerCountLimit
-
-        party.status shouldBe Party.Status.NEW
-    }
-
-    @Test
-    fun `start party`() {
-        val players = listOf(player(), player())
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns players
-
-        val field = mockk<Field>()
-        justRun { field.appointStartCells(players.map { it.id }) }
-
-        val party = party(
-            playerQueue = playerQueue,
-            field = field
-        )
-
-        party.start(party.ownerId) shouldBeRight Unit
-
-        party.status shouldBe Party.Status.STARTED
-    }
-
-    @Test
-    fun `start party - player not owner`() {
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns listOf(mockk(), mockk())
-
-        val party = party(
-            playerQueue = playerQueue
-        )
-
-        party.start(playerId()) shouldBeLeft Party.PlayerNotOwner
-
-        party.status shouldBe Party.Status.NEW
-    }
-
-    @Test
-    fun `start party - too few players`() {
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns listOf(mockk())
-
-        val party = party(
-            playerQueue = playerQueue
-        )
-
-        party.start(party.ownerId) shouldBeLeft Party.TooFewPlayers
-
-        party.status shouldBe Party.Status.NEW
-    }
-
-    @Test
-    fun `start party - already started`() {
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns listOf(mockk(), mockk())
-
-        val party = party(
-            status = Party.Status.STARTED,
-            playerQueue = playerQueue
-        )
-
-        party.start(party.ownerId) shouldBeLeft Party.AlreadyStarted
-
-        party.status shouldBe Party.Status.STARTED
-    }
-
-    @Test
-    fun `start party - already completed`() {
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns listOf(mockk(), mockk())
-
-        val party = party(
-            status = Party.Status.COMPLETED,
-            playerQueue = playerQueue
-        )
-
-        party.start(party.ownerId) shouldBeLeft Party.AlreadyCompleted
-
-        party.status shouldBe Party.Status.COMPLETED
-    }
-
-    @Test
     fun `roll - player not current`() {
         val playerQueue = mockk<PlayerQueue>()
         every { playerQueue.currentPlayerId } returns playerId()
 
         val party = party(
-            status = Party.Status.STARTED,
             playerQueue = playerQueue
         )
 
         party.roll(playerId()) shouldBeLeft Party.PlayerNotCurrent
 
-        party.status shouldBe Party.Status.STARTED
+        party.completed shouldBe false
     }
 
     @Test
@@ -160,15 +36,14 @@ class PartyTest {
         every { playerQueue.currentPlayerId } returns currentPlayerId
 
         val party = party(
-            status = Party.Status.STARTED,
             dicePair = dicePair,
             playerQueue = playerQueue
         )
 
         party.roll(currentPlayerId) shouldBeLeft Party.DicesAlreadyRolled
 
-        party.status shouldBe Party.Status.STARTED
-        party.dicePair shouldBe party.dicePair
+        party.completed shouldBe false
+        party.dicePair shouldBe dicePair
     }
 
     @Test
@@ -179,14 +54,13 @@ class PartyTest {
         every { playerQueue.currentPlayerId } returns currentPlayerId
 
         val party = party(
-            status = Party.Status.STARTED,
             dicePair = null,
             playerQueue = playerQueue
         )
 
         val rolledDice = party.roll(currentPlayerId).shouldBeRight()
 
-        party.status shouldBe Party.Status.STARTED
+        party.completed shouldBe false
         party.dicePair shouldNotBe null
         party.dicePair shouldBe rolledDice
     }
@@ -199,13 +73,12 @@ class PartyTest {
         every { playerQueue.currentPlayerId } returns playerId()
 
         val party = party(
-            status = Party.Status.STARTED,
             playerQueue = playerQueue
         )
 
         party.capture(playerId(), area) shouldBeLeft Party.PlayerNotCurrent
 
-        party.status shouldBe Party.Status.STARTED
+        party.completed shouldBe false
     }
 
     @Test
@@ -217,14 +90,13 @@ class PartyTest {
         every { playerQueue.currentPlayerId } returns currentPlayerId
 
         val party = party(
-            status = Party.Status.STARTED,
             dicePair = null,
             playerQueue = playerQueue
         )
 
         party.capture(currentPlayerId, area) shouldBeLeft Party.DicesNotRolled
 
-        party.status shouldBe Party.Status.STARTED
+        party.completed shouldBe false
         party.dicePair shouldBe null
     }
 
@@ -240,14 +112,13 @@ class PartyTest {
         every { playerQueue.currentPlayerId } returns currentPlayerId
 
         val party = party(
-            status = Party.Status.STARTED,
             dicePair = dicePair,
             playerQueue = playerQueue
         )
 
         party.capture(currentPlayerId, area) shouldBeLeft Party.MismatchedArea
 
-        party.status shouldBe Party.Status.STARTED
+        party.completed shouldBe false
         party.dicePair shouldBe dicePair
     }
 
@@ -262,7 +133,6 @@ class PartyTest {
         every { playerQueue.currentPlayerId } returns currentPlayerId
 
         val party = party(
-            status = Party.Status.STARTED,
             dicePair = dicePair,
             field = field,
             playerQueue = playerQueue
@@ -272,7 +142,7 @@ class PartyTest {
 
         party.capture(currentPlayerId, area) shouldBeLeft Party.InaccessibleArea
 
-        party.status shouldBe Party.Status.STARTED
+        party.completed shouldBe false
         party.dicePair shouldBe dicePair
     }
 
@@ -289,7 +159,6 @@ class PartyTest {
         justRun { playerQueue.changeCurrentPlayer() }
 
         val party = party(
-            status = Party.Status.STARTED,
             dicePair = dicePairFor(area),
             field = field,
             playerQueue = playerQueue
@@ -297,7 +166,7 @@ class PartyTest {
 
         party.capture(currentPlayerId, area) shouldBeRight Unit
 
-        party.status shouldBe Party.Status.STARTED
+        party.completed shouldBe false
         party.dicePair shouldBe null
     }
 

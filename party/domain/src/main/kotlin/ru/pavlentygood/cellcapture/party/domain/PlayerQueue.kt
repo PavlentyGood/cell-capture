@@ -13,10 +13,6 @@ class PlayerQueue internal constructor(
     var currentPlayerId = currentPlayerId
         private set
 
-    fun add(player: Player) {
-        _players.add(player)
-    }
-
     fun changeCurrentPlayer() {
         val currentIndex = players.indexOfFirst { it.id == currentPlayerId }
         val nextIndex = (currentIndex + 1) % players.size
@@ -26,10 +22,10 @@ class PlayerQueue internal constructor(
 
     companion object {
 
-        fun create(firstPlayer: Player) =
+        fun create(partyInfo: PartyInfo) =
             PlayerQueue(
-                players = mutableListOf(firstPlayer),
-                currentPlayerId = firstPlayer.id
+                players = partyInfo.players.toMutableList(),
+                currentPlayerId = partyInfo.ownerId
             )
 
         fun restore(

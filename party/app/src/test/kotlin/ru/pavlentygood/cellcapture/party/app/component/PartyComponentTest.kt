@@ -9,76 +9,59 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.party.domain.*
-import ru.pavlentygood.cellcapture.party.persistence.GetPartyFromDatabase
 import ru.pavlentygood.cellcapture.party.rest.*
-import java.util.*
+import ru.pavlentygood.cellcapture.party.usecase.CreatePartyUseCase
+import ru.pavlentygood.cellcapture.party.usecase.port.GetPartyByPlayer
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ComponentTest {
+class PartyComponentTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
 
     @Autowired
-    lateinit var getPartyFromDatabase: GetPartyFromDatabase
+    lateinit var createParty: CreatePartyUseCase
+
+    @Autowired
+    lateinit var getPartyByPlayer: GetPartyByPlayer
 
     @RepeatedTest(10)
-    fun `test all scenarios`() {
-        val party = generateSequence {
-            val created = createParty()
-            joinPlayer(created.id)
-            startParty(created.ownerId)
-            getPartyFromDatabase(created.id)
-        }.first { party ->
-            party.isStartCellFarFromSides() && party.isStartCellFarFromCapturedCells()
-        }
+    fun `all scenarios - createParty, roll, captureCells`() {
+        val party: Party = createParty()
 
-        val partyId = party.id.toUUID()
-        val ownerId = party.ownerId.toInt()
-
+        val ownerId = party.ownerId
         val startCellCount = party.getCells().capturedCellCount()
         val startCell = party.getCells().findStartCell(ownerId)
 
         val dicePair = roll(ownerId)
+
         captureCells(ownerId, dicePair, startCell)
 
-        val partyAfterCapture = getPartyFromDatabase(partyId)
-        partyAfterCapture.getCells().capturedCellCount() shouldBe startCellCount + dicePair.first * dicePair.second
+        val partyAfterCapture = getPartyByPlayer(ownerId)!!
+        val expectedCapturedCellCount = startCellCount + dicePair.first * dicePair.second
+
+        partyAfterCapture.getCells().capturedCellCount() shouldBe expectedCapturedCellCount
     }
 
-    private fun createParty() =
-        mockMvc.post(API_V1_PARTIES) {
-            contentType = MediaType.APPLICATION_JSON
-            content = mapper.writeValueAsString(CreatePartyRequest(playerName().toStringValue()))
-        }.andExpect { status { isCreated() } }
-            .andReturn().response.contentAsString
-            .let { mapper.readValue(it, CreatePartyResponse::class.java) }
+    private fun createParty(): Party =
+        generateSequence {
+            val partyInfo = partyInfo()
+            createParty(partyInfo)
+            getPartyByPlayer(partyInfo.ownerId)
+        }.first { party ->
+            party.isStartCellFarFromSides() && party.isStartCellFarFromCapturedCells()
+        }
 
-    private fun joinPlayer(partyId: UUID) =
-        mockMvc.post(API_V1_PARTIES_PLAYERS.with("partyId", partyId)) {
-            contentType = MediaType.APPLICATION_JSON
-            content = mapper.writeValueAsString(JoinPlayerRequest(name = playerName().toStringValue()))
-        }.andExpect { status { isOk() } }
-            .andReturn().response.contentAsString
-            .let { mapper.readValue(it, JoinPlayerResponse::class.java) }
-            .id
-
-    private fun startParty(playerId: Int) =
-        mockMvc.post(API_V1_PARTIES_START) {
-            queryParam("playerId", playerId.toString())
-            contentType = MediaType.APPLICATION_JSON
-        }.andExpect { status { isOk() } }
-
-    private fun roll(playerId: Int) =
-        mockMvc.post(API_V1_PLAYERS_DICES.with("playerId", playerId))
+    private fun roll(playerId: PlayerId) =
+        mockMvc.post(API_V1_PLAYERS_DICES.with("playerId", playerId.toInt()))
             .andExpect { status { isOk() } }
             .andReturn().response.contentAsString
             .let { mapper.readValue(it, RollEndpoint.RollResponse::class.java) }
             .dicePair
 
     private fun captureCells(
-        playerId: Int,
+        playerId: PlayerId,
         dicePair: RollEndpoint.DicePairResponse,
         startCell: Cell,
     ) {
@@ -90,14 +73,11 @@ class ComponentTest {
             first = CaptureCellsEndpoint.Request.Point(x = x1, y = y1),
             second = CaptureCellsEndpoint.Request.Point(x = x2, y = y2)
         )
-        mockMvc.post(API_V1_PLAYERS_CELLS.with("playerId", playerId)) {
+        mockMvc.post(API_V1_PLAYERS_CELLS.with("playerId", playerId.toInt())) {
             contentType = MediaType.APPLICATION_JSON
             content = mapper.writeValueAsString(request)
         }.andExpect { status { isOk() } }
     }
-
-    private fun getPartyFromDatabase(partyId: UUID) =
-        getPartyFromDatabase.parties[PartyId(partyId)]!!
 
     private fun Party.isStartCellFarFromSides(): Boolean {
         fun Cell.isFarFromRightSide() =
@@ -106,12 +86,12 @@ class ComponentTest {
         fun Cell.isFarFromBottomSide() =
             this.y + 1 + Dice.MAX < Field.HEIGHT
 
-        val cell = getCells().findStartCell(ownerId.toInt())
+        val cell = getCells().findStartCell(ownerId)
         return cell.isFarFromRightSide() && cell.isFarFromBottomSide()
     }
 
     private fun Party.isStartCellFarFromCapturedCells(): Boolean {
-        val cell = getCells().findStartCell(ownerId.toInt())
+        val cell = getCells().findStartCell(ownerId)
         return getCells().capturedCells().none {
             this.ownerId != it.playerId &&
                     cell.x + Dice.MAX >= it.x &&
@@ -130,9 +110,9 @@ class ComponentTest {
             }
         }.flatten()
 
-    private fun Array<Array<PlayerId>>.findStartCell(forPlayerId: Int) =
+    private fun Array<Array<PlayerId>>.findStartCell(forPlayer: PlayerId) =
         capturedCells()
-            .single { it.playerId.toInt() == forPlayerId }
+            .single { it.playerId == forPlayer }
 
     data class Cell(
         val playerId: PlayerId,

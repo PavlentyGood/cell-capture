@@ -6,8 +6,7 @@ class RestoreParty {
 
     operator fun invoke(
         id: PartyId,
-        playerLimit: PlayerLimit,
-        status: Party.Status,
+        completed: Boolean,
         dicePair: DicePair?,
         cells: Array<Array<PlayerId>>,
         players: List<Player>,
@@ -20,8 +19,7 @@ class RestoreParty {
         ).map { playerQueue ->
             Party(
                 id = id,
-                playerLimit = playerLimit,
-                status = status,
+                completed = completed,
                 dicePair = dicePair,
                 field = Field(
                     cells = cells

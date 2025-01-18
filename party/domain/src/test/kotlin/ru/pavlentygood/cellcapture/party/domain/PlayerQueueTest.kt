@@ -9,11 +9,11 @@ class PlayerQueueTest {
 
     @Test
     fun `create player queue`() {
-        val player = player()
+        val partyInfo = partyInfo()
 
-        val result = PlayerQueue.create(firstPlayer = player)
-        result.players shouldContainExactly listOf(player)
-        result.currentPlayerId shouldBe player.id
+        val result = PlayerQueue.create(partyInfo)
+        result.players shouldContainExactly partyInfo.players
+        result.currentPlayerId shouldBe partyInfo.ownerId
     }
 
     @Test
@@ -28,18 +28,6 @@ class PlayerQueueTest {
 
         result.players shouldContainExactly players
         result.currentPlayerId shouldBe player.id
-    }
-
-    @Test
-    fun `add player`() {
-        val firstPlayer = player()
-        val player = player()
-        val playerQueue = PlayerQueue.create(firstPlayer = firstPlayer)
-
-        playerQueue.add(player)
-
-        playerQueue.players shouldContainExactly listOf(firstPlayer, player)
-        playerQueue.currentPlayerId shouldBe firstPlayer.id
     }
 
     @Test

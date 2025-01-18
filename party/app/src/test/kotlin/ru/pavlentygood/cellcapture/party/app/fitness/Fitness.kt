@@ -13,14 +13,14 @@ import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
 import org.springframework.web.bind.annotation.RestController
 
 @AnalyzeClasses(
-    packages = ["ru.pavlentygood.cellcapture"],
+    packages = ["ru.pavlentygood.cellcapture.party"],
     importOptions = [Fitness.DoNotIncludeAppPackage::class]
 )
 class Fitness {
 
     class DoNotIncludeAppPackage : ImportOption {
         override fun includes(location: Location) =
-            !location.contains("ru/pavlentygood/cellcapture/app/")
+            !location.contains("ru/pavlentygood/cellcapture/party/app/")
     }
 
     /**

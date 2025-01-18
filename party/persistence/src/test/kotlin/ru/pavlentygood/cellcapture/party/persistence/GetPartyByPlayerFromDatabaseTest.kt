@@ -25,8 +25,7 @@ class GetPartyByPlayerFromDatabaseTest {
 
         getPartyByPlayer(player.id)!!.apply {
             id shouldBe party.id
-            playerLimit shouldBe party.playerLimit
-            status shouldBe party.status
+            completed shouldBe false
             dicePair shouldBe party.dicePair
             getCells() shouldBe party.getCells()
             players shouldBe party.players

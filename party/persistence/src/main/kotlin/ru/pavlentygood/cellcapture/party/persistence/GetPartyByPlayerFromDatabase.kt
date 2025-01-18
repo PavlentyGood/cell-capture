@@ -13,12 +13,7 @@ class GetPartyByPlayerFromDatabase(
             party.players.any { it.id == playerId }
         }?.let { party ->
             val partyId = PartyId(party.id.toUUID())
-
-            val playerLimit = PlayerLimit.from(party.playerLimit.value).getOrElse {
-                error("Invalid player limit: ${party.playerLimit.value}")
-            }
-
-            val status = Party.Status.valueOf(party.status.name)
+            val completed = party.completed
 
             val dicePair = party.dicePair?.let { dicePair ->
                 DicePair(
@@ -41,8 +36,7 @@ class GetPartyByPlayerFromDatabase(
 
             restoreParty(
                 id = partyId,
-                playerLimit = playerLimit,
-                status = status,
+                completed = completed,
                 dicePair = dicePair,
                 cells = cells,
                 players = players,

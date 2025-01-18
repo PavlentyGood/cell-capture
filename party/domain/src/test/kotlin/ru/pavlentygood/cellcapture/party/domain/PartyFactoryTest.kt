@@ -1,36 +1,28 @@
 package ru.pavlentygood.cellcapture.party.domain
 
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.jupiter.api.Test
 
 class PartyFactoryTest {
 
     @Test
     fun `create party`() {
-        val ownerId = playerId()
-        val ownerName = playerName()
+        val owner = owner()
+        val players = listOf(owner, player())
+        val partyInfo = partyInfo(players = players)
+        val partyFactory = PartyFactory()
 
-        val generatePlayerId = mockk<GeneratePlayerId>()
-        every { generatePlayerId() } returns ownerId
+        val party: Party = partyFactory.create(partyInfo)
 
-        val partyFactory = PartyFactory(generatePlayerId)
-
-        val party: Party = partyFactory.create(ownerName)
-
-        party.playerLimit shouldBe PlayerLimit.from(DEFAULT_PLAYER_LIMIT).getOrNull()!!
-        party.status shouldBe Party.Status.NEW
+        party.completed shouldBe false
         party.dicePair shouldBe null
+        party.ownerId shouldBe owner.id
+        party.currentPlayerId shouldBe owner.id
+        party.players shouldContainExactly players
         party.getCells() shouldHaveSize Field.HEIGHT
         party.getCells()[0] shouldHaveSize Field.WIDTH
         party.getCells()[0][0] shouldBe Field.nonePlayerId
-        party.ownerId shouldBe ownerId
-        party.players.single().also {
-            it.id shouldBe ownerId
-            it.name shouldBe ownerName
-            it.owner shouldBe true
-        }
     }
 }

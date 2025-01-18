@@ -2,32 +2,24 @@ package ru.pavlentygood.cellcapture.party.domain
 
 import java.util.*
 
-const val DEFAULT_PLAYER_LIMIT = 4
-
-class PartyFactory(
-    private val generatePlayerId: GeneratePlayerId
-) {
-    fun create(ownerName: PlayerName): Party {
-        val owner = createOwner(ownerName)
+class PartyFactory {
+    fun create(partyInfo: PartyInfo): Party {
         return Party(
             id = PartyId(UUID.randomUUID()),
-            playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
-            status = Party.Status.NEW,
+            completed = false,
             dicePair = null,
-            field = Field(
-                cells = createCells()
-            ),
-            playerQueue = PlayerQueue.create(firstPlayer = owner),
-            ownerId = owner.id
+            field = createField(partyInfo),
+            playerQueue = PlayerQueue.create(partyInfo),
+            ownerId = partyInfo.ownerId
         )
     }
 
-    private fun createOwner(ownerName: PlayerName) =
-        Player(
-            id = generatePlayerId(),
-            name = ownerName,
-            owner = true
-        )
+    private fun createField(partyInfo: PartyInfo) =
+        Field(
+            cells = createCells()
+        ).also {
+            it.appointStartCells(partyInfo.playerIds)
+        }
 
     private fun createCells() =
         Array(Field.HEIGHT) {
