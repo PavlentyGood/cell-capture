@@ -22,8 +22,7 @@ class Party internal constructor(
         } else {
             val player = Player(
                 id = generatePlayerId(),
-                name = name,
-                owner = false
+                name = name
             )
             playerList.add(player)
             player.id.right()

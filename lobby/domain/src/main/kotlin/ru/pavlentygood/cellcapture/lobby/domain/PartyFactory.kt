@@ -21,7 +21,6 @@ class PartyFactory(
     private fun createOwner(ownerName: PlayerName) =
         Player(
             id = generatePlayerId(),
-            name = ownerName,
-            owner = true
+            name = ownerName
         )
 }

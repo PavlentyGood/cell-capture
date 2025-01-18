@@ -25,7 +25,6 @@ class PartyFactoryTest {
         party.players.single().also {
             it.id shouldBe ownerId
             it.name shouldBe ownerName
-            it.owner shouldBe true
         }
     }
 }

@@ -25,7 +25,7 @@ fun party(
     id: PartyId = partyId(),
     started: Boolean = false,
     playerLimit: Int = 2,
-    owner: Player = player(owner = true),
+    owner: Player = player(),
     otherPlayers: List<Player> = listOf(),
     playerList: PlayerList = playerList(
         owner = owner,
@@ -40,11 +40,10 @@ fun party(
         ownerId = owner.id
     )
 
-fun player(owner: Boolean = false) =
+fun player() =
     Player(
         id = playerId(),
-        name = playerName(),
-        owner = owner
+        name = playerName()
     )
 
 fun playerList(
