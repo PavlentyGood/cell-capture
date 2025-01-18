@@ -5,11 +5,13 @@ import arrow.core.right
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 class StartPartyUseCaseTest {
 
@@ -23,7 +25,10 @@ class StartPartyUseCaseTest {
         val getPartyByPlayer = mockk<GetPartyByPlayer>()
         every { getPartyByPlayer(playerId) } returns party
 
-        val startParty = StartPartyUseCase(getPartyByPlayer)
+        val saveParty = mockk<SaveParty>()
+        justRun { saveParty(party) }
+
+        val startParty = StartPartyUseCase(getPartyByPlayer, saveParty)
 
         startParty(playerId) shouldBeRight Unit
     }
@@ -35,7 +40,9 @@ class StartPartyUseCaseTest {
         val getPartyByPlayer = mockk<GetPartyByPlayer>()
         every { getPartyByPlayer(playerId) } returns null
 
-        val startParty = StartPartyUseCase(getPartyByPlayer)
+        val saveParty = mockk<SaveParty>()
+
+        val startParty = StartPartyUseCase(getPartyByPlayer, saveParty)
 
         startParty(playerId) shouldBeLeft StartPartyUseCase.PlayerNotFound
     }
@@ -54,7 +61,9 @@ class StartPartyUseCaseTest {
             val getPartyByPlayer = mockk<GetPartyByPlayer>()
             every { getPartyByPlayer(playerId) } returns party
 
-            val startParty = StartPartyUseCase(getPartyByPlayer)
+            val saveParty = mockk<SaveParty>()
+
+            val startParty = StartPartyUseCase(getPartyByPlayer, saveParty)
 
             startParty(playerId) shouldBeLeft useCaseError
         }

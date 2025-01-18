@@ -5,14 +5,17 @@ import arrow.core.left
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.domain.PlayerId
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 class StartPartyUseCase(
-    private val getPartyByPlayer: GetPartyByPlayer
+    private val getPartyByPlayer: GetPartyByPlayer,
+    private val saveParty: SaveParty
 ) {
     operator fun invoke(playerId: PlayerId): Either<Error, Unit> =
         getPartyByPlayer(playerId)
-            ?.let { party ->
+            ?.let { party: Party ->
                 party.start(playerId)
+                    .map { saveParty(party) }
                     .mapLeft { it.toUseCaseError() }
             } ?: PlayerNotFound.left()
 
