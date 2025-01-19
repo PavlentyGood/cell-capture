@@ -19,25 +19,26 @@ class PlayerQueue internal constructor(
 
     companion object {
 
-        fun create(partyInfo: PartyInfo) =
+        fun create(playerList: PlayerList) =
             PlayerQueue(
-                players = partyInfo.players,
-                currentPlayerId = partyInfo.ownerId
+                players = playerList.players,
+                currentPlayerId = playerList.ownerId
             )
 
         fun restore(
-            players: List<Player>,
+            playerList: PlayerList,
             currentPlayerId: PlayerId
         ) =
-            if (players.map { it.id }.contains(currentPlayerId)) {
+            if (playerList.playerIds.contains(currentPlayerId)) {
                 PlayerQueue(
-                    players = players,
+                    players = playerList.players,
                     currentPlayerId = currentPlayerId
                 ).right()
             } else {
-                InvalidPlayerQueue.left()
+                IllegalCurrentPlayerId.left()
             }
     }
 
-    data object InvalidPlayerQueue
+    sealed interface PlayerQueueError
+    data object IllegalCurrentPlayerId : PlayerQueueError
 }

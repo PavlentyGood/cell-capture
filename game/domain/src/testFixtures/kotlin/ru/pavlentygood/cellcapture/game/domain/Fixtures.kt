@@ -5,7 +5,8 @@ import java.util.*
 import kotlin.random.Random
 
 fun <A> Either<Any, A>.get() =
-    getOrNull()!!
+    onLeft { throw Exception("Either test error: $it") }
+        .getOrNull()!!
 
 fun randomInt(from: Int = 0, until: Int = 1000) =
     Random.nextInt(from, until)
@@ -25,7 +26,7 @@ fun party(
     id: PartyId = partyId(),
     completed: Boolean = false,
     owner: Player = player(),
-    otherPlayers: List<Player> = listOf(),
+    otherPlayers: List<Player> = listOf(player()),
     dicePair: DicePair? = dicePair(),
     field: Field = field(),
     playerQueue: PlayerQueue = playerQueue(
@@ -97,16 +98,24 @@ fun playerQueue(
     otherPlayers: List<Player>
 ) =
     PlayerQueue.restore(
-        players = otherPlayers.toMutableList().apply { add(owner) },
+        playerList = playerList(
+            ownerId = owner.id,
+            players = otherPlayers.toMutableList().apply { add(owner) }
+        ),
         currentPlayerId = owner.id
     ).get()
 
-fun partyInfo(
+fun partyInfo() =
+    PartyInfo(
+        partyId = partyId(),
+        playerList = playerList()
+    )
+
+fun playerList(
     ownerId: PlayerId = playerId(until = 1000000),
     players: List<Player> = listOf(player(ownerId), player(playerId(until = 1000000)))
 ) =
-    PartyInfo.from(
-        id = partyId(),
+    PlayerList.from(
         ownerId = ownerId,
         players = players
     ).get()

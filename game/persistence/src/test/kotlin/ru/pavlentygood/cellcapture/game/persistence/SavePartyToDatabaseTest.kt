@@ -9,8 +9,8 @@ class SavePartyToDatabaseTest {
     @Test
     fun `save party`() {
         val party = party()
-        val saveParty = SavePartyToDatabase()
 
+        val saveParty = SavePartyToDatabase()
         saveParty(party)
 
         saveParty.parties shouldContain Pair(party.id, party)

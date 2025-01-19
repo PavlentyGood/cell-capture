@@ -1,29 +1,23 @@
 package ru.pavlentygood.cellcapture.game.persistence
 
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import ru.pavlentygood.cellcapture.game.domain.*
+import ru.pavlentygood.cellcapture.game.domain.RestoreParty
+import ru.pavlentygood.cellcapture.game.domain.party
+import ru.pavlentygood.cellcapture.game.domain.playerId
 
 class GetPartyByPlayerFromDatabaseTest {
 
     @Test
     fun `get party by player`() {
-        val player = player()
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.players } returns listOf(player)
-        every { playerQueue.currentPlayerId } returns player.id
-
-        val party = party(playerQueue = playerQueue)
+        val party = party()
 
         val saveParty = SavePartyToDatabase()
         saveParty(party)
 
         val getPartyByPlayer = GetPartyByPlayerFromDatabase(saveParty.parties, RestoreParty())
 
-        getPartyByPlayer(player.id)!!.apply {
+        getPartyByPlayer(party.ownerId)!!.apply {
             id shouldBe party.id
             completed shouldBe false
             dicePair shouldBe party.dicePair

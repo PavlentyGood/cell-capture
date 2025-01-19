@@ -9,25 +9,25 @@ class PlayerQueueTest {
 
     @Test
     fun `create player queue`() {
-        val partyInfo = partyInfo()
+        val playerList = playerList()
 
-        val result = PlayerQueue.create(partyInfo)
-        result.players shouldContainExactly partyInfo.players
-        result.currentPlayerId shouldBe partyInfo.ownerId
+        val result = PlayerQueue.create(playerList)
+        result.players shouldContainExactly playerList.players
+        result.currentPlayerId shouldBe playerList.ownerId
     }
 
     @Test
     fun `restore player queue`() {
-        val player = player()
-        val players = listOf(player)
+        val playerList = playerList()
+        val currentPlayerId = playerList.players.random().id
 
         val result = PlayerQueue.restore(
-            players = players,
-            currentPlayerId = player.id
+            playerList = playerList,
+            currentPlayerId = currentPlayerId
         ).shouldBeRight()
 
-        result.players shouldContainExactly players
-        result.currentPlayerId shouldBe player.id
+        result.players shouldContainExactly playerList.players
+        result.currentPlayerId shouldBe currentPlayerId
     }
 
     @Test
@@ -37,7 +37,10 @@ class PlayerQueueTest {
 
         fun test(players: List<Player>) {
             val playerQueue = PlayerQueue.restore(
-                players = players,
+                playerList = playerList(
+                    ownerId = currentPlayer.id,
+                    players = players
+                ),
                 currentPlayerId = currentPlayer.id
             ).get()
 

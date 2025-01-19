@@ -43,7 +43,7 @@ class GetPartyByPlayerFromDatabase(
                 currentPlayerId = currentPlayerId,
                 ownerId = ownerId
             ).getOrElse {
-                error("Invalid player queue in party #${party.id}")
+                error("Restore party error: $it. #$partyId")
             }
         }
 }

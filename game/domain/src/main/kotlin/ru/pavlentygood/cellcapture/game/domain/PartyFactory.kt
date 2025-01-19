@@ -1,24 +1,23 @@
 package ru.pavlentygood.cellcapture.game.domain
 
-import java.util.*
-
 class PartyFactory {
+
     fun create(partyInfo: PartyInfo): Party {
         return Party(
-            id = PartyId(UUID.randomUUID()),
+            id = partyInfo.partyId,
             completed = false,
             dicePair = null,
-            field = createField(partyInfo),
-            playerQueue = PlayerQueue.create(partyInfo),
+            field = createField(partyInfo.playerList),
+            playerQueue = PlayerQueue.create(partyInfo.playerList),
             ownerId = partyInfo.ownerId
         )
     }
 
-    private fun createField(partyInfo: PartyInfo) =
+    private fun createField(playerList: PlayerList) =
         Field(
             cells = createCells()
         ).also {
-            it.appointStartCells(partyInfo.playerIds)
+            it.appointStartCells(playerList.playerIds)
         }
 
     private fun createCells() =

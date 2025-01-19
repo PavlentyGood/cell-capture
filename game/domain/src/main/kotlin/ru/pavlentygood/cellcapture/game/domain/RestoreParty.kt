@@ -1,6 +1,7 @@
 package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.Either
+import arrow.core.flatMap
 
 class RestoreParty {
 
@@ -12,20 +13,25 @@ class RestoreParty {
         players: List<Player>,
         currentPlayerId: PlayerId,
         ownerId: PlayerId
-    ): Either<PlayerQueue.InvalidPlayerQueue, Party> =
-        PlayerQueue.restore(
-            players = players,
-            currentPlayerId = currentPlayerId
-        ).map { playerQueue ->
-            Party(
-                id = id,
-                completed = completed,
-                dicePair = dicePair,
-                field = Field(
-                    cells = cells
-                ),
-                playerQueue = playerQueue,
-                ownerId = ownerId
-            )
+    ): Either<Any, Party> =
+        PlayerList.from(
+            ownerId = ownerId,
+            players = players
+        ).flatMap { playerList ->
+            PlayerQueue.restore(
+                playerList = playerList,
+                currentPlayerId = currentPlayerId
+            ).map { playerQueue ->
+                Party(
+                    id = id,
+                    completed = completed,
+                    dicePair = dicePair,
+                    field = Field(
+                        cells = cells
+                    ),
+                    playerQueue = playerQueue,
+                    ownerId = ownerId
+                )
+            }
         }
 }

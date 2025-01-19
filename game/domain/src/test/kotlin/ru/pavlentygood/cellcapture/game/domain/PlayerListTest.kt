@@ -8,50 +8,44 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class PartyInfoTest {
+class PlayerListTest {
 
     @Test
-    fun `create party info`() {
-        val partyId = partyId()
+    fun `create player list`() {
         val owner = player()
         val player = player()
-        PartyInfo.from(
-            id = partyId,
+        PlayerList.from(
             ownerId = owner.id,
             players = listOf(owner, player)
-        ) shouldBeRight PartyInfo(
-            id = partyId,
+        ) shouldBeRight PlayerList(
             ownerId = owner.id,
             players = listOf(owner, player)
         )
     }
 
     @Test
-    fun `create party info - unmatched owner id`() {
+    fun `create player list - unmatched owner id`() {
         val owner = player()
-        PartyInfo.from(
-            id = partyId(),
+        PlayerList.from(
             ownerId = playerId(),
             players = listOf(owner, player())
-        ) shouldBeLeft UnmatchedOwnerId
+        ) shouldBeLeft IllegalOwnerId
     }
 
     @ParameterizedTest
     @ValueSource(ints = [MIN_PLAYER_COUNT - 1, MAX_PLAYER_COUNT + 1])
-    fun `create party info - illegal player count`(count: Int) {
+    fun `create player list - illegal player count`(count: Int) {
         val players = generateSequence { player() }.take(count).toList()
-        PartyInfo.from(
-            id = partyId(),
+        PlayerList.from(
             ownerId = players.first().id,
             players = players
         ) shouldBeLeft IllegalPlayerCount
     }
 
     @Test
-    fun `create party info - duplicate player ids`() {
+    fun `create player list - duplicate player ids`() {
         val playerId = playerId()
-        PartyInfo.from(
-            id = partyId(),
+        PlayerList.from(
             ownerId = playerId,
             players = listOf(player(playerId), player(playerId))
         ) shouldBeLeft DuplicatePlayerIds
@@ -60,23 +54,23 @@ class PartyInfoTest {
     @Test
     fun `get owner id`() {
         val owner = player()
-        val partyInfo = partyInfo(
+        val playerList = playerList(
             ownerId = owner.id,
             players = listOf(owner, player())
         )
 
-        partyInfo.ownerId shouldBe owner.id
+        playerList.ownerId shouldBe owner.id
     }
 
     @Test
     fun `get player ids`() {
         val owner = player()
         val player = player()
-        val partyInfo = partyInfo(
+        val playerList = playerList(
             ownerId = owner.id,
             players = listOf(owner, player)
         )
 
-        partyInfo.playerIds shouldContainExactly listOf(owner.id, player.id)
+        playerList.playerIds shouldContainExactly listOf(owner.id, player.id)
     }
 }

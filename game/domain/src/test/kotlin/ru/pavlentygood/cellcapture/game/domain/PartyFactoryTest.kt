@@ -9,21 +9,17 @@ class PartyFactoryTest {
 
     @Test
     fun `create party`() {
-        val owner = player()
-        val players = listOf(owner, player())
-        val partyInfo = partyInfo(
-            ownerId = owner.id,
-            players = players
-        )
+        val partyInfo = partyInfo()
         val partyFactory = PartyFactory()
 
         val party: Party = partyFactory.create(partyInfo)
 
+        party.id shouldBe partyInfo.partyId
         party.completed shouldBe false
         party.dicePair shouldBe null
-        party.ownerId shouldBe owner.id
-        party.currentPlayerId shouldBe owner.id
-        party.players shouldContainExactly players
+        party.ownerId shouldBe partyInfo.ownerId
+        party.currentPlayerId shouldBe partyInfo.ownerId
+        party.players shouldContainExactly partyInfo.players
         party.getCells() shouldHaveSize Field.HEIGHT
         party.getCells()[0] shouldHaveSize Field.WIDTH
         party.getCells()[0][0] shouldBe Field.nonePlayerId
