@@ -38,7 +38,7 @@ class PlayerQueue internal constructor(
                 IllegalCurrentPlayerId.left()
             }
     }
-
-    sealed interface PlayerQueueError
-    data object IllegalCurrentPlayerId : PlayerQueueError
 }
+
+sealed interface PlayerQueueError
+data object IllegalCurrentPlayerId : PlayerQueueError
