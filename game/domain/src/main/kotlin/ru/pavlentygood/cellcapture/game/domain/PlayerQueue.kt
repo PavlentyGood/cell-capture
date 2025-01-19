@@ -4,12 +4,9 @@ import arrow.core.left
 import arrow.core.right
 
 class PlayerQueue internal constructor(
-    players: MutableList<Player>,
+    val players: List<Player>,
     currentPlayerId: PlayerId
 ) {
-    private val _players = players
-    val players: List<Player> get() = _players
-
     var currentPlayerId = currentPlayerId
         private set
 
@@ -24,7 +21,7 @@ class PlayerQueue internal constructor(
 
         fun create(partyInfo: PartyInfo) =
             PlayerQueue(
-                players = partyInfo.players.toMutableList(),
+                players = partyInfo.players,
                 currentPlayerId = partyInfo.ownerId
             )
 
@@ -34,7 +31,7 @@ class PlayerQueue internal constructor(
         ) =
             if (players.map { it.id }.contains(currentPlayerId)) {
                 PlayerQueue(
-                    players = players.toMutableList(),
+                    players = players,
                     currentPlayerId = currentPlayerId
                 ).right()
             } else {
