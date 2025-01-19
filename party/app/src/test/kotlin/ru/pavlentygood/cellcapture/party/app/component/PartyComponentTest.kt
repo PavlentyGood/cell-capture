@@ -9,9 +9,9 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.party.domain.*
+import ru.pavlentygood.cellcapture.party.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.party.rest.*
 import ru.pavlentygood.cellcapture.party.usecase.CreatePartyUseCase
-import ru.pavlentygood.cellcapture.party.usecase.port.GetPartyByPlayer
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,9 +24,9 @@ class PartyComponentTest {
     lateinit var createParty: CreatePartyUseCase
 
     @Autowired
-    lateinit var getPartyByPlayer: GetPartyByPlayer
+    lateinit var getPartyByPlayer: GetPartyByPlayerFromDatabase
 
-    @RepeatedTest(10)
+    @RepeatedTest(100)
     fun `all scenarios - createParty, roll, captureCells`() {
         val party: Party = createParty()
 
@@ -46,6 +46,7 @@ class PartyComponentTest {
 
     private fun createParty(): Party =
         generateSequence {
+            getPartyByPlayer.parties.clear()
             val partyInfo = partyInfo()
             createParty(partyInfo)
             getPartyByPlayer(partyInfo.ownerId)

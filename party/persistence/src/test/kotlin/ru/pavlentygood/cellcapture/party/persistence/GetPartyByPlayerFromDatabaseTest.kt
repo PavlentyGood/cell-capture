@@ -36,7 +36,7 @@ class GetPartyByPlayerFromDatabaseTest {
 
     @Test
     fun `get party by player - not found`() {
-        val getPartyByPlayer = GetPartyByPlayerFromDatabase(mapOf(), RestoreParty())
+        val getPartyByPlayer = GetPartyByPlayerFromDatabase(mutableMapOf(), RestoreParty())
 
         getPartyByPlayer(playerId()) shouldBe null
     }

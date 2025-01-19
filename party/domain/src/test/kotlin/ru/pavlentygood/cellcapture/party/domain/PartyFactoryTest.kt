@@ -9,9 +9,12 @@ class PartyFactoryTest {
 
     @Test
     fun `create party`() {
-        val owner = owner()
+        val owner = player()
         val players = listOf(owner, player())
-        val partyInfo = partyInfo(players = players)
+        val partyInfo = partyInfo(
+            ownerId = owner.id,
+            players = players
+        )
         val partyFactory = PartyFactory()
 
         val party: Party = partyFactory.create(partyInfo)

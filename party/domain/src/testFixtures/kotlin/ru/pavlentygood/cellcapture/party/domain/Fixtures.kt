@@ -24,7 +24,7 @@ fun playerName() =
 fun party(
     id: PartyId = partyId(),
     completed: Boolean = false,
-    owner: Player = owner(),
+    owner: Player = player(),
     otherPlayers: List<Player> = listOf(),
     dicePair: DicePair? = dicePair(),
     field: Field = field(),
@@ -42,15 +42,11 @@ fun party(
         ownerId = owner.id
     )
 
-fun player(owner: Boolean = false) =
+fun player(id: PlayerId = playerId()) =
     Player(
-        id = playerId(),
-        name = playerName(),
-        owner = owner
+        id = id,
+        name = playerName()
     )
-
-fun owner() =
-    player(owner = true)
 
 fun area(distanceToEdges: Int = 0) =
     Area.from(
@@ -106,9 +102,11 @@ fun playerQueue(
     ).get()
 
 fun partyInfo(
-    players: List<Player> = listOf(owner(), player())
+    ownerId: PlayerId = playerId(until = 1000000),
+    players: List<Player> = listOf(player(ownerId), player(playerId(until = 1000000)))
 ) =
-    PartyInfo(
+    PartyInfo.from(
         id = partyId(),
+        ownerId = ownerId,
         players = players
-    )
+    ).get()
