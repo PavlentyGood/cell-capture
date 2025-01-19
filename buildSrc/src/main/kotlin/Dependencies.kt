@@ -1,3 +1,18 @@
+object Module {
+    const val lobby = ":lobby"
+    const val game = ":game"
+
+    const val lobbyDomain = "$lobby:domain"
+    const val lobbyUseCase = "$lobby:usecase"
+    const val lobbyRest = "$lobby:rest"
+    const val lobbyPersistence = "$lobby:persistence"
+
+    const val gameDomain = "$game:domain"
+    const val gameUseCase = "$game:usecase"
+    const val gameRest = "$game:rest"
+    const val gamePersistence = "$game:persistence"
+}
+
 object Version {
     const val kotlin = "1.9.23"
     const val detekt = "1.23.6"

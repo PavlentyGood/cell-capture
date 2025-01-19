@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":game:domain"))
+    implementation(project(Module.gameDomain))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.arrow)
@@ -11,5 +11,5 @@ dependencies {
 
     testRuntimeOnly(Lib.junitEngine)
 
-    testImplementation(testFixtures(project(":game:domain")))
+    testImplementation(testFixtures(project(Module.gameDomain)))
 }

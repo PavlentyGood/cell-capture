@@ -3,10 +3,10 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":game:domain"))
-    implementation(project(":game:usecase"))
-    implementation(project(":game:rest"))
-    implementation(project(":game:persistence"))
+    implementation(project(Module.gameDomain))
+    implementation(project(Module.gameUseCase))
+    implementation(project(Module.gameRest))
+    implementation(project(Module.gamePersistence))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
@@ -20,6 +20,6 @@ dependencies {
 
     testRuntimeOnly(Lib.junitEngine)
 
-    testImplementation(testFixtures(project(":game:domain")))
-    testImplementation(testFixtures(project(":game:rest")))
+    testImplementation(testFixtures(project(Module.gameDomain)))
+    testImplementation(testFixtures(project(Module.gameRest)))
 }

@@ -3,10 +3,10 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":lobby:domain"))
-    implementation(project(":lobby:usecase"))
-    implementation(project(":lobby:rest"))
-    implementation(project(":lobby:persistence"))
+    implementation(project(Module.lobbyDomain))
+    implementation(project(Module.lobbyUseCase))
+    implementation(project(Module.lobbyRest))
+    implementation(project(Module.lobbyPersistence))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
@@ -20,6 +20,6 @@ dependencies {
 
     testRuntimeOnly(Lib.junitEngine)
 
-    testImplementation(testFixtures(project(":lobby:domain")))
-    testImplementation(testFixtures(project(":lobby:rest")))
+    testImplementation(testFixtures(project(Module.lobbyDomain)))
+    testImplementation(testFixtures(project(Module.lobbyRest)))
 }

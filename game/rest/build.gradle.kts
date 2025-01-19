@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":game:domain"))
-    implementation(project(":game:usecase"))
+    implementation(project(Module.gameDomain))
+    implementation(project(Module.gameUseCase))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
@@ -17,5 +17,5 @@ dependencies {
 
     testRuntimeOnly(Lib.junitEngine)
 
-    testImplementation(testFixtures(project(":game:domain")))
+    testImplementation(testFixtures(project(Module.gameDomain)))
 }

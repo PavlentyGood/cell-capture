@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":lobby:domain"))
+    implementation(project(Module.lobbyDomain))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.arrow)
@@ -11,5 +11,5 @@ dependencies {
 
     testRuntimeOnly(Lib.junitEngine)
 
-    testImplementation(testFixtures(project(":lobby:domain")))
+    testImplementation(testFixtures(project(Module.lobbyDomain)))
 }
