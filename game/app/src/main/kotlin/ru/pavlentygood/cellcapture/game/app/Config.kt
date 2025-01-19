@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
-import ru.pavlentygood.cellcapture.game.domain.PartyFactory
+import ru.pavlentygood.cellcapture.game.domain.CreateParty
 import ru.pavlentygood.cellcapture.game.domain.RestoreParty
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.persistence.SavePartyToDatabase
@@ -19,7 +19,7 @@ class Config {
     fun createParty() = CreatePartyUseCase(partyFactory(), saveParty())
 
     @Bean
-    fun partyFactory() = PartyFactory()
+    fun partyFactory() = CreateParty()
 
     @Bean
     fun restoreParty() = RestoreParty()

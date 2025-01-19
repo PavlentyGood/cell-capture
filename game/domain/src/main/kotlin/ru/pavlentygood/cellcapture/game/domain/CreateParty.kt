@@ -1,8 +1,8 @@
 package ru.pavlentygood.cellcapture.game.domain
 
-class PartyFactory {
+class CreateParty {
 
-    fun create(partyInfo: PartyInfo): Party {
+    operator fun invoke(partyInfo: PartyInfo): Party {
         return Party(
             id = partyInfo.partyId,
             completed = false,

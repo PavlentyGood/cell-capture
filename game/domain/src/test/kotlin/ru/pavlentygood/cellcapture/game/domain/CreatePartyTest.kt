@@ -5,14 +5,14 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class PartyFactoryTest {
+class CreatePartyTest {
 
     @Test
     fun `create party`() {
         val partyInfo = partyInfo()
-        val partyFactory = PartyFactory()
+        val createParty = CreateParty()
 
-        val party: Party = partyFactory.create(partyInfo)
+        val party: Party = createParty(partyInfo)
 
         party.id shouldBe partyInfo.partyId
         party.completed shouldBe false
