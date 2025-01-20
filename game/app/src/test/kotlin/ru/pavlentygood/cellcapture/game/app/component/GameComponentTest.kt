@@ -10,10 +10,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
-import ru.pavlentygood.cellcapture.game.rest.API_V1_PLAYERS_CELLS
-import ru.pavlentygood.cellcapture.game.rest.API_V1_PLAYERS_DICES
-import ru.pavlentygood.cellcapture.game.rest.CaptureCellsEndpoint
-import ru.pavlentygood.cellcapture.game.rest.RollEndpoint
 import ru.pavlentygood.cellcapture.game.rest.*
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
 

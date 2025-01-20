@@ -3,13 +3,13 @@ package ru.pavlentygood.cellcapture.game.app
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
-import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
-import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
 import ru.pavlentygood.cellcapture.game.domain.CreateParty
 import ru.pavlentygood.cellcapture.game.domain.RestoreParty
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.persistence.SavePartyToDatabase
+import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
+import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
+import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
 
 @Configuration
 @ComponentScan("ru.pavlentygood.cellcapture.game.rest")
