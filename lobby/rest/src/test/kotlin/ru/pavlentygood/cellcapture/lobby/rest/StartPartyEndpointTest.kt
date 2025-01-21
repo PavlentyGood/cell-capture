@@ -2,6 +2,8 @@ package ru.pavlentygood.cellcapture.lobby.rest
 
 import arrow.core.left
 import arrow.core.right
+import io.kotest.data.row
+import io.kotest.inspectors.forAll
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpStatus.*
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
@@ -37,13 +40,20 @@ class StartPartyEndpointTest {
     }
 
     @Test
-    fun `start party - any client error`() {
-        val playerId = playerId()
+    fun `start party - use case errors`() {
+        listOf(
+            row(StartPartyUseCase.PlayerNotFound, NOT_FOUND),
+            row(StartPartyUseCase.PlayerNotOwner, FORBIDDEN),
+            row(StartPartyUseCase.TooFewPlayers, UNPROCESSABLE_ENTITY),
+            row(StartPartyUseCase.AlreadyStarted, UNPROCESSABLE_ENTITY)
+        ).forAll { (useCaseError, status) ->
+            val playerId = playerId()
 
-        every { startParty(playerId) } returns StartPartyUseCase.PlayerNotFound.left()
+            every { startParty(playerId) } returns useCaseError.left()
 
-        post(playerId).andExpect {
-            status { isNotFound() }
+            post(playerId).andExpect {
+                status { isEqualTo(status.value()) }
+            }
         }
     }
 
