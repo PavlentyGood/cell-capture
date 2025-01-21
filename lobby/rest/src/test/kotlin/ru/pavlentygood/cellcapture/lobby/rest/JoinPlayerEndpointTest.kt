@@ -23,8 +23,8 @@ import ru.pavlentygood.cellcapture.lobby.usecase.PlayerCountLimitUseCaseError
 import java.util.*
 
 @WebMvcTest
-@ContextConfiguration(classes = [JoinPlayerUseCaseEndpointTest.Config::class, JoinPlayerEndpoint::class])
-class JoinPlayerUseCaseEndpointTest {
+@ContextConfiguration(classes = [JoinPlayerEndpointTest.Config::class, JoinPlayerEndpoint::class])
+class JoinPlayerEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc

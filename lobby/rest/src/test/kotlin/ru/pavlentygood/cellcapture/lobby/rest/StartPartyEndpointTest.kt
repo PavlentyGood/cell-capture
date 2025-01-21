@@ -17,8 +17,8 @@ import ru.pavlentygood.cellcapture.lobby.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
 
 @WebMvcTest
-@ContextConfiguration(classes = [StartPartyUseCaseEndpointTest.Config::class, StartPartyEndpoint::class])
-class StartPartyUseCaseEndpointTest {
+@ContextConfiguration(classes = [StartPartyEndpointTest.Config::class, StartPartyEndpoint::class])
+class StartPartyEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
