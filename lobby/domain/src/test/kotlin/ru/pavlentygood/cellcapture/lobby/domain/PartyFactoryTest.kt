@@ -9,22 +9,18 @@ class PartyFactoryTest {
 
     @Test
     fun `create party`() {
-        val ownerId = playerId()
-        val ownerName = playerName()
+        val owner = player()
 
         val generatePlayerId = mockk<GeneratePlayerId>()
-        every { generatePlayerId() } returns ownerId
+        every { generatePlayerId() } returns owner.id
 
         val partyFactory = PartyFactory(generatePlayerId)
 
-        val party: Party = partyFactory.create(ownerName)
+        val party: Party = partyFactory.create(owner.name)
 
         party.started shouldBe false
-        party.playerLimit shouldBe PlayerLimit.from(DEFAULT_PLAYER_LIMIT).getOrNull()!!
-        party.ownerId shouldBe ownerId
-        party.players.single().also {
-            it.id shouldBe ownerId
-            it.name shouldBe ownerName
-        }
+        party.playerLimit shouldBe PlayerLimit.from(DEFAULT_PLAYER_LIMIT).get()
+        party.ownerId shouldBe owner.id
+        party.players shouldBe listOf(owner)
     }
 }

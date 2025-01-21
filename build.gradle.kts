@@ -53,7 +53,7 @@ subprojects {
                 files(classDirectories.files.map {
                     fileTree(it) {
                         exclude(listOf(
-                            "**/CellCaptureApplication**",
+                            "**/**Application**",
                             "**/persistence/**"
                         ))
                     }
