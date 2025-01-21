@@ -18,8 +18,8 @@ import ru.pavlentygood.cellcapture.game.domain.playerId
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
 
 @WebMvcTest
-@ContextConfiguration(classes = [CaptureCellsUseCaseEndpointTest.Config::class, CaptureCellsEndpoint::class])
-class CaptureCellsUseCaseEndpointTest {
+@ContextConfiguration(classes = [CaptureCellsEndpointTest.Config::class, CaptureCellsEndpoint::class])
+class CaptureCellsEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc

@@ -20,8 +20,8 @@ import ru.pavlentygood.cellcapture.game.domain.playerId
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
 
 @WebMvcTest
-@ContextConfiguration(classes = [RollUseCaseEndpointTest.Config::class, RollEndpoint::class])
-internal class RollUseCaseEndpointTest {
+@ContextConfiguration(classes = [RollEndpointTest.Config::class, RollEndpoint::class])
+internal class RollEndpointTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
