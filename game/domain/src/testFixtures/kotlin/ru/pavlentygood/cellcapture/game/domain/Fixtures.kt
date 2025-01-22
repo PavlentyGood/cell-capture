@@ -14,7 +14,7 @@ fun randomInt(from: Int = 0, until: Int = 1000) =
 fun partyId() =
     PartyId(UUID.randomUUID())
 
-fun playerId(until: Int = 1000) =
+fun playerId(until: Int = 10000) =
     PlayerId(randomInt(until = until))
 
 fun playerName() =
@@ -105,10 +105,16 @@ fun playerQueue(
         currentPlayerId = owner.id
     ).get()
 
-fun partyInfo() =
+fun partyInfo(
+    ownerId: PlayerId = playerId(),
+    players: List<Player> = listOf(player(ownerId), player())
+) =
     PartyInfo(
         partyId = partyId(),
-        playerList = playerList()
+        playerList = playerList(
+            ownerId = ownerId,
+            players = players
+        )
     )
 
 fun playerList(

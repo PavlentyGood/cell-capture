@@ -2,25 +2,10 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
-import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class FieldTest {
-
-    @Test
-    fun `appoint start cells`() {
-        val maxCellCount = Field.WIDTH * Field.HEIGHT
-        val field = field()
-        val playerIds = generateSequence { playerId(until = 1000000) }
-            .take(maxCellCount)
-            .toList()
-
-        field.appointStartCells(playerIds)
-
-        field.getCells().capturedCellCount() shouldBe maxCellCount
-        field.getCells().flatMap { it.map { id -> id } } shouldContainAll playerIds
-    }
 
     @Test
     fun `capture cells`() {
