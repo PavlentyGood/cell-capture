@@ -13,14 +13,27 @@ import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
 import org.springframework.web.bind.annotation.RestController
 
 @AnalyzeClasses(
-    packages = ["ru.pavlentygood.cellcapture.lobby"],
+    packages = [Fitness.PROJECT],
     importOptions = [Fitness.DoNotIncludeAppPackage::class]
 )
 class Fitness {
 
+    companion object {
+        const val PROJECT = "ru.pavlentygood.cellcapture.lobby"
+        private const val KERNEL = "ru.pavlentygood.cellcapture.kernel"
+
+        const val DOMAIN = "$PROJECT.domain.."
+        const val USECASE = "$PROJECT.usecase.."
+        const val REST = "$PROJECT.rest.."
+        const val PERSISTENCE = "$PROJECT.persistence.."
+
+        const val KERNEL_DOMAIN = "$KERNEL.domain.."
+    }
+
     class DoNotIncludeAppPackage : ImportOption {
         override fun includes(location: Location) =
-            !location.contains("ru/pavlentygood/cellcapture/lobby/app/")
+            PROJECT.replace(".", "/")
+                .let { !location.contains("$it/app/") }
     }
 
     /**
@@ -29,7 +42,7 @@ class Fitness {
     @ArchTest
     val noCycleDependencies =
         slices()
-            .matching("ru.pavlentygood.cellcapture.lobby.(**)")
+            .matching("$PROJECT.(**)")
             .should().beFreeOfCycles()
 
     /**
@@ -38,11 +51,11 @@ class Fitness {
     @ArchTest
     val onionArchitecture =
         onionArchitecture()
-            .domainModels("..domain..")
-            .domainServices("..domain..")
-            .applicationServices("..usecase..")
-            .adapter("rest", "..rest..")
-            .adapter("persistence", "..persistence..")
+            .domainModels(DOMAIN)
+            .domainServices(DOMAIN)
+            .applicationServices(USECASE)
+            .adapter("rest", REST)
+            .adapter("persistence", PERSISTENCE)
 
     /**
      * Доменный слой имеет минимальное количество зависимостей
@@ -50,10 +63,11 @@ class Fitness {
     @ArchTest
     val domainDependencies =
         classes()
-            .that().resideInAnyPackage("..domain..")
+            .that().resideInAnyPackage(DOMAIN)
             .should().onlyDependOnClassesThat()
             .resideInAnyPackage(
-                "..domain..",
+                KERNEL_DOMAIN,
+                DOMAIN,
                 "java..",
                 "kotlin..",
                 "arrow.core..",
@@ -66,11 +80,12 @@ class Fitness {
     @ArchTest
     val useCaseDependencies =
         classes()
-            .that().resideInAnyPackage("..usecase..")
+            .that().resideInAnyPackage(USECASE)
             .should().onlyDependOnClassesThat()
             .resideInAnyPackage(
-                "..domain..",
-                "..usecase..",
+                KERNEL_DOMAIN,
+                DOMAIN,
+                USECASE,
                 "java..",
                 "kotlin..",
                 "arrow.core..",
@@ -83,7 +98,7 @@ class Fitness {
     @ArchTest
     val endpointNaming =
         classes()
-            .that().resideInAPackage("..rest..")
+            .that().resideInAPackage(REST)
             .and().areAnnotatedWith(RestController::class.java)
             .should().haveSimpleNameEndingWith("Endpoint")
 
