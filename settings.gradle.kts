@@ -1,5 +1,7 @@
 rootProject.name = "cell-capture"
 
+include("kernel:domain")
+
 include("lobby:domain")
 include("lobby:usecase")
 include("lobby:rest")
