@@ -15,8 +15,8 @@ import org.springframework.http.HttpStatus.*
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.lobby.domain.PlayerId
-import ru.pavlentygood.cellcapture.lobby.domain.playerId
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
 
 @WebMvcTest

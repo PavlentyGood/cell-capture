@@ -14,9 +14,9 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockHttpServletRequestDsl
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.lobby.domain.partyId
-import ru.pavlentygood.cellcapture.lobby.domain.playerId
-import ru.pavlentygood.cellcapture.lobby.domain.playerName
+import ru.pavlentygood.cellcapture.kernel.domain.partyId
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
+import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.PartyNotFoundUseCaseError
 import ru.pavlentygood.cellcapture.lobby.usecase.PlayerCountLimitUseCaseError

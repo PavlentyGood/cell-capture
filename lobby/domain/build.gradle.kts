@@ -1,4 +1,6 @@
 dependencies {
+    implementation(project(Module.kernelDomain))
+
     implementation(Lib.kotlinReflect)
     implementation(Lib.arrow)
 
@@ -8,4 +10,8 @@ dependencies {
     testImplementation(Lib.mockk)
 
     testRuntimeOnly(Lib.junitEngine)
+
+    testImplementation(testFixtures(project(Module.kernelDomain)))
+
+    testFixturesImplementation(testFixtures(project(Module.kernelDomain)))
 }

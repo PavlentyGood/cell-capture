@@ -10,10 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
+import ru.pavlentygood.cellcapture.kernel.domain.PartyId
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
+import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.domain.Party
-import ru.pavlentygood.cellcapture.lobby.domain.PartyId
-import ru.pavlentygood.cellcapture.lobby.domain.PlayerName
-import ru.pavlentygood.cellcapture.lobby.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.persistence.GetPartyFromDatabase
 import ru.pavlentygood.cellcapture.lobby.rest.*
 import java.util.*

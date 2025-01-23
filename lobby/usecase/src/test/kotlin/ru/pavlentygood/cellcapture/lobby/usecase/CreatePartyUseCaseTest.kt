@@ -5,9 +5,9 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
+import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.domain.PartyFactory
 import ru.pavlentygood.cellcapture.lobby.domain.party
-import ru.pavlentygood.cellcapture.lobby.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 class CreatePartyUseCaseTest {

@@ -1,25 +1,6 @@
 package ru.pavlentygood.cellcapture.lobby.domain
 
-import arrow.core.Either
-import java.util.*
-import kotlin.random.Random
-
-fun <A> Either<Any, A>.get() =
-    getOrNull()!!
-
-fun randomInt(from: Int = 0, until: Int = 1000) =
-    Random.nextInt(from, until)
-
-fun partyId() =
-    PartyId(UUID.randomUUID())
-
-fun playerId(until: Int = 1000) =
-    PlayerId(randomInt(until = until))
-
-fun playerName() =
-    PlayerName.from(
-        name = "Bob ${randomInt()}"
-    ).get()
+import ru.pavlentygood.cellcapture.kernel.domain.*
 
 fun party(
     id: PartyId = partyId(),

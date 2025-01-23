@@ -7,6 +7,8 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
+import ru.pavlentygood.cellcapture.kernel.domain.playerName
 
 class PartyTest {
 

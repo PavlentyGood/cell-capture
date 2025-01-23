@@ -4,7 +4,11 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import ru.pavlentygood.cellcapture.lobby.domain.*
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
+import ru.pavlentygood.cellcapture.lobby.domain.PlayerList
+import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
+import ru.pavlentygood.cellcapture.lobby.domain.party
+import ru.pavlentygood.cellcapture.lobby.domain.player
 
 class GetPartyByPlayerFromDatabaseTest {
 

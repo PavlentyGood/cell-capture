@@ -1,6 +1,9 @@
 object Module {
+    const val kernel = ":kernel"
     const val lobby = ":lobby"
     const val game = ":game"
+
+    const val kernelDomain = "$kernel:domain"
 
     const val lobbyDomain = "$lobby:domain"
     const val lobbyUseCase = "$lobby:usecase"

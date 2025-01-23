@@ -8,7 +8,11 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import ru.pavlentygood.cellcapture.lobby.domain.*
+import ru.pavlentygood.cellcapture.kernel.domain.partyId
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
+import ru.pavlentygood.cellcapture.kernel.domain.playerName
+import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
+import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 

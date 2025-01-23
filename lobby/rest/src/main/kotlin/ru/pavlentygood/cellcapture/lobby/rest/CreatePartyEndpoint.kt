@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import ru.pavlentygood.cellcapture.lobby.domain.PlayerName
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyResult
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
 import java.net.URI

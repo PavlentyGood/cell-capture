@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import ru.pavlentygood.cellcapture.lobby.domain.PartyId
-import ru.pavlentygood.cellcapture.lobby.domain.PlayerName
+import ru.pavlentygood.cellcapture.kernel.domain.PartyId
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerError
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.PartyNotFoundUseCaseError

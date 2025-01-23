@@ -12,10 +12,10 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.lobby.domain.PlayerId
-import ru.pavlentygood.cellcapture.lobby.domain.partyId
-import ru.pavlentygood.cellcapture.lobby.domain.playerName
-import ru.pavlentygood.cellcapture.lobby.domain.randomInt
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.partyId
+import ru.pavlentygood.cellcapture.kernel.domain.playerName
+import ru.pavlentygood.cellcapture.kernel.domain.randomInt
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyResult
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
 

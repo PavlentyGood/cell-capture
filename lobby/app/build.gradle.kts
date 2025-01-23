@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(Module.kernelDomain))
     implementation(project(Module.lobbyDomain))
     implementation(project(Module.lobbyUseCase))
     implementation(project(Module.lobbyRest))
@@ -20,6 +21,7 @@ dependencies {
 
     testRuntimeOnly(Lib.junitEngine)
 
+    testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))
     testImplementation(testFixtures(project(Module.lobbyRest)))
 }
