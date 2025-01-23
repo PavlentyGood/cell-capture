@@ -38,11 +38,11 @@ class Fitness {
     @ArchTest
     val onionArchitecture =
         onionArchitecture()
-            .domainModels("..domain..")
-            .domainServices("..domain..")
-            .applicationServices("..usecase..")
-            .adapter("rest", "..rest..")
-            .adapter("persistence", "..persistence..")
+            .domainModels("ru.pavlentygood.cellcapture.game.domain..")
+            .domainServices("ru.pavlentygood.cellcapture.game.domain..")
+            .applicationServices("ru.pavlentygood.cellcapture.game.usecase..")
+            .adapter("rest", "ru.pavlentygood.cellcapture.game.rest..")
+            .adapter("persistence", "ru.pavlentygood.cellcapture.game.persistence..")
 
     /**
      * Доменный слой имеет минимальное количество зависимостей
@@ -50,10 +50,11 @@ class Fitness {
     @ArchTest
     val domainDependencies =
         classes()
-            .that().resideInAnyPackage("..domain..")
+            .that().resideInAnyPackage("ru.pavlentygood.cellcapture.game.domain..")
             .should().onlyDependOnClassesThat()
             .resideInAnyPackage(
-                "..domain..",
+                "ru.pavlentygood.cellcapture.kernel.domain..",
+                "ru.pavlentygood.cellcapture.game.domain..",
                 "java..",
                 "kotlin..",
                 "arrow.core..",
@@ -66,11 +67,12 @@ class Fitness {
     @ArchTest
     val useCaseDependencies =
         classes()
-            .that().resideInAnyPackage("..usecase..")
+            .that().resideInAnyPackage("ru.pavlentygood.cellcapture.game.usecase..")
             .should().onlyDependOnClassesThat()
             .resideInAnyPackage(
-                "..domain..",
-                "..usecase..",
+                "ru.pavlentygood.cellcapture.kernel.domain..",
+                "ru.pavlentygood.cellcapture.game.domain..",
+                "ru.pavlentygood.cellcapture.game.usecase..",
                 "java..",
                 "kotlin..",
                 "arrow.core..",
@@ -83,7 +85,7 @@ class Fitness {
     @ArchTest
     val endpointNaming =
         classes()
-            .that().resideInAPackage("..rest..")
+            .that().resideInAPackage("ru.pavlentygood.cellcapture.game.rest..")
             .and().areAnnotatedWith(RestController::class.java)
             .should().haveSimpleNameEndingWith("Endpoint")
 
