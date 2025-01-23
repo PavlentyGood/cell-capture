@@ -2,6 +2,7 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import ru.pavlentygood.cellcapture.kernel.domain.randomInt
 import kotlin.math.abs
 
 class AreaTest {

@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(Module.kernelDomain))
     implementation(project(Module.gameDomain))
     implementation(project(Module.gameUseCase))
 
@@ -17,5 +18,6 @@ dependencies {
 
     testRuntimeOnly(Lib.junitEngine)
 
+    testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))
 }

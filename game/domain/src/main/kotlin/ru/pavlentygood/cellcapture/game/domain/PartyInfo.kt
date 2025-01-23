@@ -1,5 +1,7 @@
 package ru.pavlentygood.cellcapture.game.domain
 
+import ru.pavlentygood.cellcapture.kernel.domain.PartyId
+
 data class PartyInfo(
     val partyId: PartyId,
     val playerList: PlayerList

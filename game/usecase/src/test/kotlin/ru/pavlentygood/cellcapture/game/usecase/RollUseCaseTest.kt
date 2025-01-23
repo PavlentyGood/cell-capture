@@ -6,13 +6,15 @@ import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.data.row
 import io.kotest.inspectors.forAll
-import io.mockk.*
+import io.mockk.every
+import io.mockk.justRun
+import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.game.domain.Party
 import ru.pavlentygood.cellcapture.game.domain.dicePair
-import ru.pavlentygood.cellcapture.game.domain.playerId
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
 class RollUseCaseTest {
 

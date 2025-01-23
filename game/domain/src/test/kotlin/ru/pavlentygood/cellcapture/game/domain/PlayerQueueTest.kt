@@ -4,6 +4,8 @@ import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import ru.pavlentygood.cellcapture.kernel.domain.Player
+import ru.pavlentygood.cellcapture.kernel.domain.get
 
 class PlayerQueueTest {
 

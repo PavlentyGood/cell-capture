@@ -12,6 +12,7 @@ import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.rest.*
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @SpringBootTest
 @AutoConfigureMockMvc

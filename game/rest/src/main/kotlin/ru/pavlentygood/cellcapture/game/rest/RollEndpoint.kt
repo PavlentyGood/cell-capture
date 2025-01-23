@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.game.domain.DicePair
-import ru.pavlentygood.cellcapture.game.domain.PlayerId
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @RestController
 class RollEndpoint(

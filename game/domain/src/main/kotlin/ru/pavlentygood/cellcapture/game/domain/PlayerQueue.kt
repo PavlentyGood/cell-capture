@@ -2,6 +2,8 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.left
 import arrow.core.right
+import ru.pavlentygood.cellcapture.kernel.domain.Player
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 class PlayerQueue internal constructor(
     val players: List<Player>,

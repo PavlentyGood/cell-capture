@@ -1,5 +1,6 @@
 package ru.pavlentygood.cellcapture.game.domain
 
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import kotlin.random.Random
 
 class CreateParty {

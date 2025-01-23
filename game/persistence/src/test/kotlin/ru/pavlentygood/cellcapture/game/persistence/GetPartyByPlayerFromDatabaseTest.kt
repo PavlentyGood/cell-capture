@@ -4,7 +4,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.game.domain.RestoreParty
 import ru.pavlentygood.cellcapture.game.domain.party
-import ru.pavlentygood.cellcapture.game.domain.playerId
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
 class GetPartyByPlayerFromDatabaseTest {
 

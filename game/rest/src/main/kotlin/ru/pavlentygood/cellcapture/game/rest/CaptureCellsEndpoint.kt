@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.game.domain.Area
-import ru.pavlentygood.cellcapture.game.domain.PlayerId
 import ru.pavlentygood.cellcapture.game.domain.Point
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @RestController
 class CaptureCellsEndpoint(

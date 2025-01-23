@@ -14,8 +14,8 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.area
-import ru.pavlentygood.cellcapture.game.domain.playerId
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
 @WebMvcTest
 @ContextConfiguration(classes = [CaptureCellsEndpointTest.Config::class, CaptureCellsEndpoint::class])
