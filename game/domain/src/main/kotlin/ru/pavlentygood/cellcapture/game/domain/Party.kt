@@ -5,15 +5,17 @@ import arrow.core.left
 import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 
 class Party internal constructor(
-    val id: PartyId,
+    id: PartyId,
     completed: Boolean,
     dicePair: DicePair?,
     private val field: Field,
     private val playerQueue: PlayerQueue,
     val ownerId: PlayerId
-) {
+) : AggregateRoot<PartyId>(id) {
+
     var completed = completed
         private set
 
