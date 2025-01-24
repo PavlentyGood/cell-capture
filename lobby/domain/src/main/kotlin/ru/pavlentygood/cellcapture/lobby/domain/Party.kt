@@ -7,14 +7,16 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
+import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 
 class Party internal constructor(
-    val id: PartyId,
+    id: PartyId,
     started: Boolean,
     val playerLimit: PlayerLimit,
     private val playerList: PlayerList,
     val ownerId: PlayerId
-) {
+) : AggregateRoot<PartyId>(id) {
+
     var started = started
         private set
 
