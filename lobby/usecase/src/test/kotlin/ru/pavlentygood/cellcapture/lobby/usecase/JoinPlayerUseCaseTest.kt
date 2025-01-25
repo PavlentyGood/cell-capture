@@ -54,17 +54,22 @@ class JoinPlayerUseCaseTest {
     }
 
     @Test
-    fun `join player - player count limit reached`() {
-        val party = mockk<Party>()
-        every { party.joinPlayer(playerName, generatePlayerId) } returns Party.PlayerCountLimit.left()
+    fun `join player - domain errors`() {
+        mapOf(
+            Party.AlreadyStarted to AlreadyStartedUseCaseError,
+            Party.PlayerCountLimit to PlayerCountLimitUseCaseError
+        ).forEach { (domainError, useCaseError) ->
+            val party = mockk<Party>()
+            every { party.joinPlayer(playerName, generatePlayerId) } returns domainError.left()
 
-        val getParty = mockk<GetParty>()
-        every { getParty(partyId) } returns party
+            val getParty = mockk<GetParty>()
+            every { getParty(partyId) } returns party
 
-        val saveParty = mockk<SaveParty>()
+            val saveParty = mockk<SaveParty>()
 
-        val joinPlayer = JoinPlayerUseCase(getParty, saveParty, generatePlayerId)
+            val joinPlayer = JoinPlayerUseCase(getParty, saveParty, generatePlayerId)
 
-        joinPlayer(partyId, playerName) shouldBeLeft PlayerCountLimitUseCaseError
+            joinPlayer(partyId, playerName) shouldBeLeft useCaseError
+        }
     }
 }

@@ -24,6 +24,23 @@ class PartyTest {
     }
 
     @Test
+    fun `join player - party already started`() {
+        val owner = player()
+        val player = player()
+        val party = party(
+            started = true,
+            owner = owner,
+            otherPlayers = listOf(player)
+        )
+        val generatePlayerId = { playerId() }
+
+        party.joinPlayer(playerName(), generatePlayerId) shouldBeLeft Party.AlreadyStarted
+
+        party.started shouldBe true
+        party.getPlayers() shouldBe listOf(owner, player)
+    }
+
+    @Test
     fun `join player - limit`() {
         val owner = player()
         val player = player()

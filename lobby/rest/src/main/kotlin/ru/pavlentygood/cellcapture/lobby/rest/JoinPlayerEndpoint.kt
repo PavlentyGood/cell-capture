@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
-import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerError
-import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
-import ru.pavlentygood.cellcapture.lobby.usecase.PartyNotFoundUseCaseError
-import ru.pavlentygood.cellcapture.lobby.usecase.PlayerCountLimitUseCaseError
+import ru.pavlentygood.cellcapture.lobby.usecase.*
 import java.util.*
 
 @RestController
@@ -41,8 +38,9 @@ data class JoinPlayerResponse(
     val id: Int
 )
 
-fun JoinPlayerError.toRestError(): ResponseEntity<Unit> =
+fun JoinPlayerUseCaseError.toRestError(): ResponseEntity<Unit> =
     when (this) {
         PartyNotFoundUseCaseError -> ResponseEntity.notFound().build()
+        AlreadyStartedUseCaseError -> ResponseEntity.unprocessableEntity().build()
         PlayerCountLimitUseCaseError -> ResponseEntity.unprocessableEntity().build()
     }

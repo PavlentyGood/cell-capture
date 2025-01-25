@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.kernel.domain.partyId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
+import ru.pavlentygood.cellcapture.lobby.usecase.AlreadyStartedUseCaseError
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.PartyNotFoundUseCaseError
 import ru.pavlentygood.cellcapture.lobby.usecase.PlayerCountLimitUseCaseError
@@ -90,16 +91,21 @@ class JoinPlayerEndpointTest {
     }
 
     @Test
-    fun `join player - player count limit is reached`() {
-        val partyId = partyId()
+    fun `join player - usecase errors`() {
+        listOf(
+            AlreadyStartedUseCaseError,
+            PlayerCountLimitUseCaseError
+        ).forEach { useCaseError ->
+            val partyId = partyId()
 
-        every { joinPlayer(partyId, any()) } returns PlayerCountLimitUseCaseError.left()
+            every { joinPlayer(partyId, any()) } returns useCaseError.left()
 
-        post(partyId.toUUID()) {
-            contentType = MediaType.APPLICATION_JSON
-            content = mapper.writeValueAsString(JoinPlayerRequest(name = rawPlayerName))
-        }.andExpect {
-            status { isUnprocessableEntity() }
+            post(partyId.toUUID()) {
+                contentType = MediaType.APPLICATION_JSON
+                content = mapper.writeValueAsString(JoinPlayerRequest(name = rawPlayerName))
+            }.andExpect {
+                status { isUnprocessableEntity() }
+            }
         }
     }
 

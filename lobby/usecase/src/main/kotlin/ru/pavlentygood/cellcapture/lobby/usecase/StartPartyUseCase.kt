@@ -19,7 +19,7 @@ class StartPartyUseCase(
                     .mapLeft { it.toUseCaseError() }
             } ?: PlayerNotFound.left()
 
-    private fun Party.Start.toUseCaseError() =
+    private fun Party.StartPartyError.toUseCaseError() =
         when (this) {
             Party.PlayerNotOwner -> PlayerNotOwner
             Party.TooFewPlayers -> TooFewPlayers

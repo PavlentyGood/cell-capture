@@ -6,6 +6,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
+import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
@@ -14,18 +15,25 @@ class JoinPlayerUseCase(
     private val saveParty: SaveParty,
     private val generatePlayerId: GeneratePlayerId
 ) {
-    operator fun invoke(partyId: PartyId, name: PlayerName): Either<JoinPlayerError, PlayerId> =
+    operator fun invoke(partyId: PartyId, name: PlayerName): Either<JoinPlayerUseCaseError, PlayerId> =
         getParty(partyId)
             ?.let { party ->
                 party.joinPlayer(name, generatePlayerId)
-                    .mapLeft { PlayerCountLimitUseCaseError }
+                    .mapLeft { it.toUseCaseError() }
                     .map { playerId ->
                         saveParty(party)
                         playerId
                     }
             } ?: PartyNotFoundUseCaseError.left()
+
+    private fun Party.JoinPlayerError.toUseCaseError() =
+        when (this) {
+            Party.AlreadyStarted -> AlreadyStartedUseCaseError
+            Party.PlayerCountLimit -> PlayerCountLimitUseCaseError
+        }
 }
 
-sealed class JoinPlayerError
-data object PartyNotFoundUseCaseError : JoinPlayerError()
-data object PlayerCountLimitUseCaseError : JoinPlayerError()
+sealed interface JoinPlayerUseCaseError
+data object PartyNotFoundUseCaseError : JoinPlayerUseCaseError
+data object AlreadyStartedUseCaseError : JoinPlayerUseCaseError
+data object PlayerCountLimitUseCaseError : JoinPlayerUseCaseError
