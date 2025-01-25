@@ -3,11 +3,10 @@ package ru.pavlentygood.cellcapture.game.domain
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import ru.pavlentygood.cellcapture.kernel.domain.MAX_PLAYER_COUNT
+import ru.pavlentygood.cellcapture.kernel.domain.MIN_PLAYER_COUNT
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
-
-const val MIN_PLAYER_COUNT = 2
-const val MAX_PLAYER_COUNT = 16
 
 data class PlayerList internal constructor(
     val ownerId: PlayerId,
