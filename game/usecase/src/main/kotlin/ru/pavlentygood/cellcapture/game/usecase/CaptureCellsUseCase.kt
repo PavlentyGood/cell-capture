@@ -20,7 +20,7 @@ class CaptureCellsUseCase(
                     .onRight { saveParty(party) }
             } ?: PlayerNotFound.left()
 
-    private fun Party.Capture.toUseCaseError() =
+    private fun Party.CaptureCellsError.toUseCaseError() =
         when (this) {
             Party.PlayerNotCurrent -> PlayerNotCurrent
             Party.DicesNotRolled -> DicesNotRolled

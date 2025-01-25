@@ -20,7 +20,7 @@ class RollUseCase(
                     .onRight { saveParty(party) }
             } ?: PlayerNotFound.left()
 
-    private fun Party.Roll.toUseCaseError() =
+    private fun Party.RollDicesError.toUseCaseError() =
         when (this) {
             Party.PlayerNotCurrent -> PlayerNotCurrent
             Party.DicesAlreadyRolled -> DicesAlreadyRolled

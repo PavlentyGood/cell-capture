@@ -28,46 +28,40 @@ class Party internal constructor(
 
     fun getCells() = field.getCells()
 
-    fun roll(playerId: PlayerId): Either<Roll, DicePair> =
-        if (playerId == playerQueue.currentPlayerId) {
-            if (!dicePair.isRolled()) {
+    fun roll(playerId: PlayerId): Either<RollDicesError, DicePair> =
+        when {
+            playerId != playerQueue.currentPlayerId -> PlayerNotCurrent.left()
+            dicePair.isRolled() -> DicesAlreadyRolled.left()
+            else -> {
                 dicePair = DicePair.roll()
                 dicePair!!.right()
-            } else {
-                DicesAlreadyRolled.left()
             }
-        } else {
-            PlayerNotCurrent.left()
         }
 
-    fun capture(playerId: PlayerId, area: Area): Either<Capture, Unit> =
-        if (playerId == playerQueue.currentPlayerId) {
-            if (dicePair.isRolled()) {
-                if (dicePair!!.isMatched(area)) {
-                    field.capture(playerId, area)
-                        .onRight {
-                            dicePair = null
-                            playerQueue.changeCurrentPlayer()
-                        }
-                } else {
-                    MismatchedArea.left()
+    fun capture(playerId: PlayerId, area: Area): Either<CaptureCellsError, Unit> =
+        when {
+            playerId != playerQueue.currentPlayerId -> PlayerNotCurrent.left()
+            dicePair.isNotRolled() -> DicesNotRolled.left()
+            !dicePair!!.isMatched(area) -> MismatchedArea.left()
+            else -> field.capture(playerId, area)
+                .onRight {
+                    dicePair = null
+                    playerQueue.changeCurrentPlayer()
                 }
-            } else {
-                DicesNotRolled.left()
-            }
-        } else {
-            PlayerNotCurrent.left()
         }
 
     private fun DicePair?.isRolled() =
         this != null
 
-    sealed interface Roll
-    sealed interface Capture
+    private fun DicePair?.isNotRolled() =
+        !isRolled()
 
-    data object DicesAlreadyRolled : Roll
-    data object PlayerNotCurrent : Capture, Roll
-    data object DicesNotRolled : Capture
-    data object MismatchedArea : Capture
-    data object InaccessibleArea : Capture
+    sealed interface RollDicesError
+    sealed interface CaptureCellsError
+
+    data object DicesAlreadyRolled : RollDicesError
+    data object PlayerNotCurrent : CaptureCellsError, RollDicesError
+    data object DicesNotRolled : CaptureCellsError
+    data object MismatchedArea : CaptureCellsError
+    data object InaccessibleArea : CaptureCellsError
 }
