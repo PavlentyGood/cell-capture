@@ -3,24 +3,23 @@ package ru.pavlentygood.cellcapture.lobby.domain
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import ru.pavlentygood.cellcapture.kernel.domain.PartyId
-import ru.pavlentygood.cellcapture.kernel.domain.Player
-import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
-import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
+import ru.pavlentygood.cellcapture.kernel.domain.*
 import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 
 class Party internal constructor(
     id: PartyId,
     started: Boolean,
+    players: List<Player>,
     val playerLimit: PlayerLimit,
-    private val playerList: PlayerList,
     val ownerId: PlayerId
 ) : AggregateRoot<PartyId>(id) {
 
     var started = started
         private set
 
-    val players by playerList::players
+    private val players = players.toMutableList()
+
+    fun getPlayers() = players.toList()
 
     fun joinPlayer(name: PlayerName, generatePlayerId: GeneratePlayerId) =
         if (playerLimit.isReached(players.size)) {
@@ -30,7 +29,7 @@ class Party internal constructor(
                 id = generatePlayerId(),
                 name = name
             )
-            playerList.add(player)
+            players.add(player)
             player.id.right()
         }
 

@@ -7,17 +7,13 @@ fun party(
     started: Boolean = false,
     playerLimit: Int = 2,
     owner: Player = player(),
-    otherPlayers: List<Player> = listOf(),
-    playerList: PlayerList = playerList(
-        owner = owner,
-        otherPlayers = otherPlayers
-    )
+    otherPlayers: List<Player> = listOf()
 ) =
     Party(
         id = id,
         started = started,
-        playerLimit = PlayerLimit(playerLimit),
-        playerList = playerList,
+        playerLimit = playerLimit(playerLimit),
+        players = listOf(owner).plus(otherPlayers),
         ownerId = owner.id
     )
 
@@ -27,10 +23,5 @@ fun player() =
         name = playerName()
     )
 
-fun playerList(
-    owner: Player,
-    otherPlayers: List<Player>
-) =
-    PlayerList.restore(
-        players = otherPlayers.toMutableList().apply { add(owner) }
-    )
+fun playerLimit(value: Int = 2) =
+    PlayerLimit.from(value).get()

@@ -6,6 +6,8 @@ import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import ru.pavlentygood.cellcapture.kernel.domain.MAX_PLAYER_COUNT
+import ru.pavlentygood.cellcapture.kernel.domain.MIN_PLAYER_COUNT
 import ru.pavlentygood.cellcapture.kernel.domain.randomInt
 
 class PlayerLimitTest {
@@ -18,9 +20,9 @@ class PlayerLimitTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [Int.MIN_VALUE, -1, 0, 1])
-    fun `create player limit - invalid`(limit: Int) {
-        PlayerLimit.from(limit) shouldBeLeft InvalidPlayerLimit
+    @ValueSource(ints = [MIN_PLAYER_COUNT - 1, MAX_PLAYER_COUNT + 1])
+    fun `create player limit - illegal`(limit: Int) {
+        PlayerLimit.from(limit) shouldBeLeft IllegalPlayerLimit
     }
 
     @Test
@@ -40,5 +42,5 @@ class PlayerLimitTest {
     }
 
     private fun randomPlayerCount() =
-        randomInt(from = 2)
+        randomInt(from = 2, until = MAX_PLAYER_COUNT + 1)
 }

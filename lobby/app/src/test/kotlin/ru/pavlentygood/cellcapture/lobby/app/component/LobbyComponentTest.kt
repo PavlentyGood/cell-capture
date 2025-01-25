@@ -29,7 +29,7 @@ class LobbyComponentTest {
     lateinit var getPartyFromDatabase: GetPartyFromDatabase
 
     @RepeatedTest(10)
-    fun `test all scenarios together`() {
+    fun `test all usecases together`() {
         val ownerName = playerName()
         val playerName = playerName()
 
@@ -40,9 +40,9 @@ class LobbyComponentTest {
         val party: Party = getPartyFromDatabase(created.id)
 
         party.started shouldBe true
-        party.players.size shouldBe 2
-        party.players.map { it.id.toInt() } shouldContain created.ownerId
-        party.players.map { it.name } shouldContainExactly listOf(ownerName, playerName)
+        party.getPlayers().size shouldBe 2
+        party.getPlayers().map { it.id.toInt() } shouldContain created.ownerId
+        party.getPlayers().map { it.name } shouldContainExactly listOf(ownerName, playerName)
     }
 
     private fun createParty(playerName: PlayerName) =

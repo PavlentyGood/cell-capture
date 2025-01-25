@@ -14,16 +14,16 @@ class GetPartyByPlayerFromDatabase(
 ) : GetPartyByPlayer {
     override operator fun invoke(playerId: PlayerId): Party? =
         parties.values.find { party ->
-            party.players.any { it.id == playerId }
+            party.getPlayers().any { it.id == playerId }
         }?.let { party ->
             val partyId = PartyId(party.id.toUUID())
             val started = party.started
 
             val playerLimit = PlayerLimit.from(party.playerLimit.value).getOrElse {
-                error("Invalid player limit: ${party.playerLimit.value}")
+                error("Illegal player limit: ${party.playerLimit.value}")
             }
 
-            val players = party.players.toList()
+            val players = party.getPlayers()
 
             val ownerId = PlayerId(party.ownerId.toInt())
 
@@ -33,6 +33,8 @@ class GetPartyByPlayerFromDatabase(
                 playerLimit = playerLimit,
                 players = players,
                 ownerId = ownerId
-            )
+            ).getOrElse {
+                error("Restore party error: $it. #$partyId")
+            }
         }
 }

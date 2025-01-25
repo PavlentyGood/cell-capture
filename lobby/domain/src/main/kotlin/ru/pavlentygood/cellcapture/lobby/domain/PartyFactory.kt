@@ -16,7 +16,7 @@ class PartyFactory(
             id = PartyId(UUID.randomUUID()),
             started = false,
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
-            playerList = PlayerList.create(firstPlayer = owner),
+            players = listOf(owner),
             ownerId = owner.id
         )
     }
