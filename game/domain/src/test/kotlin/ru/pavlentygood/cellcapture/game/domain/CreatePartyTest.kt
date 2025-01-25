@@ -5,6 +5,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import ru.pavlentygood.cellcapture.kernel.domain.MAX_PLAYER_COUNT
 
 class CreatePartyTest {
 
