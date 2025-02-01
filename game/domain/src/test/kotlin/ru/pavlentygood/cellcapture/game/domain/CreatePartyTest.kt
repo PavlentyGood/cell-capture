@@ -14,14 +14,11 @@ class CreatePartyTest {
         val players = generateSequence { player() }
             .take(MAX_PLAYER_COUNT)
             .toList()
-
         val owner = players.first()
-
         val partyInfo = partyInfo(
             ownerId = owner.id,
             players = players
         )
-
         val createParty = CreateParty()
 
         val party: Party = createParty(partyInfo)
@@ -31,7 +28,7 @@ class CreatePartyTest {
         party.dicePair shouldBe null
         party.ownerId shouldBe partyInfo.ownerId
         party.currentPlayerId shouldBe partyInfo.ownerId
-        party.players shouldContainExactly partyInfo.players
+        party.getPlayers() shouldContainExactly partyInfo.players
         party.getCells() shouldHaveSize Field.HEIGHT
         party.getCells()[0] shouldHaveSize Field.WIDTH
         party.getCells().capturedCellCount() shouldBe partyInfo.players.size

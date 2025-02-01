@@ -15,7 +15,7 @@ class GetPartyByPlayerFromDatabase(
 ) : GetPartyByPlayer {
     override operator fun invoke(playerId: PlayerId): Party? =
         parties.values.find { party ->
-            party.players.any { it.id == playerId }
+            party.getPlayers().any { it.id == playerId }
         }?.let { party ->
             val partyId = PartyId(party.id.toUUID())
             val completed = party.completed
@@ -33,7 +33,7 @@ class GetPartyByPlayerFromDatabase(
 
             val cells = party.getCells()
 
-            val players = party.players.toList()
+            val players = party.getPlayers()
 
             val currentPlayerId = PlayerId(party.currentPlayerId.toInt())
 

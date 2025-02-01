@@ -4,10 +4,9 @@ import arrow.core.left
 import arrow.core.right
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import io.mockk.every
-import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
@@ -15,160 +14,112 @@ import ru.pavlentygood.cellcapture.kernel.domain.playerId
 class PartyTest {
 
     @Test
-    fun `roll - player not current`() {
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns playerId()
-
-        val party = party(
-            playerQueue = playerQueue
-        )
-
-        party.roll(playerId()) shouldBeLeft Party.PlayerNotCurrent
-
-        party.completed shouldBe false
-    }
-
-    @Test
-    fun `roll - dices already rolled`() {
-        val currentPlayerId = playerId()
-        val dicePair = dicePair()
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns currentPlayerId
-
-        val party = party(
-            dicePair = dicePair,
-            playerQueue = playerQueue
-        )
-
-        party.roll(currentPlayerId) shouldBeLeft Party.DicesAlreadyRolled
-
-        party.completed shouldBe false
-        party.dicePair shouldBe dicePair
-    }
-
-    @Test
     fun `roll dices`() {
-        val currentPlayerId = playerId()
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns currentPlayerId
-
+        val player = player()
         val party = party(
             dicePair = null,
-            playerQueue = playerQueue
+            currentPlayer = player
         )
 
-        val rolledDice = party.roll(currentPlayerId).shouldBeRight()
+        val rolledDice = party.roll(player.id).shouldBeRight()
 
-        party.completed shouldBe false
-        party.dicePair shouldNotBe null
+        party.dicePair.shouldNotBeNull()
         party.dicePair shouldBe rolledDice
     }
 
     @Test
-    fun `capture - player not current`() {
-        val area = area()
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns playerId()
-
-        val party = party(
-            playerQueue = playerQueue
-        )
-
-        party.capture(playerId(), area) shouldBeLeft Party.PlayerNotCurrent
-
-        party.completed shouldBe false
+    fun `roll dices - player not current`() {
+        val party = party()
+        party.roll(playerId()) shouldBeLeft Party.PlayerNotCurrent
     }
 
     @Test
-    fun `capture - dices not rolled`() {
-        val area = area()
-        val currentPlayerId = playerId()
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns currentPlayerId
-
-        val party = party(
-            dicePair = null,
-            playerQueue = playerQueue
-        )
-
-        party.capture(currentPlayerId, area) shouldBeLeft Party.DicesNotRolled
-
-        party.completed shouldBe false
-        party.dicePair shouldBe null
-    }
-
-    @Test
-    fun `capture - mismatched area`() {
-        val area = area()
-        val currentPlayerId = playerId()
-
-        val dicePair = mockk<DicePair>()
-        every { dicePair.isMatched(area) } returns false
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns currentPlayerId
-
+    fun `roll dices - dices already rolled`() {
+        val player = player()
+        val dicePair = dicePair()
         val party = party(
             dicePair = dicePair,
-            playerQueue = playerQueue
+            currentPlayer = player
         )
 
-        party.capture(currentPlayerId, area) shouldBeLeft Party.MismatchedArea
+        party.roll(player.id) shouldBeLeft Party.DicesAlreadyRolled
 
-        party.completed shouldBe false
-        party.dicePair shouldBe dicePair
-    }
-
-    @Test
-    fun `capture - inaccessible area`() {
-        val area = area()
-        val field = mockk<Field>()
-        val currentPlayerId = playerId()
-        val dicePair = dicePairFor(area)
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns currentPlayerId
-
-        val party = party(
-            dicePair = dicePair,
-            field = field,
-            playerQueue = playerQueue
-        )
-
-        every { field.capture(currentPlayerId, area) } returns Party.InaccessibleArea.left()
-
-        party.capture(currentPlayerId, area) shouldBeLeft Party.InaccessibleArea
-
-        party.completed shouldBe false
         party.dicePair shouldBe dicePair
     }
 
     @Test
     fun `capture cells`() {
         val area = area()
-        val currentPlayerId = playerId()
+        val player = player()
+        val nextPlayer = player()
 
         val field = mockk<Field>()
-        every { field.capture(currentPlayerId, area) } returns Unit.right()
-
-        val playerQueue = mockk<PlayerQueue>()
-        every { playerQueue.currentPlayerId } returns currentPlayerId
-        justRun { playerQueue.changeCurrentPlayer() }
+        every { field.capture(player.id, area) } returns Unit.right()
 
         val party = party(
             dicePair = dicePairFor(area),
             field = field,
-            playerQueue = playerQueue
+            currentPlayer = player,
+            otherPlayers = listOf(player, nextPlayer)
         )
 
-        party.capture(currentPlayerId, area) shouldBeRight Unit
+        party.capture(player.id, area) shouldBeRight Unit
 
-        party.completed shouldBe false
         party.dicePair shouldBe null
+        party.currentPlayerId shouldBe nextPlayer.id
+    }
+
+    @Test
+    fun `capture cells - player not current`() {
+        val area = area()
+        val party = party()
+
+        party.capture(playerId(), area) shouldBeLeft Party.PlayerNotCurrent
+    }
+
+    @Test
+    fun `capture cells - dices not rolled`() {
+        val area = area()
+        val player = player()
+        val party = party(
+            dicePair = null,
+            currentPlayer = player
+        )
+
+        party.capture(player.id, area) shouldBeLeft Party.DicesNotRolled
+    }
+
+    @Test
+    fun `capture cells - mismatched area`() {
+        val area = area()
+        val player = player()
+
+        val dicePair = mockk<DicePair>()
+        every { dicePair.isMatched(area) } returns false
+
+        val party = party(
+            dicePair = dicePair,
+            currentPlayer = player
+        )
+
+        party.capture(player.id, area) shouldBeLeft Party.MismatchedArea
+    }
+
+    @Test
+    fun `capture cells - inaccessible area`() {
+        val area = area()
+        val player = player()
+        val field = mockk<Field>()
+        val dicePair = dicePairFor(area)
+        val party = party(
+            dicePair = dicePair,
+            field = field,
+            currentPlayer = player
+        )
+
+        every { field.capture(player.id, area) } returns Party.InaccessibleArea.left()
+
+        party.capture(player.id, area) shouldBeLeft Party.InaccessibleArea
     }
 
     private fun dicePairFor(area: Area) =

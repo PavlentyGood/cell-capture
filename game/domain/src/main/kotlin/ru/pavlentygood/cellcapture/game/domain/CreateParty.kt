@@ -11,8 +11,9 @@ class CreateParty {
             completed = false,
             dicePair = null,
             field = createField(partyInfo.playerList),
-            playerQueue = PlayerQueue.create(partyInfo.playerList),
-            ownerId = partyInfo.ownerId
+            ownerId = partyInfo.ownerId,
+            currentPlayerId = partyInfo.ownerId,
+            players = partyInfo.players
         )
     }
 

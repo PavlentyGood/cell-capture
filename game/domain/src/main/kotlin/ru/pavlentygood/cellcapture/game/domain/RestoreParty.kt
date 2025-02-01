@@ -2,6 +2,8 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.Either
 import arrow.core.flatMap
+import arrow.core.left
+import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
@@ -21,10 +23,7 @@ class RestoreParty {
             ownerId = ownerId,
             players = players
         ).flatMap { playerList ->
-            PlayerQueue.restore(
-                playerList = playerList,
-                currentPlayerId = currentPlayerId
-            ).map { playerQueue ->
+            if (playerList.playerIds.contains(currentPlayerId)) {
                 Party(
                     id = id,
                     completed = completed,
@@ -32,9 +31,14 @@ class RestoreParty {
                     field = Field(
                         cells = cells
                     ),
-                    playerQueue = playerQueue,
-                    ownerId = ownerId
-                )
+                    ownerId = ownerId,
+                    currentPlayerId = currentPlayerId,
+                    players = playerList.players
+                ).right()
+            } else {
+                IllegalCurrentPlayerId.left()
             }
         }
 }
+
+data object IllegalCurrentPlayerId

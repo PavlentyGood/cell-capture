@@ -22,7 +22,7 @@ class GetPartyByPlayerFromDatabaseTest {
             completed shouldBe false
             dicePair shouldBe party.dicePair
             getCells() shouldBe party.getCells()
-            players shouldBe party.players
+            getPlayers() shouldBe party.getPlayers()
             currentPlayerId shouldBe party.currentPlayerId
             ownerId shouldBe ownerId
         }
