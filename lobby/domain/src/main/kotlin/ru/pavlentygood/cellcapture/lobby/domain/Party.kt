@@ -5,6 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.*
 import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 class Party internal constructor(
     id: PartyId,
@@ -49,8 +50,8 @@ class Party internal constructor(
             }
         }
 
-    sealed interface JoinPlayerError
-    sealed interface StartPartyError
+    sealed interface JoinPlayerError : DomainError
+    sealed interface StartPartyError : DomainError
 
     data object PlayerCountLimit : JoinPlayerError
     data object PlayerNotOwner : StartPartyError

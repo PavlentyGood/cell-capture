@@ -7,6 +7,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.MIN_PLAYER_COUNT
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 class RestoreParty {
 
@@ -32,7 +33,7 @@ class RestoreParty {
         }
 }
 
-sealed interface RestorePartyError
+sealed interface RestorePartyError : DomainError
 data object TooFewPlayers : RestorePartyError
 data object TooManyPlayers : RestorePartyError
 data object IllegalOwnerId : RestorePartyError

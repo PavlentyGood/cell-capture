@@ -4,6 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.MAX_PLAYER_COUNT
 import ru.pavlentygood.cellcapture.kernel.domain.MIN_PLAYER_COUNT
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 data class PlayerLimit internal constructor(
     val value: Int
@@ -23,4 +24,4 @@ data class PlayerLimit internal constructor(
     }
 }
 
-object IllegalPlayerLimit
+object IllegalPlayerLimit : DomainError
