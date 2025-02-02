@@ -2,6 +2,7 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.left
 import arrow.core.right
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 import kotlin.random.Random
 
 data class Dice internal constructor(
@@ -24,5 +25,5 @@ data class Dice internal constructor(
             }
     }
 
-    data object InvalidValue
+    data object InvalidValue : DomainError
 }

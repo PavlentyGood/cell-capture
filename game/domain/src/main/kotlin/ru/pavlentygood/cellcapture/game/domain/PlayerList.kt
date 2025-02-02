@@ -7,6 +7,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.MAX_PLAYER_COUNT
 import ru.pavlentygood.cellcapture.kernel.domain.MIN_PLAYER_COUNT
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 data class PlayerList internal constructor(
     val ownerId: PlayerId,
@@ -39,7 +40,7 @@ data class PlayerList internal constructor(
     }
 }
 
-sealed interface PartyInfoError
+sealed interface PartyInfoError : DomainError
 data object IllegalOwnerId : PartyInfoError
 data object IllegalPlayerCount : PartyInfoError
 data object DuplicatePlayerIds : PartyInfoError

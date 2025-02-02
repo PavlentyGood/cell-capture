@@ -2,6 +2,7 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.left
 import arrow.core.right
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 data class Point internal constructor(
     val x: Int,
@@ -18,5 +19,5 @@ data class Point internal constructor(
             }
     }
 
-    data object InvalidValue
+    data object InvalidValue : DomainError
 }

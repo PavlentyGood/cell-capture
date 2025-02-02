@@ -7,6 +7,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 class Party internal constructor(
     id: PartyId,
@@ -68,8 +69,8 @@ class Party internal constructor(
         currentPlayerId = nextPlayer.id
     }
 
-    sealed interface RollDicesError
-    sealed interface CaptureCellsError
+    sealed interface RollDicesError : DomainError
+    sealed interface CaptureCellsError : DomainError
 
     data object DicesAlreadyRolled : RollDicesError
     data object PlayerNotCurrent : CaptureCellsError, RollDicesError
