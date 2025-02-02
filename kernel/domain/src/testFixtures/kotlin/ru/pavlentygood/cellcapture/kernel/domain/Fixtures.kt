@@ -1,10 +1,11 @@
 package ru.pavlentygood.cellcapture.kernel.domain
 
 import arrow.core.Either
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 import java.util.*
 import kotlin.random.Random
 
-fun <A> Either<Any, A>.get() =
+fun <A> Either<DomainError, A>.get() =
     onLeft { throw Exception("Either test error: $it") }
         .getOrNull()!!
 
