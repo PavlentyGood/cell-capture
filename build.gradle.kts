@@ -54,7 +54,8 @@ subprojects {
                     fileTree(it) {
                         exclude(listOf(
                             "**/**Application**",
-                            "**/persistence/**"
+                            "**/persistence/**",
+                            "**/kernel/domain/base/**"
                         ))
                     }
                 })
