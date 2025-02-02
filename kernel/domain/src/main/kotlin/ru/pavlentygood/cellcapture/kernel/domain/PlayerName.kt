@@ -3,6 +3,7 @@ package ru.pavlentygood.cellcapture.kernel.domain
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 data class PlayerName internal constructor(
     private val value: String
@@ -23,4 +24,4 @@ data class PlayerName internal constructor(
     }
 }
 
-object IllegalPlayerNameLength
+object IllegalPlayerNameLength : DomainError
