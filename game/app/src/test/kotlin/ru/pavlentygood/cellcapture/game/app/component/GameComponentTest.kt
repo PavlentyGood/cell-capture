@@ -35,12 +35,12 @@ class GameComponentTest {
         val startCellCount = party.getCells().capturedCellCount()
         val startCell = party.getCells().findStartCell(ownerId)
 
-        val dicePair = roll(ownerId)
+        val dices = roll(ownerId)
 
-        captureCells(ownerId, dicePair, startCell)
+        captureCells(ownerId, dices, startCell)
 
         val partyAfterCapture = getPartyByPlayer(ownerId)!!
-        val expectedCapturedCellCount = startCellCount + dicePair.first * dicePair.second
+        val expectedCapturedCellCount = startCellCount + dices.first * dices.second
 
         partyAfterCapture.getCells().capturedCellCount() shouldBe expectedCapturedCellCount
     }
@@ -60,17 +60,17 @@ class GameComponentTest {
             .andExpect { status { isOk() } }
             .andReturn().response.contentAsString
             .let { mapper.readValue(it, RollEndpoint.RollResponse::class.java) }
-            .dicePair
+            .dices
 
     private fun captureCells(
         playerId: PlayerId,
-        dicePair: RollEndpoint.DicePairResponse,
+        dices: RollEndpoint.DicesResponse,
         startCell: Cell,
     ) {
         val x1 = startCell.x + 1
-        val x2 = x1 + dicePair.first - 1
+        val x2 = x1 + dices.first - 1
         val y1 = startCell.y
-        val y2 = y1 + dicePair.second - 1
+        val y2 = y1 + dices.second - 1
         val request = CaptureCellsEndpoint.Request(
             first = CaptureCellsEndpoint.Request.Point(x = x1, y = y1),
             second = CaptureCellsEndpoint.Request.Point(x = x2, y = y2)

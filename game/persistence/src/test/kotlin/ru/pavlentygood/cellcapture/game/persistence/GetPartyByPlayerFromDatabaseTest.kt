@@ -20,7 +20,7 @@ class GetPartyByPlayerFromDatabaseTest {
         getPartyByPlayer(party.ownerId)!!.apply {
             id shouldBe party.id
             completed shouldBe false
-            dicePair shouldBe party.dicePair
+            dices shouldBe party.dices
             getCells() shouldBe party.getCells()
             getPlayers() shouldBe party.getPlayers()
             currentPlayerId shouldBe party.currentPlayerId
@@ -31,7 +31,6 @@ class GetPartyByPlayerFromDatabaseTest {
     @Test
     fun `get party by player - not found`() {
         val getPartyByPlayer = GetPartyByPlayerFromDatabase(mutableMapOf(), RestoreParty())
-
         getPartyByPlayer(playerId()) shouldBe null
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.game.domain.dicePair
+import ru.pavlentygood.cellcapture.game.domain.dices
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
@@ -54,15 +54,15 @@ internal class RollEndpointTest {
     @Test
     fun `roll dices`() {
         val playerId = playerId()
-        val dicePair = dicePair()
+        val dices = dices()
 
-        every { roll(playerId) } returns dicePair.right()
+        every { roll(playerId) } returns dices.right()
 
         post(playerId).andExpect {
             status { isOk() }
             content {
-                jsonPath("$.dicePair.first") { value(dicePair.first.value) }
-                jsonPath("$.dicePair.second") { value(dicePair.second.value) }
+                jsonPath("$.dices.first") { value(dices.first.value) }
+                jsonPath("$.dices.second") { value(dices.second.value) }
             }
         }
     }

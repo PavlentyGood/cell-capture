@@ -4,8 +4,8 @@ import arrow.core.left
 import arrow.core.right
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
@@ -17,14 +17,14 @@ class PartyTest {
     fun `roll dices`() {
         val player = player()
         val party = party(
-            dicePair = null,
+            dices = Dices.notRolled(),
             currentPlayer = player
         )
 
-        val rolledDice = party.roll(player.id).shouldBeRight()
+        val rolledDices = party.roll(player.id).shouldBeRight()
 
-        party.dicePair.shouldNotBeNull()
-        party.dicePair shouldBe rolledDice
+        party.dices shouldBe rolledDices
+        rolledDices shouldNotBe Dices.notRolled()
     }
 
     @Test
@@ -36,15 +36,15 @@ class PartyTest {
     @Test
     fun `roll dices - dices already rolled`() {
         val player = player()
-        val dicePair = dicePair()
+        val dices = dices()
         val party = party(
-            dicePair = dicePair,
+            dices = dices,
             currentPlayer = player
         )
 
         party.roll(player.id) shouldBeLeft Party.DicesAlreadyRolled
 
-        party.dicePair shouldBe dicePair
+        party.dices shouldBe dices
     }
 
     @Test
@@ -57,7 +57,7 @@ class PartyTest {
         every { field.capture(player.id, area) } returns Unit.right()
 
         val party = party(
-            dicePair = dicePairFor(area),
+            dices = dicesFor(area),
             field = field,
             currentPlayer = player,
             otherPlayers = listOf(player, nextPlayer)
@@ -65,7 +65,7 @@ class PartyTest {
 
         party.capture(player.id, area) shouldBeRight Unit
 
-        party.dicePair shouldBe null
+        party.dices shouldBe Dices.notRolled()
         party.currentPlayerId shouldBe nextPlayer.id
     }
 
@@ -82,7 +82,7 @@ class PartyTest {
         val area = area()
         val player = player()
         val party = party(
-            dicePair = null,
+            dices = Dices.notRolled(),
             currentPlayer = player
         )
 
@@ -94,11 +94,11 @@ class PartyTest {
         val area = area()
         val player = player()
 
-        val dicePair = mockk<DicePair>()
-        every { dicePair.isMatched(area) } returns false
+        val dices = mockk<Dices>()
+        every { dices.isMatched(area) } returns false.right()
 
         val party = party(
-            dicePair = dicePair,
+            dices = dices,
             currentPlayer = player
         )
 
@@ -110,9 +110,9 @@ class PartyTest {
         val area = area()
         val player = player()
         val field = mockk<Field>()
-        val dicePair = dicePairFor(area)
+        val dices = dicesFor(area)
         val party = party(
-            dicePair = dicePair,
+            dices = dices,
             field = field,
             currentPlayer = player
         )
@@ -122,8 +122,8 @@ class PartyTest {
         party.capture(player.id, area) shouldBeLeft Party.InaccessibleArea
     }
 
-    private fun dicePairFor(area: Area) =
-        mockk<DicePair>().also {
-            every { it.isMatched(area) } returns true
+    private fun dicesFor(area: Area) =
+        mockk<Dices>().also {
+            every { it.isMatched(area) } returns true.right()
         }
 }

@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.pavlentygood.cellcapture.game.domain.DicePair
+import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
@@ -17,23 +17,23 @@ class RollEndpoint(
         roll(PlayerId(playerId))
             .fold(
                 { it.toError() },
-                { dicePair ->
-                    val response = RollResponse(dicePair.toResponse())
+                { dices ->
+                    val response = RollResponse(dices.toResponse())
                     ResponseEntity.ok(response)
                 }
             )
 
     data class RollResponse(
-        val dicePair: DicePairResponse
+        val dices: DicesResponse
     )
 
-    data class DicePairResponse(
+    data class DicesResponse(
         val first: Int,
         val second: Int
     )
 
-    private fun DicePair.toResponse() =
-        DicePairResponse(first.value, second.value)
+    private fun RolledDices.toResponse() =
+        DicesResponse(first.value, second.value)
 
     private fun RollUseCase.Error.toError(): ResponseEntity<Unit> =
         when (this) {

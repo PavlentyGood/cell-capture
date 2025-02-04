@@ -9,7 +9,7 @@ class CreateParty {
         return Party(
             id = partyInfo.partyId,
             completed = false,
-            dicePair = null,
+            dices = Dices.notRolled(),
             field = createField(partyInfo.playerList),
             ownerId = partyInfo.ownerId,
             currentPlayerId = partyInfo.ownerId,

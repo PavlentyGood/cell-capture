@@ -1,8 +1,8 @@
 package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.Either
+import arrow.core.flatMap
 import arrow.core.left
-import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
@@ -12,7 +12,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 class Party internal constructor(
     id: PartyId,
     completed: Boolean,
-    dicePair: DicePair?,
+    dices: Dices,
     private val field: Field,
     val ownerId: PlayerId,
     currentPlayerId: PlayerId,
@@ -22,7 +22,7 @@ class Party internal constructor(
     var completed = completed
         private set
 
-    var dicePair = dicePair
+    var dices = dices
         private set
 
     var currentPlayerId = currentPlayerId
@@ -34,33 +34,31 @@ class Party internal constructor(
 
     fun getCells() = field.getCells()
 
-    fun roll(playerId: PlayerId): Either<RollDicesError, DicePair> =
+    fun roll(playerId: PlayerId): Either<RollDicesError, RolledDices> =
         when {
             playerId != currentPlayerId -> PlayerNotCurrent.left()
-            dicePair.isRolled() -> DicesAlreadyRolled.left()
-            else -> {
-                dicePair = DicePair.roll()
-                dicePair!!.right()
-            }
+            else -> dices.roll()
+                .onRight { rolledDices ->
+                    dices = rolledDices
+                }
         }
 
     fun capture(playerId: PlayerId, area: Area): Either<CaptureCellsError, Unit> =
         when {
             playerId != currentPlayerId -> PlayerNotCurrent.left()
-            dicePair.isNotRolled() -> DicesNotRolled.left()
-            !dicePair!!.isMatched(area) -> MismatchedArea.left()
-            else -> field.capture(playerId, area)
-                .onRight {
-                    dicePair = null
-                    changeCurrentPlayer()
+            else -> dices.isMatched(area)
+                .flatMap { matched ->
+                    if (matched) {
+                        field.capture(playerId, area)
+                            .onRight {
+                                dices = Dices.notRolled()
+                                changeCurrentPlayer()
+                            }
+                    } else {
+                        MismatchedArea.left()
+                    }
                 }
         }
-
-    private fun DicePair?.isRolled() =
-        this != null
-
-    private fun DicePair?.isNotRolled() =
-        !isRolled()
 
     private fun changeCurrentPlayer() {
         val currentIndex = players.indexOfFirst { it.id == currentPlayerId }

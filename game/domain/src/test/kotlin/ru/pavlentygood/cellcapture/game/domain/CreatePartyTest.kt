@@ -25,7 +25,7 @@ class CreatePartyTest {
 
         party.id shouldBe partyInfo.partyId
         party.completed shouldBe false
-        party.dicePair shouldBe null
+        party.dices shouldBe Dices.notRolled()
         party.ownerId shouldBe partyInfo.ownerId
         party.currentPlayerId shouldBe partyInfo.ownerId
         party.getPlayers() shouldContainExactly partyInfo.players

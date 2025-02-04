@@ -8,13 +8,13 @@ fun party(
     owner: Player = player(),
     currentPlayer: Player = player(),
     otherPlayers: List<Player> = listOf(currentPlayer),
-    dicePair: DicePair? = dicePair(),
+    dices: Dices = dices(),
     field: Field = field()
 ) =
     Party(
         id = id,
         completed = completed,
-        dicePair = dicePair,
+        dices = dices,
         field = field,
         ownerId = owner.id,
         currentPlayerId = currentPlayer.id,
@@ -45,16 +45,8 @@ fun point(distanceToEdges: Int = 0) =
         y = randomInt(from = distanceToEdges, until = Field.HEIGHT - distanceToEdges)
     )
 
-fun dicePair() =
-    DicePair(
-        first = dice(),
-        second = dice()
-    )
-
-fun dice(value: Int = randomInt(from = 1, until = 7)) =
-    Dice.from(
-        value = value
-    ).get()
+fun dices() =
+    Dices.notRolled().roll().get()
 
 fun field(cells: Array<Array<PlayerId>> = cells()) =
     Field(

@@ -1,37 +1,37 @@
 package ru.pavlentygood.cellcapture.game.domain
 
-import io.kotest.matchers.shouldBe
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 
-class DicePairTest {
+class DicesTest {
 
     @Test
     fun `is matched area`() {
-        val dicePair = dicePair()
+        val dices = dices()
 
-        dicePair.checkMatched(dicePair.first, dicePair.second)
-        dicePair.checkMatched(dicePair.second, dicePair.first)
+        dices.checkMatched(dices.first, dices.second)
+        dices.checkMatched(dices.second, dices.first)
     }
 
-    private fun DicePair.checkMatched(first: Dice, second: Dice) {
+    private fun Dices.checkMatched(first: Dice, second: Dice) {
         val area = mockk<Area>()
         every { area.xDistance() } returns first.value - 1
         every { area.yDistance() } returns second.value - 1
 
-        isMatched(area) shouldBe true
+        isMatched(area) shouldBeRight true
     }
 
     @Test
     fun `is not matched area`() {
         val someDistanceForNotMatchedArea = 6
-        val dicePair = dicePair()
+        val dices = dices()
 
         val area = mockk<Area>()
         every { area.xDistance() } returns someDistanceForNotMatchedArea
         every { area.yDistance() } returns someDistanceForNotMatchedArea
 
-        dicePair.isMatched(area) shouldBe false
+        dices.isMatched(area) shouldBeRight false
     }
 }

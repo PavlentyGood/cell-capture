@@ -11,7 +11,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.game.domain.Party
-import ru.pavlentygood.cellcapture.game.domain.dicePair
+import ru.pavlentygood.cellcapture.game.domain.dices
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
@@ -48,14 +48,14 @@ class RollUseCaseTest {
     @Test
     fun `roll dices`() = with { roll, getPartyByPlayer, saveParty ->
         val playerId = playerId()
-        val dicePair = dicePair()
+        val dices = dices()
         val party = mockk<Party>()
 
-        every { party.roll(playerId) } returns dicePair.right()
+        every { party.roll(playerId) } returns dices.right()
         every { getPartyByPlayer(playerId) } returns party
         justRun { saveParty(party) }
 
-        roll(playerId) shouldBeRight dicePair
+        roll(playerId) shouldBeRight dices
     }
 
     private fun with(test: (RollUseCase, GetPartyByPlayer, SaveParty) -> Unit) {

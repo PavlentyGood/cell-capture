@@ -14,7 +14,7 @@ class RestoreParty {
     operator fun invoke(
         id: PartyId,
         completed: Boolean,
-        dicePair: DicePair?,
+        dices: Dices,
         cells: Array<Array<PlayerId>>,
         players: List<Player>,
         currentPlayerId: PlayerId,
@@ -28,7 +28,7 @@ class RestoreParty {
                 Party(
                     id = id,
                     completed = completed,
-                    dicePair = dicePair,
+                    dices = dices,
                     field = Field(
                         cells = cells
                     ),
