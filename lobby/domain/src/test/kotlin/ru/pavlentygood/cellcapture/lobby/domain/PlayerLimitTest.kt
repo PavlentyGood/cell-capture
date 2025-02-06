@@ -16,7 +16,7 @@ class PlayerLimitTest {
     fun `create player limit`() {
         val value = randomPlayerCount()
         PlayerLimit.from(value) shouldBe PlayerLimit.from(value)
-        PlayerLimit.from(value) shouldNotBe PlayerLimit.from(randomPlayerCount())
+        PlayerLimit.from(2) shouldNotBe PlayerLimit.from(3)
     }
 
     @ParameterizedTest
