@@ -41,7 +41,8 @@ internal class RollEndpointTest {
     fun `roll - use case errors`() {
         listOf(
             row(RollUseCase.PlayerNotCurrent),
-            row(RollUseCase.DicesAlreadyRolled)
+            row(RollUseCase.DicesAlreadyRolled),
+            row(RollUseCase.PartyAlreadyCompleted)
         ).forAll { (useCaseError) ->
             val playerId = playerId()
 

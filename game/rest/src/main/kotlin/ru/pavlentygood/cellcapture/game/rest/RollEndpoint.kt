@@ -38,7 +38,8 @@ class RollEndpoint(
     private fun RollUseCase.Error.toError(): ResponseEntity<Unit> =
         when (this) {
             RollUseCase.PlayerNotCurrent,
-            RollUseCase.DicesAlreadyRolled -> ResponseEntity.unprocessableEntity().build()
+            RollUseCase.DicesAlreadyRolled,
+            RollUseCase.PartyAlreadyCompleted -> ResponseEntity.unprocessableEntity().build()
             RollUseCase.PlayerNotFound -> ResponseEntity.notFound().build()
         }
 }

@@ -57,6 +57,7 @@ class CaptureCellsEndpoint(
             CaptureCellsUseCase.PlayerNotCurrent,
             CaptureCellsUseCase.DicesNotRolled,
             CaptureCellsUseCase.InaccessibleArea,
-            CaptureCellsUseCase.MismatchedArea -> ResponseEntity.unprocessableEntity().build()
+            CaptureCellsUseCase.MismatchedArea,
+            CaptureCellsUseCase.PartyAlreadyCompleted -> ResponseEntity.unprocessableEntity().build()
         }
 }
