@@ -6,21 +6,16 @@ import arrow.core.left
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
-import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 class Party internal constructor(
     id: PartyId,
-    completed: Boolean,
     dices: Dices,
     private val field: Field,
     val ownerId: PlayerId,
     currentPlayerId: PlayerId,
     players: List<Player>
-) : AggregateRoot<PartyId>(id) {
-
-    var completed = completed
-        private set
+) : AbstractParty(id) {
 
     var dices = dices
         private set
@@ -34,7 +29,7 @@ class Party internal constructor(
 
     fun getCells() = field.getCells()
 
-    fun roll(playerId: PlayerId): Either<RollDicesError, RolledDices> =
+    override fun roll(playerId: PlayerId): Either<RollDicesError, RolledDices> =
         when {
             playerId != currentPlayerId -> PlayerNotCurrent.left()
             else -> dices.roll()
@@ -43,7 +38,7 @@ class Party internal constructor(
                 }
         }
 
-    fun capture(playerId: PlayerId, area: Area): Either<CaptureCellsError, Unit> =
+    override fun capture(playerId: PlayerId, area: Area): Either<CaptureCellsError, Unit> =
         when {
             playerId != currentPlayerId -> PlayerNotCurrent.left()
             else -> dices.isMatched(area)

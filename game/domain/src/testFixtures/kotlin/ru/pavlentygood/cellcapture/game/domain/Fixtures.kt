@@ -4,7 +4,6 @@ import ru.pavlentygood.cellcapture.kernel.domain.*
 
 fun party(
     id: PartyId = partyId(),
-    completed: Boolean = false,
     owner: Player = player(),
     currentPlayer: Player = player(),
     otherPlayers: List<Player> = listOf(currentPlayer),
@@ -13,7 +12,6 @@ fun party(
 ) =
     Party(
         id = id,
-        completed = completed,
         dices = dices,
         field = field,
         ownerId = owner.id,

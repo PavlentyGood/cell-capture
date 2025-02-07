@@ -19,15 +19,16 @@ class RestoreParty {
         players: List<Player>,
         currentPlayerId: PlayerId,
         ownerId: PlayerId
-    ): Either<DomainError, Party> =
-        PlayerList.from(
+    ): Either<DomainError, AbstractParty> {
+        if (completed) return CompletedParty(id = id).right()
+
+        return PlayerList.from(
             ownerId = ownerId,
             players = players
         ).flatMap { playerList ->
             if (playerList.playerIds.contains(currentPlayerId)) {
                 Party(
                     id = id,
-                    completed = completed,
                     dices = dices,
                     field = Field(
                         cells = cells
@@ -40,6 +41,7 @@ class RestoreParty {
                 IllegalCurrentPlayerId.left()
             }
         }
+    }
 }
 
 data object IllegalCurrentPlayerId : DomainError

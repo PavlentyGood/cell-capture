@@ -8,7 +8,6 @@ class CreateParty {
     operator fun invoke(partyInfo: PartyInfo): Party {
         return Party(
             id = partyInfo.partyId,
-            completed = false,
             dices = Dices.notRolled(),
             field = createField(partyInfo.playerList),
             ownerId = partyInfo.ownerId,
