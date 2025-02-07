@@ -9,10 +9,10 @@ class CompletedParty(
 ) : AbstractParty(id) {
 
     override fun roll(playerId: PlayerId) =
-        PartyAlreadyCompleted.left()
+        PartyCompleted.left()
 
     override fun capture(playerId: PlayerId, area: Area) =
-        PartyAlreadyCompleted.left()
+        PartyCompleted.left()
 }
 
-data object PartyAlreadyCompleted : Party.RollDicesError, Party.CaptureCellsError
+data object PartyCompleted : Party.RollDicesError, Party.CaptureCellsError

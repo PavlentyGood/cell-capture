@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import ru.pavlentygood.cellcapture.game.domain.Area
 import ru.pavlentygood.cellcapture.game.domain.Party
+import ru.pavlentygood.cellcapture.game.domain.PartyCompleted
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
@@ -26,6 +27,7 @@ class CaptureCellsUseCase(
             Party.DicesNotRolled -> DicesNotRolled
             Party.MismatchedArea -> MismatchedArea
             Party.InaccessibleArea -> InaccessibleArea
+            PartyCompleted -> PartyAlreadyCompleted
         }
 
     sealed interface Error
@@ -34,4 +36,5 @@ class CaptureCellsUseCase(
     data object DicesNotRolled : Error
     data object MismatchedArea : Error
     data object InaccessibleArea : Error
+    data object PartyAlreadyCompleted : Error
 }

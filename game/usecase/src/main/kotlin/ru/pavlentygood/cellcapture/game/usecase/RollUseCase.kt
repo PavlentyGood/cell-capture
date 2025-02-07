@@ -3,6 +3,7 @@ package ru.pavlentygood.cellcapture.game.usecase
 import arrow.core.Either
 import arrow.core.left
 import ru.pavlentygood.cellcapture.game.domain.Party
+import ru.pavlentygood.cellcapture.game.domain.PartyCompleted
 import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
@@ -24,10 +25,12 @@ class RollUseCase(
         when (this) {
             Party.PlayerNotCurrent -> PlayerNotCurrent
             Party.DicesAlreadyRolled -> DicesAlreadyRolled
+            PartyCompleted -> PartyAlreadyCompleted
         }
 
     sealed interface Error
     data object PlayerNotFound : Error
     data object PlayerNotCurrent : Error
     data object DicesAlreadyRolled : Error
+    data object PartyAlreadyCompleted : Error
 }
