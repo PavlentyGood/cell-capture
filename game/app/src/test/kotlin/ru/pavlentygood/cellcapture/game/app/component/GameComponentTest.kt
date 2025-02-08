@@ -28,16 +28,16 @@ class GameComponentTest {
     lateinit var getPartyByPlayer: GetPartyByPlayerFromDatabase
 
     @RepeatedTest(100)
-    fun `all scenarios - createParty, roll, captureCells`() {
-        val party: Party = createParty()
+    fun `all use cases as process`() {
+        val party = createParty() // use case
 
         val ownerId = party.ownerId
         val startCellCount = party.getCells().capturedCellCount()
         val startCell = party.getCells().findStartCell(ownerId)
 
-        val dices = roll(ownerId)
+        val dices = roll(ownerId) // use case
 
-        captureCells(ownerId, dices, startCell)
+        captureCells(ownerId, dices, startCell) // use case
 
         val partyAfterCapture = getPartyByPlayer(ownerId)!!
         val expectedCapturedCellCount = startCellCount + dices.first * dices.second
@@ -45,7 +45,7 @@ class GameComponentTest {
         partyAfterCapture.getCells().capturedCellCount() shouldBe expectedCapturedCellCount
     }
 
-    private fun createParty(): Party =
+    private fun createParty(): AbstractParty =
         generateSequence {
             getPartyByPlayer.parties.clear()
             val partyInfo = partyInfo()
@@ -81,7 +81,7 @@ class GameComponentTest {
         }.andExpect { status { isOk() } }
     }
 
-    private fun Party.isStartCellFarFromSides(): Boolean {
+    private fun AbstractParty.isStartCellFarFromSides(): Boolean {
         fun Cell.isFarFromRightSide() =
             this.x + 1 + Dice.MAX < Field.WIDTH
 
@@ -92,7 +92,7 @@ class GameComponentTest {
         return cell.isFarFromRightSide() && cell.isFarFromBottomSide()
     }
 
-    private fun Party.isStartCellFarFromCapturedCells(): Boolean {
+    private fun AbstractParty.isStartCellFarFromCapturedCells(): Boolean {
         val cell = getCells().findStartCell(ownerId)
         return getCells().capturedCells().none {
             this.ownerId != it.playerId &&
