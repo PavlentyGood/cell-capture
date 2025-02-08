@@ -20,7 +20,16 @@ class RestoreParty {
         currentPlayerId: PlayerId,
         ownerId: PlayerId
     ): Either<DomainError, AbstractParty> {
-        if (completed) return CompletedParty(id = id).right()
+        if (completed) {
+            return CompletedParty(
+                id = id,
+                dices = dices,
+                cells = cells,
+                players = players,
+                currentPlayerId = currentPlayerId,
+                ownerId = ownerId
+            ).right()
+        }
 
         return PlayerList.from(
             ownerId = ownerId,

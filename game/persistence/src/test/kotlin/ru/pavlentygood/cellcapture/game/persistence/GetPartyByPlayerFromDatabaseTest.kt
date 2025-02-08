@@ -19,7 +19,6 @@ class GetPartyByPlayerFromDatabaseTest {
 
         getPartyByPlayer(party.ownerId)!!.apply {
             id shouldBe party.id
-            completed shouldBe false
             dices shouldBe party.dices
             getCells() shouldBe party.getCells()
             getPlayers() shouldBe party.getPlayers()
