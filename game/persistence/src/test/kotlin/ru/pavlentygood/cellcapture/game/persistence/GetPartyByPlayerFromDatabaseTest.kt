@@ -20,8 +20,8 @@ class GetPartyByPlayerFromDatabaseTest {
         getPartyByPlayer(party.ownerId)!!.apply {
             id shouldBe party.id
             dices shouldBe party.dices
-            getCells() shouldBe party.getCells()
-            getPlayers() shouldBe party.getPlayers()
+            cells shouldBe party.cells
+            players shouldBe party.players
             currentPlayerId shouldBe party.currentPlayerId
             ownerId shouldBe ownerId
         }

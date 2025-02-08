@@ -13,16 +13,11 @@ sealed class AbstractParty(
 ) : AggregateRoot<PartyId>(id) {
 
     abstract val ownerId: PlayerId
-
     abstract val currentPlayerId: PlayerId
-
     abstract val dices: Dices
-
-    abstract fun getPlayers(): List<Player>
-
-    abstract fun getCells(): Array<Array<PlayerId>>
+    abstract val players: List<Player>
+    abstract val cells: Array<Array<PlayerId>>
 
     abstract fun roll(playerId: PlayerId): Either<RollDicesError, RolledDices>
-
     abstract fun capture(playerId: PlayerId, area: Area): Either<CaptureCellsError, Unit>
 }

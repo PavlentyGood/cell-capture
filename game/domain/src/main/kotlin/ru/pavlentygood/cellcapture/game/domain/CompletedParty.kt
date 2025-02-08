@@ -8,15 +8,11 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 class CompletedParty(
     id: PartyId,
     override val dices: Dices,
-    private val cells: Array<Array<PlayerId>>,
+    override val cells: Array<Array<PlayerId>>,
     override val ownerId: PlayerId,
     override val currentPlayerId: PlayerId,
-    private val players: List<Player>
+    override val players: List<Player>
 ) : AbstractParty(id) {
-
-    override fun getPlayers() = players
-
-    override fun getCells() = cells.copyOf()
 
     override fun roll(playerId: PlayerId) =
         PartyCompleted.left()

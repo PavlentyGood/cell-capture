@@ -12,11 +12,8 @@ class GetPartyByPlayerFromDatabase(
 ) : GetPartyByPlayer {
     override operator fun invoke(playerId: PlayerId): AbstractParty? =
         parties.values.find { party ->
-            party.getPlayers().any { it.id == playerId }
+            party.players.any { it.id == playerId }
         }?.let { party ->
-            val partyId = PartyId(party.id.toUUID())
-            val completed = party is CompletedParty
-
             val dices = party.dices.let { d ->
                 if (d is RolledDices) {
                     RolledDices(
@@ -32,24 +29,16 @@ class GetPartyByPlayerFromDatabase(
                 }
             }
 
-            val cells = party.getCells()
-
-            val players = party.getPlayers()
-
-            val currentPlayerId = PlayerId(party.currentPlayerId.toInt())
-
-            val ownerId = PlayerId(party.ownerId.toInt())
-
             restoreParty(
-                id = partyId,
-                completed = completed,
+                id = PartyId(party.id.toUUID()),
+                completed = party is CompletedParty,
                 dices = dices,
-                cells = cells,
-                players = players,
-                currentPlayerId = currentPlayerId,
-                ownerId = ownerId
+                cells = party.cells,
+                players = party.players,
+                currentPlayerId = party.currentPlayerId,
+                ownerId = party.ownerId
             ).getOrElse {
-                error("Restore party error: $it. #$partyId")
+                error("Restore party error: $it. #${party.id}")
             }
         }
 }

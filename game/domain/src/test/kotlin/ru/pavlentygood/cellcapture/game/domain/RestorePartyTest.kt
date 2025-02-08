@@ -17,8 +17,8 @@ class RestorePartyTest {
             id = party.id,
             completed = partyCompleted,
             dices = party.dices,
-            cells = party.getCells(),
-            players = party.getPlayers(),
+            cells = party.cells,
+            players = party.players,
             currentPlayerId = party.currentPlayerId,
             ownerId = party.ownerId
         ).shouldBeRight()
@@ -26,8 +26,8 @@ class RestorePartyTest {
         restoredParty.apply {
             id shouldBe party.id
             dices shouldBe party.dices
-            getCells() shouldBe party.getCells()
-            getPlayers() shouldBe party.getPlayers()
+            cells shouldBe party.cells
+            players shouldBe party.players
             currentPlayerId shouldBe party.currentPlayerId
             ownerId shouldBe party.ownerId
         }

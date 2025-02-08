@@ -27,10 +27,10 @@ class CreatePartyTest {
         party.dices shouldBe Dices.notRolled()
         party.ownerId shouldBe partyInfo.ownerId
         party.currentPlayerId shouldBe partyInfo.ownerId
-        party.getPlayers() shouldContainExactly partyInfo.players
-        party.getCells() shouldHaveSize Field.HEIGHT
-        party.getCells()[0] shouldHaveSize Field.WIDTH
-        party.getCells().capturedCellCount() shouldBe partyInfo.players.size
-        party.getCells().flatMap { it.map { id -> id } } shouldContainAll partyInfo.playerList.playerIds
+        party.players shouldContainExactly partyInfo.players
+        party.cells shouldHaveSize Field.HEIGHT
+        party.cells[0] shouldHaveSize Field.WIDTH
+        party.cells.capturedCellCount() shouldBe partyInfo.players.size
+        party.cells.flatMap { it.map { id -> id } } shouldContainAll partyInfo.playerList.playerIds
     }
 }

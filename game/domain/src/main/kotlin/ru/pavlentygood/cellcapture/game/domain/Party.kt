@@ -14,7 +14,7 @@ class Party internal constructor(
     private val field: Field,
     override val ownerId: PlayerId,
     currentPlayerId: PlayerId,
-    players: List<Player>
+    override val players: List<Player>
 ) : AbstractParty(id) {
 
     override var currentPlayerId = currentPlayerId
@@ -23,11 +23,8 @@ class Party internal constructor(
     override var dices = dices
         private set
 
-    private val players = players.toMutableList()
-
-    override fun getPlayers() = players.toList()
-
-    override fun getCells() = field.getCells()
+    override val cells
+        get() = field.getCells()
 
     override fun roll(playerId: PlayerId): Either<RollDicesError, RolledDices> =
         when {
