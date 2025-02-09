@@ -45,7 +45,7 @@ class GameComponentTest {
         partyAfterCapture.cells.capturedCellCount() shouldBe expectedCapturedCellCount
     }
 
-    private fun createParty(): AbstractParty =
+    private fun createParty(): Party =
         generateSequence {
             getPartyByPlayer.parties.clear()
             val partyInfo = partyInfo()
@@ -81,7 +81,7 @@ class GameComponentTest {
         }.andExpect { status { isOk() } }
     }
 
-    private fun AbstractParty.isStartCellFarFromSides(): Boolean {
+    private fun Party.isStartCellFarFromSides(): Boolean {
         fun Cell.isFarFromRightSide() =
             this.x + 1 + Dice.MAX < Field.WIDTH
 
@@ -92,7 +92,7 @@ class GameComponentTest {
         return cell.isFarFromRightSide() && cell.isFarFromBottomSide()
     }
 
-    private fun AbstractParty.isStartCellFarFromCapturedCells(): Boolean {
+    private fun Party.isStartCellFarFromCapturedCells(): Boolean {
         val cell = cells.findStartCell(ownerId)
         return cells.capturedCells().none {
             this.ownerId != it.playerId &&

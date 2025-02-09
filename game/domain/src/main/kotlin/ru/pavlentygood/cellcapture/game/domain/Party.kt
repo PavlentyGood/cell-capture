@@ -6,7 +6,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 
-sealed class AbstractParty(
+sealed class Party(
     id: PartyId
 ) : AggregateRoot<PartyId>(id) {
 

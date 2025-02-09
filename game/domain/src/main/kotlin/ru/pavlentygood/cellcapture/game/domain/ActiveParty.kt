@@ -15,7 +15,7 @@ class ActiveParty internal constructor(
     override val ownerId: PlayerId,
     currentPlayerId: PlayerId,
     override val players: List<Player>
-) : AbstractParty(id) {
+) : Party(id) {
 
     override var currentPlayerId = currentPlayerId
         private set

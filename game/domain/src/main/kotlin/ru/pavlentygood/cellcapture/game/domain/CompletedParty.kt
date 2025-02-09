@@ -12,7 +12,7 @@ class CompletedParty(
     override val ownerId: PlayerId,
     override val currentPlayerId: PlayerId,
     override val players: List<Player>
-) : AbstractParty(id) {
+) : Party(id) {
 
     override fun roll(playerId: PlayerId) =
         PartyCompleted.left()

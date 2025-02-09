@@ -7,10 +7,10 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 class GetPartyByPlayerFromDatabase(
-    val parties: MutableMap<PartyId, AbstractParty>,
+    val parties: MutableMap<PartyId, Party>,
     private val restoreParty: RestoreParty
 ) : GetPartyByPlayer {
-    override operator fun invoke(playerId: PlayerId): AbstractParty? =
+    override operator fun invoke(playerId: PlayerId): Party? =
         parties.values.find { party ->
             party.players.any { it.id == playerId }
         }?.let { party ->

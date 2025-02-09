@@ -1,5 +1,5 @@
 package ru.pavlentygood.cellcapture.game.usecase.port
 
-import ru.pavlentygood.cellcapture.game.domain.AbstractParty
+import ru.pavlentygood.cellcapture.game.domain.Party
 
-fun interface SaveParty : (AbstractParty) -> Unit
+fun interface SaveParty : (Party) -> Unit

@@ -19,7 +19,7 @@ class RestoreParty {
         players: List<Player>,
         currentPlayerId: PlayerId,
         ownerId: PlayerId
-    ): Either<DomainError, AbstractParty> {
+    ): Either<DomainError, Party> {
         if (completed) {
             return CompletedParty(
                 id = id,
