@@ -46,7 +46,7 @@ class FieldTest {
 
         val field = field(cells = cells)
 
-        field.capture(playerId(), area) shouldBeLeft Party.InaccessibleArea
+        field.capture(playerId(), area) shouldBeLeft InaccessibleArea
 
         field.getCells().capturedCellCount() shouldBe 1
     }
@@ -64,6 +64,6 @@ class FieldTest {
 
         val field = field(cells = cells)
 
-        field.capture(playerId, area) shouldBeLeft Party.InaccessibleArea
+        field.capture(playerId, area) shouldBeLeft InaccessibleArea
     }
 }

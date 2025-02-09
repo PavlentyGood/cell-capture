@@ -58,13 +58,15 @@ class Party internal constructor(
         val nextPlayer = players[nextIndex]
         currentPlayerId = nextPlayer.id
     }
-
-    sealed interface RollDicesError : DomainError
-    sealed interface CaptureCellsError : DomainError
-
-    data object DicesAlreadyRolled : RollDicesError
-    data object PlayerNotCurrent : CaptureCellsError, RollDicesError
-    data object DicesNotRolled : CaptureCellsError
-    data object MismatchedArea : CaptureCellsError
-    data object InaccessibleArea : CaptureCellsError
 }
+
+sealed interface RollDicesError : DomainError
+sealed interface CaptureCellsError : DomainError
+
+data object DicesAlreadyRolled : RollDicesError
+
+data object DicesNotRolled : CaptureCellsError
+data object InaccessibleArea : CaptureCellsError
+data object MismatchedArea : CaptureCellsError
+
+data object PlayerNotCurrent : CaptureCellsError, RollDicesError

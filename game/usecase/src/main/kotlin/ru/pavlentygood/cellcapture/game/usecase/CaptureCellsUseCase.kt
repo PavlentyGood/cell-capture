@@ -2,9 +2,7 @@ package ru.pavlentygood.cellcapture.game.usecase
 
 import arrow.core.Either
 import arrow.core.left
-import ru.pavlentygood.cellcapture.game.domain.Area
-import ru.pavlentygood.cellcapture.game.domain.Party
-import ru.pavlentygood.cellcapture.game.domain.PartyCompleted
+import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
@@ -21,12 +19,12 @@ class CaptureCellsUseCase(
                     .onRight { saveParty(party) }
             } ?: PlayerNotFound.left()
 
-    private fun Party.CaptureCellsError.toUseCaseError() =
+    private fun CaptureCellsError.toUseCaseError() =
         when (this) {
-            Party.PlayerNotCurrent -> PlayerNotCurrent
-            Party.DicesNotRolled -> DicesNotRolled
-            Party.MismatchedArea -> MismatchedArea
-            Party.InaccessibleArea -> InaccessibleArea
+            ru.pavlentygood.cellcapture.game.domain.PlayerNotCurrent -> PlayerNotCurrent
+            ru.pavlentygood.cellcapture.game.domain.DicesNotRolled -> DicesNotRolled
+            ru.pavlentygood.cellcapture.game.domain.MismatchedArea -> MismatchedArea
+            ru.pavlentygood.cellcapture.game.domain.InaccessibleArea -> InaccessibleArea
             PartyCompleted -> PartyAlreadyCompleted
         }
 

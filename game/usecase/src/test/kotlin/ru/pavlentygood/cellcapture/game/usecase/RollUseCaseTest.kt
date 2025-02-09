@@ -10,9 +10,7 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import ru.pavlentygood.cellcapture.game.domain.Party
-import ru.pavlentygood.cellcapture.game.domain.PartyCompleted
-import ru.pavlentygood.cellcapture.game.domain.dices
+import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
@@ -31,8 +29,8 @@ class RollUseCaseTest {
     @Test
     fun `roll - domain errors`() {
         listOf(
-            row(Party.PlayerNotCurrent, RollUseCase.PlayerNotCurrent),
-            row(Party.DicesAlreadyRolled, RollUseCase.DicesAlreadyRolled),
+            row(PlayerNotCurrent, RollUseCase.PlayerNotCurrent),
+            row(DicesAlreadyRolled, RollUseCase.DicesAlreadyRolled),
             row(PartyCompleted, RollUseCase.PartyAlreadyCompleted)
         ).forAll { (domainError, useCaseError) ->
             with { roll, getPartyByPlayer, _ ->

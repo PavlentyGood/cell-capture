@@ -30,7 +30,7 @@ class PartyTest {
     @Test
     fun `roll dices - player not current`() {
         val party = party()
-        party.roll(playerId()) shouldBeLeft Party.PlayerNotCurrent
+        party.roll(playerId()) shouldBeLeft PlayerNotCurrent
     }
 
     @Test
@@ -42,7 +42,7 @@ class PartyTest {
             currentPlayer = player
         )
 
-        party.roll(player.id) shouldBeLeft Party.DicesAlreadyRolled
+        party.roll(player.id) shouldBeLeft DicesAlreadyRolled
 
         party.dices shouldBe dices
     }
@@ -74,7 +74,7 @@ class PartyTest {
         val area = area()
         val party = party()
 
-        party.capture(playerId(), area) shouldBeLeft Party.PlayerNotCurrent
+        party.capture(playerId(), area) shouldBeLeft PlayerNotCurrent
     }
 
     @Test
@@ -86,7 +86,7 @@ class PartyTest {
             currentPlayer = player
         )
 
-        party.capture(player.id, area) shouldBeLeft Party.DicesNotRolled
+        party.capture(player.id, area) shouldBeLeft DicesNotRolled
     }
 
     @Test
@@ -102,7 +102,7 @@ class PartyTest {
             currentPlayer = player
         )
 
-        party.capture(player.id, area) shouldBeLeft Party.MismatchedArea
+        party.capture(player.id, area) shouldBeLeft MismatchedArea
     }
 
     @Test
@@ -117,9 +117,9 @@ class PartyTest {
             currentPlayer = player
         )
 
-        every { field.capture(player.id, area) } returns Party.InaccessibleArea.left()
+        every { field.capture(player.id, area) } returns InaccessibleArea.left()
 
-        party.capture(player.id, area) shouldBeLeft Party.InaccessibleArea
+        party.capture(player.id, area) shouldBeLeft InaccessibleArea
     }
 
     private fun dicesFor(area: Area) =

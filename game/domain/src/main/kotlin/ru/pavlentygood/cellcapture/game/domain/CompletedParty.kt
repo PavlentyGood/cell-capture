@@ -21,4 +21,4 @@ class CompletedParty(
         PartyCompleted.left()
 }
 
-data object PartyCompleted : Party.RollDicesError, Party.CaptureCellsError
+data object PartyCompleted : RollDicesError, CaptureCellsError

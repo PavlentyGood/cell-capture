@@ -8,8 +8,8 @@ const val DICE_CORRECTION = 1
 
 abstract class Dices {
 
-    abstract fun roll(): Either<Party.DicesAlreadyRolled, RolledDices>
-    abstract fun isMatched(area: Area): Either<Party.DicesNotRolled, Boolean>
+    abstract fun roll(): Either<DicesAlreadyRolled, RolledDices>
+    abstract fun isMatched(area: Area): Either<DicesNotRolled, Boolean>
 
     companion object {
         fun notRolled() = NotRolledDices
@@ -22,7 +22,7 @@ data class RolledDices(
 ) : Dices() {
 
     override fun roll() =
-        Party.DicesAlreadyRolled.left()
+        DicesAlreadyRolled.left()
 
     override fun isMatched(area: Area) =
         (area.isMatched(first, second) || area.isMatched(second, first)).right()
@@ -43,5 +43,5 @@ data object NotRolledDices : Dices() {
         ).right()
 
     override fun isMatched(area: Area) =
-        Party.DicesNotRolled.left()
+        DicesNotRolled.left()
 }

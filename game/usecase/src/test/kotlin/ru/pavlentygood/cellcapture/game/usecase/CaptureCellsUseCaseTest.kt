@@ -8,9 +8,7 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import ru.pavlentygood.cellcapture.game.domain.Party
-import ru.pavlentygood.cellcapture.game.domain.PartyCompleted
-import ru.pavlentygood.cellcapture.game.domain.area
+import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
@@ -53,10 +51,10 @@ class CaptureCellsUseCaseTest {
     @Test
     fun `capture cells - domain errors`() {
         mapOf(
-            Party.PlayerNotCurrent to CaptureCellsUseCase.PlayerNotCurrent,
-            Party.DicesNotRolled to CaptureCellsUseCase.DicesNotRolled,
-            Party.MismatchedArea to CaptureCellsUseCase.MismatchedArea,
-            Party.InaccessibleArea to CaptureCellsUseCase.InaccessibleArea,
+            PlayerNotCurrent to CaptureCellsUseCase.PlayerNotCurrent,
+            DicesNotRolled to CaptureCellsUseCase.DicesNotRolled,
+            MismatchedArea to CaptureCellsUseCase.MismatchedArea,
+            InaccessibleArea to CaptureCellsUseCase.InaccessibleArea,
             PartyCompleted to CaptureCellsUseCase.PartyAlreadyCompleted
         ).forEach { (domainError, useCaseError) ->
             val playerId = playerId()

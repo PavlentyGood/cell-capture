@@ -11,7 +11,7 @@ class Field internal constructor(
 
     fun capture(playerId: PlayerId, area: Area) =
         if (area.isAnyCellCaptured() || !area.isTouchOwnCell(playerId)) {
-            Party.InaccessibleArea.left()
+            InaccessibleArea.left()
         } else {
             area.capture(playerId).right()
         }
