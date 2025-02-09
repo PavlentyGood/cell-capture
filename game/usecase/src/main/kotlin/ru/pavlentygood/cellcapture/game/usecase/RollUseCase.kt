@@ -11,24 +11,25 @@ class RollUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,
     private val saveParty: SaveParty
 ) {
-    operator fun invoke(playerId: PlayerId): Either<Error, RolledDices> =
+    operator fun invoke(playerId: PlayerId): Either<RollUseCaseError, RolledDices> =
         getPartyByPlayer(playerId)
             ?.let { party ->
                 party.roll(playerId)
                     .mapLeft { it.toUseCaseError() }
                     .onRight { saveParty(party) }
-            } ?: PlayerNotFound.left()
+            } ?: RollUseCaseError.PlayerNotFound.left()
 
     private fun RollDicesError.toUseCaseError() =
         when (this) {
-            ru.pavlentygood.cellcapture.game.domain.PlayerNotCurrent -> PlayerNotCurrent
-            ru.pavlentygood.cellcapture.game.domain.DicesAlreadyRolled -> DicesAlreadyRolled
-            PartyCompleted -> PartyAlreadyCompleted
+            PlayerNotCurrent -> RollUseCaseError.PlayerNotCurrent
+            DicesAlreadyRolled -> RollUseCaseError.DicesAlreadyRolled
+            PartyCompleted -> RollUseCaseError.PartyCompleted
         }
+}
 
-    sealed interface Error
-    data object PlayerNotFound : Error
-    data object PlayerNotCurrent : Error
-    data object DicesAlreadyRolled : Error
-    data object PartyAlreadyCompleted : Error
+sealed interface RollUseCaseError {
+    data object PlayerNotFound : RollUseCaseError
+    data object PlayerNotCurrent : RollUseCaseError
+    data object DicesAlreadyRolled : RollUseCaseError
+    data object PartyCompleted : RollUseCaseError
 }

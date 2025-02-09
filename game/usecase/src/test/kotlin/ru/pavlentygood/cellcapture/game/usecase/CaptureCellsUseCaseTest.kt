@@ -45,17 +45,17 @@ class CaptureCellsUseCaseTest {
 
         val captureCells = CaptureCellsUseCase(getPartyByPlayer, saveParty)
 
-        captureCells(playerId, area()) shouldBeLeft CaptureCellsUseCase.PlayerNotFound
+        captureCells(playerId, area()) shouldBeLeft CaptureCellsUseCaseError.PlayerNotFound
     }
 
     @Test
     fun `capture cells - domain errors`() {
         mapOf(
-            PlayerNotCurrent to CaptureCellsUseCase.PlayerNotCurrent,
-            DicesNotRolled to CaptureCellsUseCase.DicesNotRolled,
-            MismatchedArea to CaptureCellsUseCase.MismatchedArea,
-            InaccessibleArea to CaptureCellsUseCase.InaccessibleArea,
-            PartyCompleted to CaptureCellsUseCase.PartyAlreadyCompleted
+            PlayerNotCurrent to CaptureCellsUseCaseError.PlayerNotCurrent,
+            DicesNotRolled to CaptureCellsUseCaseError.DicesNotRolled,
+            MismatchedArea to CaptureCellsUseCaseError.MismatchedArea,
+            InaccessibleArea to CaptureCellsUseCaseError.InaccessibleArea,
+            PartyCompleted to CaptureCellsUseCaseError.PartyCompleted
         ).forEach { (domainError, useCaseError) ->
             val playerId = playerId()
             val area = area()

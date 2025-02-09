@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
+import ru.pavlentygood.cellcapture.game.usecase.RollUseCaseError
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @RestController
@@ -35,11 +36,11 @@ class RollEndpoint(
     private fun RolledDices.toResponse() =
         DicesResponse(first.value, second.value)
 
-    private fun RollUseCase.Error.toError(): ResponseEntity<Unit> =
+    private fun RollUseCaseError.toError(): ResponseEntity<Unit> =
         when (this) {
-            RollUseCase.PlayerNotCurrent,
-            RollUseCase.DicesAlreadyRolled,
-            RollUseCase.PartyAlreadyCompleted -> ResponseEntity.unprocessableEntity().build()
-            RollUseCase.PlayerNotFound -> ResponseEntity.notFound().build()
+            RollUseCaseError.PlayerNotFound -> ResponseEntity.notFound().build()
+            RollUseCaseError.PlayerNotCurrent,
+            RollUseCaseError.DicesAlreadyRolled,
+            RollUseCaseError.PartyCompleted -> ResponseEntity.unprocessableEntity().build()
         }
 }

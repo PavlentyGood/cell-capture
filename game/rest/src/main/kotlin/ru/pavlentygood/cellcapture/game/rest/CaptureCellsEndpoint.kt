@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.game.domain.Area
 import ru.pavlentygood.cellcapture.game.domain.Point
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
+import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCaseError
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @RestController
@@ -51,13 +52,13 @@ class CaptureCellsEndpoint(
     private fun Request.Point.toDomain() =
         Point.from(x = x, y = y)
 
-    fun CaptureCellsUseCase.Error.toRestError(): ResponseEntity<Unit> =
+    fun CaptureCellsUseCaseError.toRestError(): ResponseEntity<Unit> =
         when (this) {
-            CaptureCellsUseCase.PlayerNotFound -> ResponseEntity.notFound().build()
-            CaptureCellsUseCase.PlayerNotCurrent,
-            CaptureCellsUseCase.DicesNotRolled,
-            CaptureCellsUseCase.InaccessibleArea,
-            CaptureCellsUseCase.MismatchedArea,
-            CaptureCellsUseCase.PartyAlreadyCompleted -> ResponseEntity.unprocessableEntity().build()
+            CaptureCellsUseCaseError.PlayerNotFound -> ResponseEntity.notFound().build()
+            CaptureCellsUseCaseError.PlayerNotCurrent,
+            CaptureCellsUseCaseError.DicesNotRolled,
+            CaptureCellsUseCaseError.InaccessibleArea,
+            CaptureCellsUseCaseError.MismatchedArea,
+            CaptureCellsUseCaseError.PartyCompleted -> ResponseEntity.unprocessableEntity().build()
         }
 }

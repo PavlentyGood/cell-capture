@@ -11,28 +11,29 @@ class CaptureCellsUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,
     private val saveParty: SaveParty
 ) {
-    operator fun invoke(playerId: PlayerId, area: Area): Either<Error, Unit> =
+    operator fun invoke(playerId: PlayerId, area: Area): Either<CaptureCellsUseCaseError, Unit> =
         getPartyByPlayer(playerId)
             ?.let { party ->
                 party.capture(playerId, area)
                     .mapLeft { it.toUseCaseError() }
                     .onRight { saveParty(party) }
-            } ?: PlayerNotFound.left()
+            } ?: CaptureCellsUseCaseError.PlayerNotFound.left()
 
     private fun CaptureCellsError.toUseCaseError() =
         when (this) {
-            ru.pavlentygood.cellcapture.game.domain.PlayerNotCurrent -> PlayerNotCurrent
-            ru.pavlentygood.cellcapture.game.domain.DicesNotRolled -> DicesNotRolled
-            ru.pavlentygood.cellcapture.game.domain.MismatchedArea -> MismatchedArea
-            ru.pavlentygood.cellcapture.game.domain.InaccessibleArea -> InaccessibleArea
-            PartyCompleted -> PartyAlreadyCompleted
+            PlayerNotCurrent -> CaptureCellsUseCaseError.PlayerNotCurrent
+            DicesNotRolled -> CaptureCellsUseCaseError.DicesNotRolled
+            MismatchedArea -> CaptureCellsUseCaseError.MismatchedArea
+            InaccessibleArea -> CaptureCellsUseCaseError.InaccessibleArea
+            PartyCompleted -> CaptureCellsUseCaseError.PartyCompleted
         }
+}
 
-    sealed interface Error
-    data object PlayerNotFound : Error
-    data object PlayerNotCurrent : Error
-    data object DicesNotRolled : Error
-    data object MismatchedArea : Error
-    data object InaccessibleArea : Error
-    data object PartyAlreadyCompleted : Error
+sealed interface CaptureCellsUseCaseError {
+    data object PlayerNotFound : CaptureCellsUseCaseError
+    data object PlayerNotCurrent : CaptureCellsUseCaseError
+    data object DicesNotRolled : CaptureCellsUseCaseError
+    data object MismatchedArea : CaptureCellsUseCaseError
+    data object InaccessibleArea : CaptureCellsUseCaseError
+    data object PartyCompleted : CaptureCellsUseCaseError
 }

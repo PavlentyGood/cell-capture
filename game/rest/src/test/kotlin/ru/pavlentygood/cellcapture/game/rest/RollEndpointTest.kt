@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.dices
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
+import ru.pavlentygood.cellcapture.game.usecase.RollUseCaseError
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
@@ -32,7 +33,7 @@ internal class RollEndpointTest {
     fun `roll - not found`() {
         val playerId = playerId()
 
-        every { roll(playerId) } returns RollUseCase.PlayerNotFound.left()
+        every { roll(playerId) } returns RollUseCaseError.PlayerNotFound.left()
 
         post(playerId).andExpect { status { isNotFound() } }
     }
@@ -40,9 +41,9 @@ internal class RollEndpointTest {
     @Test
     fun `roll - use case errors`() {
         listOf(
-            row(RollUseCase.PlayerNotCurrent),
-            row(RollUseCase.DicesAlreadyRolled),
-            row(RollUseCase.PartyAlreadyCompleted)
+            row(RollUseCaseError.PlayerNotCurrent),
+            row(RollUseCaseError.DicesAlreadyRolled),
+            row(RollUseCaseError.PartyCompleted)
         ).forAll { (useCaseError) ->
             val playerId = playerId()
 

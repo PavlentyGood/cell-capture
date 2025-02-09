@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.area
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
+import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCaseError
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
 @WebMvcTest
@@ -41,7 +42,7 @@ class CaptureCellsEndpointTest {
     fun `capture cells - player not found`() {
         val playerId = playerId()
 
-        every { captureCells(playerId, area) } returns CaptureCellsUseCase.PlayerNotFound.left()
+        every { captureCells(playerId, area) } returns CaptureCellsUseCaseError.PlayerNotFound.left()
 
         post(playerId.toInt()).andExpect { status { isNotFound() } }
     }
@@ -50,7 +51,7 @@ class CaptureCellsEndpointTest {
     fun `capture cells - player not current`() {
         val playerId = playerId()
 
-        every { captureCells(playerId, area) } returns CaptureCellsUseCase.PlayerNotCurrent.left()
+        every { captureCells(playerId, area) } returns CaptureCellsUseCaseError.PlayerNotCurrent.left()
 
         post(playerId.toInt()).andExpect { status { isUnprocessableEntity() } }
     }

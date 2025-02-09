@@ -23,15 +23,15 @@ class RollUseCaseTest {
 
         every { getPartyByPlayer(playerId) } returns null
 
-        roll(playerId) shouldBeLeft RollUseCase.PlayerNotFound
+        roll(playerId) shouldBeLeft RollUseCaseError.PlayerNotFound
     }
 
     @Test
     fun `roll - domain errors`() {
         listOf(
-            row(PlayerNotCurrent, RollUseCase.PlayerNotCurrent),
-            row(DicesAlreadyRolled, RollUseCase.DicesAlreadyRolled),
-            row(PartyCompleted, RollUseCase.PartyAlreadyCompleted)
+            row(PlayerNotCurrent, RollUseCaseError.PlayerNotCurrent),
+            row(DicesAlreadyRolled, RollUseCaseError.DicesAlreadyRolled),
+            row(PartyCompleted, RollUseCaseError.PartyCompleted)
         ).forAll { (domainError, useCaseError) ->
             with { roll, getPartyByPlayer, _ ->
                 val playerId = playerId()
