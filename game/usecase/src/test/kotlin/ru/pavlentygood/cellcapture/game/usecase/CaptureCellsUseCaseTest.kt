@@ -20,7 +20,7 @@ class CaptureCellsUseCaseTest {
         val playerId = playerId()
         val area = area()
 
-        val party = mockk<ActiveParty>()
+        val party = mockk<Party>()
         every { party.capture(playerId, area) } returns Unit.right()
 
         val getPartyByPlayer = mockk<GetPartyByPlayer>()
@@ -60,7 +60,7 @@ class CaptureCellsUseCaseTest {
             val playerId = playerId()
             val area = area()
 
-            val party = mockk<ActiveParty>()
+            val party = mockk<Party>()
             every { party.capture(playerId, area) } returns domainError.left()
 
             val getPartyByPlayer = mockk<GetPartyByPlayer>()

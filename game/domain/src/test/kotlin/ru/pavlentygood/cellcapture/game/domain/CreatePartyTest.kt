@@ -21,7 +21,7 @@ class CreatePartyTest {
         )
         val createParty = CreateParty()
 
-        val party: ActiveParty = createParty(partyInfo)
+        val party: Party = createParty(partyInfo)
 
         party.id shouldBe partyInfo.partyId
         party.dices shouldBe Dices.notRolled()

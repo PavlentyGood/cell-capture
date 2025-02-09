@@ -5,7 +5,7 @@ import kotlin.random.Random
 
 class CreateParty {
 
-    operator fun invoke(partyInfo: PartyInfo): ActiveParty {
+    operator fun invoke(partyInfo: PartyInfo): Party {
         return ActiveParty(
             id = partyInfo.partyId,
             dices = Dices.notRolled(),
