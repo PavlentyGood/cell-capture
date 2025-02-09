@@ -8,7 +8,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
-class Party internal constructor(
+class ActiveParty internal constructor(
     id: PartyId,
     dices: Dices,
     private val field: Field,

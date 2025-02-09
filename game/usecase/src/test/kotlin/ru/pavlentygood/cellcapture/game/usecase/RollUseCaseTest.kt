@@ -35,7 +35,7 @@ class RollUseCaseTest {
         ).forAll { (domainError, useCaseError) ->
             with { roll, getPartyByPlayer, _ ->
                 val playerId = playerId()
-                val party = mockk<Party>()
+                val party = mockk<ActiveParty>()
 
                 every { party.roll(playerId) } returns domainError.left()
                 every { getPartyByPlayer(playerId) } returns party
@@ -49,7 +49,7 @@ class RollUseCaseTest {
     fun `roll dices`() = with { roll, getPartyByPlayer, saveParty ->
         val playerId = playerId()
         val dices = dices()
-        val party = mockk<Party>()
+        val party = mockk<ActiveParty>()
 
         every { party.roll(playerId) } returns dices.right()
         every { getPartyByPlayer(playerId) } returns party

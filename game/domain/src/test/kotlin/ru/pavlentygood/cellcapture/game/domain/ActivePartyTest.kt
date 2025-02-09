@@ -11,7 +11,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
-class PartyTest {
+class ActivePartyTest {
 
     @Test
     fun `roll dices`() {

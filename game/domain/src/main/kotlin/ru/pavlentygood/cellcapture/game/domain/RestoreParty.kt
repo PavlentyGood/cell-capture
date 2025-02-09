@@ -36,7 +36,7 @@ class RestoreParty {
             players = players
         ).flatMap { playerList ->
             if (playerList.playerIds.contains(currentPlayerId)) {
-                Party(
+                ActiveParty(
                     id = id,
                     dices = dices,
                     field = Field(

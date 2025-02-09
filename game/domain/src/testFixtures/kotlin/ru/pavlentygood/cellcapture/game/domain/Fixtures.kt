@@ -10,7 +10,7 @@ fun party(
     dices: Dices = dices(),
     field: Field = field()
 ) =
-    Party(
+    ActiveParty(
         id = id,
         dices = dices,
         field = field,
