@@ -44,7 +44,7 @@ fun point(distanceToEdges: Int = 0) =
     )
 
 fun dices() =
-    Dices.notRolled().roll().get()
+    Dices.roll()
 
 fun field(cells: Array<Array<PlayerId>> = cells()) =
     Field(

@@ -95,7 +95,8 @@ class ActivePartyTest {
         val player = player()
 
         val dices = mockk<Dices>()
-        every { dices.isMatched(area) } returns false.right()
+        every { dices.notRolled } returns false
+        every { dices.isNotMatched(area) } returns true
 
         val party = party(
             dices = dices,
@@ -124,6 +125,7 @@ class ActivePartyTest {
 
     private fun dicesFor(area: Area) =
         mockk<Dices>().also {
-            every { it.isMatched(area) } returns true.right()
+            every { it.notRolled } returns false
+            every { it.isNotMatched(area) } returns false
         }
 }

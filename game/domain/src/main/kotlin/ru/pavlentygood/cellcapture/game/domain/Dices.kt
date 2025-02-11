@@ -1,18 +1,24 @@
 package ru.pavlentygood.cellcapture.game.domain
 
-import arrow.core.Either
-import arrow.core.left
-import arrow.core.right
-
 const val DICE_CORRECTION = 1
 
 abstract class Dices {
 
-    abstract fun roll(): Either<DicesAlreadyRolled, RolledDices>
-    abstract fun isMatched(area: Area): Either<DicesNotRolled, Boolean>
+    abstract val rolled: Boolean
+
+    val notRolled get() = !rolled
+
+    abstract fun isNotMatched(area: Area): Boolean
 
     companion object {
+
         fun notRolled() = NotRolledDices
+
+        fun roll(): RolledDices =
+            RolledDices(
+                first = Dice.roll(),
+                second = Dice.roll()
+            )
     }
 }
 
@@ -21,11 +27,12 @@ data class RolledDices(
     val second: Dice
 ) : Dices() {
 
-    override fun roll() =
-        DicesAlreadyRolled.left()
+    override val rolled = true
 
-    override fun isMatched(area: Area) =
-        (area.isMatched(first, second) || area.isMatched(second, first)).right()
+    override fun isNotMatched(area: Area) = !isMatched(area)
+
+    private fun isMatched(area: Area) =
+        area.isMatched(first, second) || area.isMatched(second, first)
 
     private fun Area.isMatched(a: Dice, b: Dice) =
         a.isMatched(xDistance()) && b.isMatched(yDistance())
@@ -36,12 +43,7 @@ data class RolledDices(
 
 data object NotRolledDices : Dices() {
 
-    override fun roll() =
-        RolledDices(
-            first = Dice.roll(),
-            second = Dice.roll()
-        ).right()
+    override val rolled = false
 
-    override fun isMatched(area: Area) =
-        DicesNotRolled.left()
+    override fun isNotMatched(area: Area) = true
 }

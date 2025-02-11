@@ -1,8 +1,8 @@
 package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.Either
-import arrow.core.flatMap
 import arrow.core.left
+import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
@@ -29,27 +29,26 @@ class ActiveParty internal constructor(
     override fun roll(playerId: PlayerId): Either<RollDicesError, RolledDices> =
         when {
             playerId != currentPlayerId -> PlayerNotCurrent.left()
-            else -> dices.roll()
-                .onRight { rolledDices ->
-                    dices = rolledDices
-                }
+            dices.rolled -> DicesAlreadyRolled.left()
+            else -> {
+                val rolledDices = Dices.roll()
+                dices = rolledDices
+                rolledDices.right()
+            }
         }
 
     override fun capture(playerId: PlayerId, area: Area): Either<CaptureCellsError, Unit> =
         when {
             playerId != currentPlayerId -> PlayerNotCurrent.left()
-            else -> dices.isMatched(area)
-                .flatMap { matched ->
-                    if (matched) {
-                        field.capture(playerId, area)
-                            .onRight {
-                                dices = Dices.notRolled()
-                                changeCurrentPlayer()
-                            }
-                    } else {
-                        MismatchedArea.left()
+            dices.notRolled -> DicesNotRolled.left()
+            dices.isNotMatched(area) -> MismatchedArea.left()
+            else -> {
+                field.capture(playerId, area)
+                    .onRight {
+                        dices = Dices.notRolled()
+                        changeCurrentPlayer()
                     }
-                }
+            }
         }
 
     private fun changeCurrentPlayer() {

@@ -1,6 +1,6 @@
 package ru.pavlentygood.cellcapture.game.domain
 
-import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
@@ -20,7 +20,7 @@ class DicesTest {
         every { area.xDistance() } returns first.value - 1
         every { area.yDistance() } returns second.value - 1
 
-        isMatched(area) shouldBeRight true
+        isNotMatched(area) shouldBe false
     }
 
     @Test
@@ -32,6 +32,6 @@ class DicesTest {
         every { area.xDistance() } returns someDistanceForNotMatchedArea
         every { area.yDistance() } returns someDistanceForNotMatchedArea
 
-        dices.isMatched(area) shouldBeRight false
+        dices.isNotMatched(area) shouldBe true
     }
 }
