@@ -2,34 +2,42 @@ package ru.pavlentygood.cellcapture.game.persistence
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import ru.pavlentygood.cellcapture.game.domain.RestoreParty
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
+import org.springframework.test.context.ContextConfiguration
+import ru.pavlentygood.cellcapture.game.domain.ActiveParty
 import ru.pavlentygood.cellcapture.game.domain.party
+import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
+@JdbcTest
+@ContextConfiguration(classes = [TestPersistenceConfig::class])
 class GetPartyByPlayerFromDatabaseTest {
+
+    @Autowired
+    private lateinit var saveParty: SaveParty
+    @Autowired
+    private lateinit var getPartyByPlayer: GetPartyByPlayer
 
     @Test
     fun `get party by player`() {
         val party = party()
-
-        val saveParty = SavePartyToDatabase()
         saveParty(party)
 
-        val getPartyByPlayer = GetPartyByPlayerFromDatabase(saveParty.parties, RestoreParty())
-
         getPartyByPlayer(party.ownerId)!!.apply {
+            this is ActiveParty
             id shouldBe party.id
             dices shouldBe party.dices
             cells shouldBe party.cells
             players shouldBe party.players
+            ownerId shouldBe party.ownerId
             currentPlayerId shouldBe party.currentPlayerId
-            ownerId shouldBe ownerId
         }
     }
 
     @Test
     fun `get party by player - not found`() {
-        val getPartyByPlayer = GetPartyByPlayerFromDatabase(mutableMapOf(), RestoreParty())
         getPartyByPlayer(playerId()) shouldBe null
     }
 }

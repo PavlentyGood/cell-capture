@@ -5,27 +5,31 @@ import org.junit.jupiter.api.RepeatedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
+import ru.pavlentygood.cellcapture.game.persistence.TestPersistenceConfig
 import ru.pavlentygood.cellcapture.game.rest.*
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(value = [TestPersistenceConfig::class])
 class GameComponentTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
-
     @Autowired
     lateinit var createParty: CreatePartyUseCase
-
     @Autowired
     lateinit var getPartyByPlayer: GetPartyByPlayerFromDatabase
+    @Autowired
+    lateinit var jdbcTemplate: NamedParameterJdbcTemplate
 
     @RepeatedTest(100)
     fun `all use cases as process`() {
@@ -47,13 +51,17 @@ class GameComponentTest {
 
     private fun createParty(): Party =
         generateSequence {
-            getPartyByPlayer.parties.clear()
+            clearDatabase()
             val partyInfo = partyInfo()
             createParty(partyInfo)
             getPartyByPlayer(partyInfo.ownerId)
         }.first { party ->
             party.isStartCellFarFromSides() && party.isStartCellFarFromCapturedCells()
         }
+
+    private fun clearDatabase() {
+        jdbcTemplate.update("truncate table parties cascade", mapOf<String, Any>())
+    }
 
     private fun roll(playerId: PlayerId) =
         mockMvc.post(API_V1_PLAYERS_DICES.with("playerId", playerId.toInt()))

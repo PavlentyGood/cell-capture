@@ -29,6 +29,9 @@ object Version {
     const val arrow = "1.2.4"
     const val kotestArrow = "1.4.0"
     const val archUnit = "1.3.0"
+    const val postgresql = "42.7.5"
+    const val flyway = "11.3.1"
+    const val testcontainers = "1.20.4"
 }
 
 object Plugin {
@@ -43,6 +46,7 @@ object Lib {
     const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Version.kotlin}"
     const val jacksonKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:${Version.jackson}"
     const val springBootStarterWeb = "org.springframework.boot:spring-boot-starter-web:${Version.springBoot}"
+    const val springBootStarterJdbc = "org.springframework.boot:spring-boot-starter-jdbc:${Version.springBoot}"
     const val springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${Version.springBoot}"
     const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.junit}"
     const val kotestJUnit = "io.kotest:kotest-runner-junit5:${Version.kotest}"
@@ -50,4 +54,7 @@ object Lib {
     const val arrow = "io.arrow-kt:arrow-core:${Version.arrow}"
     const val mockk = "io.mockk:mockk:${Version.mockk}"
     const val archUnit = "com.tngtech.archunit:archunit-junit5:${Version.archUnit}"
+    const val postgresql = "org.postgresql:postgresql:${Version.postgresql}"
+    const val flywayPostgresql = "org.flywaydb:flyway-database-postgresql:${Version.flyway}"
+    const val testcontainersPostgresql = "org.testcontainers:postgresql:${Version.testcontainers}"
 }

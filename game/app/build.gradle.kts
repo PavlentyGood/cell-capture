@@ -13,6 +13,8 @@ dependencies {
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWeb)
 
+    implementation(Lib.springBootStarterJdbc)
+
     testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
@@ -24,4 +26,5 @@ dependencies {
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))
     testImplementation(testFixtures(project(Module.gameRest)))
+    testImplementation(testFixtures(project(Module.gamePersistence)))
 }
