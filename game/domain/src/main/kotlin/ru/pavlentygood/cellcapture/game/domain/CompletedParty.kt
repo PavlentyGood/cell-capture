@@ -14,6 +14,8 @@ class CompletedParty(
     override val players: List<Player>
 ) : Party(id) {
 
+    override val completed = true
+
     override fun roll(playerId: PlayerId) =
         PartyCompleted.left()
 

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
 import org.springframework.test.context.ContextConfiguration
-import ru.pavlentygood.cellcapture.game.domain.ActiveParty
 import ru.pavlentygood.cellcapture.game.domain.party
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
@@ -26,7 +25,7 @@ class GetPartyByPlayerFromDatabaseTest {
         saveParty(party)
 
         getPartyByPlayer(party.ownerId)!!.apply {
-            this is ActiveParty
+            completed shouldBe party.completed
             id shouldBe party.id
             dices shouldBe party.dices
             cells shouldBe party.cells

@@ -10,6 +10,7 @@ sealed class Party(
     id: PartyId
 ) : AggregateRoot<PartyId>(id) {
 
+    abstract val completed: Boolean
     abstract val ownerId: PlayerId
     abstract val currentPlayerId: PlayerId
     abstract val dices: Dices

@@ -17,6 +17,8 @@ class ActiveParty internal constructor(
     override val players: List<Player>
 ) : Party(id) {
 
+    override val completed = false
+
     override var currentPlayerId = currentPlayerId
         private set
 

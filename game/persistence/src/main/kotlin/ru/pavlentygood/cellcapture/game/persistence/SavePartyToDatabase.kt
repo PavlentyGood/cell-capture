@@ -2,7 +2,10 @@ package ru.pavlentygood.cellcapture.game.persistence
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.transaction.annotation.Transactional
-import ru.pavlentygood.cellcapture.game.domain.*
+import ru.pavlentygood.cellcapture.game.domain.Cell
+import ru.pavlentygood.cellcapture.game.domain.Field
+import ru.pavlentygood.cellcapture.game.domain.Party
+import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
@@ -120,7 +123,7 @@ class SavePartyToDatabase(
     private fun Party.toParams(): Map<String, Any?> {
         return mapOf(
             "id" to id.toUUID(),
-            "completed" to (this is CompletedParty),
+            "completed" to completed,
             "first_dice" to (dices as? RolledDices)?.first?.value,
             "second_dice" to (dices as? RolledDices)?.second?.value,
             "owner_id" to ownerId.toInt(),
