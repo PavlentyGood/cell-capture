@@ -21,7 +21,7 @@ class GetPartyByPlayerFromDatabase(
         return restoreParty(
             id = PartyId(partyDto.id),
             completed = partyDto.completed,
-            dices = mapDices(partyDto),
+            dices = partyDto.mapDices(),
             players = getPlayers(partyDto.id),
             cells = getCells(partyDto.id),
             currentPlayerId = PlayerId(partyDto.currentPlayerId),
@@ -86,20 +86,9 @@ class GetPartyByPlayerFromDatabase(
         return cells
     }
 
-    private fun mapDices(partyDto: PartyDto): Dices {
-        return if (partyDto.firstDice == null && partyDto.secondDice == null) {
-            Dices.notRolled()
-        } else {
-            RolledDices(
-                first = mapDice(partyDto.firstDice),
-                second = mapDice(partyDto.secondDice),
-            )
-        }
-    }
-
-    private fun mapDice(value: Int?): Dice {
-        return Dice.from(value!!).getOrElse {
-            error("Invalid dice value: $value")
+    private fun PartyDto.mapDices(): Dices {
+        return Dices.restore(firstDice, secondDice).getOrElse {
+            error("Invalid dice values: $firstDice and $secondDice")
         }
     }
 

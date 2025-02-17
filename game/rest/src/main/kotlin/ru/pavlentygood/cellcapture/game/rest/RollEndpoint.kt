@@ -34,7 +34,7 @@ class RollEndpoint(
     )
 
     private fun RolledDices.toResponse() =
-        DicesResponse(first.value, second.value)
+        DicesResponse(firstValue, secondValue)
 
     private fun RollUseCaseError.toError(): ResponseEntity<Unit> =
         when (this) {

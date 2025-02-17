@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional
 import ru.pavlentygood.cellcapture.game.domain.Cell
 import ru.pavlentygood.cellcapture.game.domain.Field
 import ru.pavlentygood.cellcapture.game.domain.Party
-import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
@@ -124,8 +123,8 @@ class SavePartyToDatabase(
         return mapOf(
             "id" to id.toUUID(),
             "completed" to completed,
-            "first_dice" to (dices as? RolledDices)?.first?.value,
-            "second_dice" to (dices as? RolledDices)?.second?.value,
+            "first_dice" to dices.firstValue,
+            "second_dice" to dices.secondValue,
             "owner_id" to ownerId.toInt(),
             "current_player_id" to currentPlayerId.toInt()
         )

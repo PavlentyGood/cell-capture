@@ -63,8 +63,8 @@ internal class RollEndpointTest {
         post(playerId).andExpect {
             status { isOk() }
             content {
-                jsonPath("$.dices.first") { value(dices.first.value) }
-                jsonPath("$.dices.second") { value(dices.second.value) }
+                jsonPath("$.dices.first") { value(dices.firstValue) }
+                jsonPath("$.dices.second") { value(dices.secondValue) }
             }
         }
     }

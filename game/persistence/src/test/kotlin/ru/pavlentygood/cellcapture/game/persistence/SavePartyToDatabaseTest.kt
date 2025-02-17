@@ -89,8 +89,8 @@ class SavePartyToDatabaseTest {
             mapOf("id" to id.toUUID())
         )
         fields["completed"] shouldBe completed
-        fields["first_dice"] shouldBe (dices as? RolledDices)?.first?.value
-        fields["second_dice"] shouldBe (dices as? RolledDices)?.second?.value
+        fields["first_dice"] shouldBe dices.firstValue
+        fields["second_dice"] shouldBe dices.secondValue
         fields["owner_id"] shouldBe ownerId.toInt()
         fields["current_player_id"] shouldBe currentPlayerId.toInt()
         fields["created"] shouldNotBe null
