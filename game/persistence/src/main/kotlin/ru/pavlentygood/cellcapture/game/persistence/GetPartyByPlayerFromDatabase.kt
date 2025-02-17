@@ -67,7 +67,7 @@ class GetPartyByPlayerFromDatabase(
         return jdbcTemplate.query(sql, params, mapper)
     }
 
-    private fun getCells(partyId: UUID): Array<Array<PlayerId>> {
+    private fun getCells(partyId: UUID): Array<Array<Cell>> {
         val sql = "select * from cells where party_id = :party_id"
         val params = mapOf("party_id" to partyId)
         val mapper = { rs: ResultSet, _: Int ->
@@ -77,11 +77,13 @@ class GetPartyByPlayerFromDatabase(
                 y = rs.getInt("y")
             )
         }
-        val cells = Array(Field.HEIGHT) {
-            Array(Field.WIDTH) { Field.nonePlayerId }
+        val cells = Array(Field.HEIGHT) { y ->
+            Array(Field.WIDTH) { x ->
+                Cell(Field.nonePlayerId, x, y)
+            }
         }
         jdbcTemplate.query(sql, params, mapper).forEach {
-            cells[it.y][ it.x] = it.playerId
+            cells[it.y][ it.x] = it
         }
         return cells
     }

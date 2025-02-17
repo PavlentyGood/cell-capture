@@ -15,7 +15,7 @@ class RestoreParty {
         id: PartyId,
         completed: Boolean,
         dices: Dices,
-        cells: Array<Array<PlayerId>>,
+        cells: Array<Array<Cell>>,
         players: List<Player>,
         currentPlayerId: PlayerId,
         ownerId: PlayerId

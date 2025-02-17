@@ -5,7 +5,7 @@ import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 class Field internal constructor(
-    private val cells: Array<Array<PlayerId>>
+    private val cells: Array<Array<Cell>>
 ) {
     fun getCells() = cells.copyOf()
 
@@ -19,14 +19,18 @@ class Field internal constructor(
     private fun Area.capture(playerId: PlayerId) =
         rangeByY().forEach { y ->
             rangeByX().forEach { x ->
-                cells[y][x] = playerId
+                cells[y][x] = Cell(
+                    playerId = playerId,
+                    x = x,
+                    y = y
+                )
             }
         }
 
     private fun Area.isAnyCellCaptured() =
         rangeByY().any { y ->
             rangeByX().any { x ->
-                cells[y][x] != nonePlayerId
+                cells[y][x].playerId != nonePlayerId
             }
         }
 
@@ -34,7 +38,7 @@ class Field internal constructor(
         fun byRanges(xRange: IntRange, yRange: IntRange) =
             yRange.any { y ->
                 xRange.any { x ->
-                    cells[y][x] == playerId
+                    cells[y][x].playerId == playerId
                 }
             }
 

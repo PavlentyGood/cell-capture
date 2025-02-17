@@ -109,24 +109,7 @@ class GameComponentTest {
         }
     }
 
-    private fun Array<Array<PlayerId>>.capturedCells() =
-        this.indices.map { y ->
-            this[y].indices.mapNotNull { x ->
-                if (this[y][x] != Field.nonePlayerId) {
-                    Cell(this[y][x], x, y)
-                } else {
-                    null
-                }
-            }
-        }.flatten()
-
-    private fun Array<Array<PlayerId>>.findStartCell(forPlayer: PlayerId) =
+    private fun Array<Array<Cell>>.findStartCell(forPlayer: PlayerId): Cell =
         capturedCells()
             .single { it.playerId == forPlayer }
-
-    data class Cell(
-        val playerId: PlayerId,
-        val x: Int,
-        val y: Int,
-    )
 }

@@ -15,7 +15,7 @@ sealed class Party(
     abstract val currentPlayerId: PlayerId
     abstract val dices: Dices
     abstract val players: List<Player>
-    abstract val cells: Array<Array<PlayerId>>
+    abstract val cells: Array<Array<Cell>>
 
     abstract fun roll(playerId: PlayerId): Either<RollDicesError, RolledDices>
     abstract fun capture(playerId: PlayerId, area: Area): Either<CaptureCellsError, Unit>

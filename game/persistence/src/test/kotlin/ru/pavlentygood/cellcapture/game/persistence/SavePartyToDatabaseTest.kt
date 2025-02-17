@@ -11,7 +11,6 @@ import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
-import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @JdbcTest
 @ContextConfiguration(classes = [TestPersistenceConfig::class])
@@ -27,8 +26,8 @@ class SavePartyToDatabaseTest {
         val owner = player()
         val player = player()
         val cells = cells()
-        cells[1][2] = owner.id
-        cells[3][4] = player.id
+        cells.setCell(owner.id, 2, 1)
+        cells.setCell(player.id, 4, 3)
         val party = party(
             dices = Dices.notRolled(),
             field = field(cells()),
@@ -46,8 +45,8 @@ class SavePartyToDatabaseTest {
         val owner = player()
         val player = player()
         val cells = cells()
-        cells[1][2] = owner.id
-        cells[3][4] = player.id
+        cells.setCell(owner.id, 2, 1)
+        cells.setCell(player.id, 4, 3)
         val party = party(
             dices = Dices.roll(),
             field = field(cells()),
@@ -55,7 +54,7 @@ class SavePartyToDatabaseTest {
             currentPlayer = player
         )
         saveParty(party)
-        cells[5][6] = owner.id
+        cells.setCell(owner.id, 6, 5)
         val changedParty = party(
             id = party.id,
             dices = Dices.notRolled(),
@@ -71,16 +70,8 @@ class SavePartyToDatabaseTest {
 
     private fun Party.check() {
         checkExistsInDb()
-        players.forEach {
-            it.checkExistsInDb(id)
-        }
-        cells.forEachIndexed { y, row ->
-            row.forEachIndexed { x, playerId ->
-                if (playerId != Field.nonePlayerId) {
-                    checkExistsInDb(x, y, playerId, id)
-                }
-            }
-        }
+        players.forEach { it.checkExistsInDb(id) }
+        cells.capturedCells().forEach { it.checkExistsInDb(id) }
     }
 
     private fun Party.checkExistsInDb() {
@@ -106,7 +97,7 @@ class SavePartyToDatabaseTest {
         fields["party_id"] shouldBe partyId.toUUID()
     }
 
-    private fun checkExistsInDb(x: Int, y: Int, playerId: PlayerId, partyId: PartyId) {
+    private fun Cell.checkExistsInDb(partyId: PartyId) {
         val sql = """
             select exists(
                 select 1 from cells

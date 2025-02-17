@@ -14,16 +14,16 @@ class FieldTest {
         val area = area(distanceToEdges = 1)
 
         val cells = cells()
-        cells[area.from.y][area.from.x - 1] = playerId
+        cells.setCell(playerId, area.from.x - 1, area.from.y)
 
         val field = field(cells = cells)
 
         field.capture(playerId, area) shouldBeRight Unit
 
-        field.getCells()[area.from.y][area.from.x] shouldBe playerId
-        field.getCells()[area.from.y][area.to.x] shouldBe playerId
-        field.getCells()[area.to.y][area.from.x] shouldBe playerId
-        field.getCells()[area.to.y][area.to.x] shouldBe playerId
+        field.getCells()[area.from.y][area.from.x].playerId shouldBe playerId
+        field.getCells()[area.from.y][area.to.x].playerId shouldBe playerId
+        field.getCells()[area.to.y][area.from.x].playerId shouldBe playerId
+        field.getCells()[area.to.y][area.to.x].playerId shouldBe playerId
 
         field.getCells().capturedCellCount() shouldBe (area.xDistance() + 1) * (area.yDistance() + 1) + 1
     }
@@ -42,7 +42,7 @@ class FieldTest {
         val otherPlayerId = playerId()
 
         val cells = cells()
-        cells[y][x] = otherPlayerId
+        cells.setCell(otherPlayerId, x, y)
 
         val field = field(cells = cells)
 
@@ -57,10 +57,10 @@ class FieldTest {
         val area = area(distanceToEdges = 2)
 
         val cells = cells()
-        cells[area.from.y][area.from.x - 2] = playerId
-        cells[area.from.y - 2][area.from.x] = playerId
-        cells[area.to.y][area.to.x + 2] = playerId
-        cells[area.to.y + 2][area.to.x] = playerId
+        cells.setCell(playerId, area.from.x - 2, area.from.y)
+        cells.setCell(playerId, area.from.x, area.from.y - 2)
+        cells.setCell(playerId, area.to.x + 2, area.to.y)
+        cells.setCell(playerId, area.to.x, area.to.y + 2)
 
         val field = field(cells = cells)
 

@@ -20,14 +20,18 @@ class CreateParty {
         val cells = createCells()
 
         generateStartCells(playerList.playerIds)
-            .forEach { cell -> cells[cell.y][cell.x] = cell.playerId }
+            .forEach { cell ->
+                cells[cell.y][cell.x] = Cell(cell.playerId, cell.x, cell.y)
+            }
 
         return Field(cells)
     }
 
-    private fun createCells(): Array<Array<PlayerId>> =
-        Array(Field.HEIGHT) {
-            Array(Field.WIDTH) { Field.nonePlayerId }
+    private fun createCells(): Array<Array<Cell>> =
+        Array(Field.HEIGHT) { y ->
+            Array(Field.WIDTH) { x ->
+                Cell(Field.nonePlayerId, x, y)
+            }
         }
 
     private tailrec fun generateStartCells(

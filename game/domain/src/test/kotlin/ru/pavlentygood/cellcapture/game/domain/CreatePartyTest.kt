@@ -32,6 +32,6 @@ class CreatePartyTest {
         party.cells shouldHaveSize Field.HEIGHT
         party.cells[0] shouldHaveSize Field.WIDTH
         party.cells.capturedCellCount() shouldBe partyInfo.players.size
-        party.cells.flatMap { it.map { id -> id } } shouldContainAll partyInfo.playerList.playerIds
+        party.cells.flatten().map { it.playerId } shouldContainAll partyInfo.playerList.playerIds
     }
 }

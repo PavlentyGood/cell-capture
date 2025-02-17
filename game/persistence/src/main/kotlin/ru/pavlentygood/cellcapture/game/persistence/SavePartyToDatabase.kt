@@ -64,15 +64,7 @@ class SavePartyToDatabase(
     }
 
     private fun Party.getCapturedCells(): List<Cell> {
-        return cells.mapIndexed { y, row ->
-            row.mapIndexed { x, playerId ->
-                Cell(
-                    playerId = playerId,
-                    x = x,
-                    y = y
-                )
-            }
-        }.flatten()
+        return cells.flatten()
             .filter { it.playerId != Field.nonePlayerId }
     }
 

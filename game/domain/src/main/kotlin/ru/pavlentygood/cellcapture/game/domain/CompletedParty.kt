@@ -8,7 +8,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 class CompletedParty(
     id: PartyId,
     override val dices: Dices,
-    override val cells: Array<Array<PlayerId>>,
+    override val cells: Array<Array<Cell>>,
     override val ownerId: PlayerId,
     override val currentPlayerId: PlayerId,
     override val players: List<Player>

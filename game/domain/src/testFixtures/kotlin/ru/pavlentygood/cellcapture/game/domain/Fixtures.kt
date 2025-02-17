@@ -46,20 +46,27 @@ fun point(distanceToEdges: Int = 0) =
 fun dices() =
     Dices.roll()
 
-fun field(cells: Array<Array<PlayerId>> = cells()) =
+fun field(cells: Array<Array<Cell>> = cells()) =
     Field(
         cells = cells
     )
 
 fun cells() =
-    Array(Field.HEIGHT) {
-        Array(Field.WIDTH) { Field.nonePlayerId }
+    Array(Field.HEIGHT) { y ->
+        Array(Field.WIDTH) { x ->
+            Cell(Field.nonePlayerId, x, y)
+        }
     }
 
-fun Array<Array<PlayerId>>.capturedCellCount() =
-    sumOf { line ->
-        line.count { id -> id != Field.nonePlayerId }
-    }
+fun Array<Array<Cell>>.setCell(playerId: PlayerId, x: Int, y: Int) {
+    this[y][x] = Cell(playerId, x, y)
+}
+
+fun Array<Array<Cell>>.capturedCells(): List<Cell> =
+    flatten().filter { it.playerId != Field.nonePlayerId }
+
+fun Array<Array<Cell>>.capturedCellCount() =
+    capturedCells().count()
 
 fun partyInfo(
     ownerId: PlayerId = playerId(),
