@@ -25,6 +25,7 @@ class RestorePartyTest {
 
         restoredParty.apply {
             id shouldBe party.id
+            completed shouldBe partyCompleted
             dices shouldBe party.dices
             cells shouldBe party.cells
             players shouldBe party.players
