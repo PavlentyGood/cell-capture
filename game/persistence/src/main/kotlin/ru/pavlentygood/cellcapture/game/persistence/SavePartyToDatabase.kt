@@ -6,7 +6,6 @@ import ru.pavlentygood.cellcapture.game.domain.Cell
 import ru.pavlentygood.cellcapture.game.domain.Field
 import ru.pavlentygood.cellcapture.game.domain.Party
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
-import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @Transactional
 class SavePartyToDatabase(
@@ -54,13 +53,7 @@ class SavePartyToDatabase(
     private fun Party.getSavedCells(): Set<Cell> {
         val sql = "select player_id, x, y from cells where party_id = :party_id"
         val params = mapOf("party_id" to id.toUUID())
-        return jdbcTemplate.query(sql, params) { rs, _ ->
-            Cell(
-                playerId = PlayerId(rs.getInt("player_id")),
-                x = rs.getInt("x"),
-                y = rs.getInt("y")
-            )
-        }.toSet()
+        return jdbcTemplate.query(sql, params, cellMapper).toSet()
     }
 
     private fun Party.getCapturedCells(): List<Cell> {
