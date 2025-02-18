@@ -2,6 +2,9 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.left
 import arrow.core.right
+import ru.pavlentygood.cellcapture.game.domain.Field.Companion.HEIGHT
+import ru.pavlentygood.cellcapture.game.domain.Field.Companion.WIDTH
+import ru.pavlentygood.cellcapture.game.domain.Field.Companion.nonePlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 class Field internal constructor(
@@ -73,3 +76,10 @@ class Field internal constructor(
         val nonePlayerId = PlayerId(0)
     }
 }
+
+fun createCells(): Array<Array<Cell>> =
+    Array(HEIGHT) { y ->
+        Array(WIDTH) { x ->
+            Cell(nonePlayerId, x, y)
+        }
+    }

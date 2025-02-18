@@ -27,13 +27,6 @@ class CreateParty {
         return Field(cells)
     }
 
-    private fun createCells(): Array<Array<Cell>> =
-        Array(Field.HEIGHT) { y ->
-            Array(Field.WIDTH) { x ->
-                Cell(Field.nonePlayerId, x, y)
-            }
-        }
-
     private tailrec fun generateStartCells(
         playerIds: List<PlayerId>,
         cells: List<Cell> = listOf()

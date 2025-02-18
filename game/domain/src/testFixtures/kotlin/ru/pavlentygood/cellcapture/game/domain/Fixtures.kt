@@ -51,12 +51,8 @@ fun field(cells: Array<Array<Cell>> = cells()) =
         cells = cells
     )
 
-fun cells() =
-    Array(Field.HEIGHT) { y ->
-        Array(Field.WIDTH) { x ->
-            Cell(Field.nonePlayerId, x, y)
-        }
-    }
+fun cells(): Array<Array<Cell>> =
+    createCells()
 
 fun Array<Array<Cell>>.setCell(playerId: PlayerId, x: Int, y: Int) {
     this[y][x] = Cell(playerId, x, y)
