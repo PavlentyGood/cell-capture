@@ -77,8 +77,8 @@ fun partyInfo(
     )
 
 fun playerList(
-    ownerId: PlayerId = playerId(until = 1000000),
-    players: List<Player> = listOf(player(ownerId), player(playerId(until = 1000000)))
+    ownerId: PlayerId = playerId(),
+    players: List<Player> = listOf(player(ownerId), player(playerId()))
 ) =
     PlayerList.from(
         ownerId = ownerId,

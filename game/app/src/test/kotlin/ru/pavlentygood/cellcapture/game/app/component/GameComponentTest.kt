@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.*
@@ -28,8 +27,6 @@ class GameComponentTest {
     lateinit var createParty: CreatePartyUseCase
     @Autowired
     lateinit var getPartyByPlayer: GetPartyByPlayerFromDatabase
-    @Autowired
-    lateinit var jdbcTemplate: NamedParameterJdbcTemplate
 
     @RepeatedTest(100)
     fun `all use cases as process`() {
@@ -51,17 +48,12 @@ class GameComponentTest {
 
     private fun createParty(): Party =
         generateSequence {
-            clearDatabase()
             val partyInfo = partyInfo()
             createParty(partyInfo)
             getPartyByPlayer(partyInfo.ownerId)
         }.first { party ->
             party.isStartCellFarFromSides() && party.isStartCellFarFromCapturedCells()
         }
-
-    private fun clearDatabase() {
-        jdbcTemplate.update("truncate table parties cascade", mapOf<String, Any>())
-    }
 
     private fun roll(playerId: PlayerId) =
         mockMvc.post(API_V1_PLAYERS_DICES.with("playerId", playerId.toInt()))
