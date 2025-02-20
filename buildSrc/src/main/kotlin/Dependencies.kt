@@ -47,6 +47,7 @@ object Lib {
     const val jacksonKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:${Version.jackson}"
     const val springBootStarterWeb = "org.springframework.boot:spring-boot-starter-web:${Version.springBoot}"
     const val springBootStarterJdbc = "org.springframework.boot:spring-boot-starter-jdbc:${Version.springBoot}"
+    const val springBootStarterDataJpa = "org.springframework.boot:spring-boot-starter-data-jpa:${Version.springBoot}"
     const val springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${Version.springBoot}"
     const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.junit}"
     const val kotestJUnit = "io.kotest:kotest-runner-junit5:${Version.kotest}"

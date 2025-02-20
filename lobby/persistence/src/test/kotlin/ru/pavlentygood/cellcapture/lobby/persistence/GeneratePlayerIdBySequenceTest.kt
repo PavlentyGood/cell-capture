@@ -2,13 +2,36 @@ package ru.pavlentygood.cellcapture.lobby.persistence
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import org.springframework.test.context.ContextConfiguration
+import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
+import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
 
+@JdbcTest
+@ContextConfiguration(classes = [TestPersistenceConfig::class])
 class GeneratePlayerIdBySequenceTest {
+
+    @Autowired
+    private lateinit var generatePlayerId: GeneratePlayerId
+    @Autowired
+    private lateinit var jdbcTemplate: NamedParameterJdbcTemplate
 
     @Test
     fun `generate player id`() {
-        val counter = 1
-        val generatePlayerId = GeneratePlayerIdBySequence(counter)
-        generatePlayerId().toInt() shouldBe counter + 1
+        val id = playerId()
+        setSequenceValue(id)
+
+        generatePlayerId() shouldBe PlayerId(id.toInt() + 1)
+    }
+
+    private fun setSequenceValue(id: PlayerId) {
+        jdbcTemplate.queryForObject(
+            "select setval('player_id_seq', :value)",
+            mapOf("value" to id.toInt()),
+            Long::class.java
+        )
     }
 }
