@@ -1,7 +1,6 @@
 package ru.pavlentygood.cellcapture.lobby.persistence
 
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration
-import org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -9,12 +8,12 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource
 import org.testcontainers.containers.PostgreSQLContainer
 
 @Configuration
-@ImportAutoConfiguration(exclude = [TestDatabaseAutoConfiguration::class])
+@EnableAutoConfiguration
 @Import(value = [
     GeneratePlayerIdBySequence::class,
 //    GetPartyByPlayerFromDatabase::class,
 //    GetPartyFromDatabase::class,
-//    SavePartyToDatabase::class
+    SavePartyToDatabase::class
 ])
 class TestPersistenceConfig {
 

@@ -1,6 +1,7 @@
 package ru.pavlentygood.cellcapture.lobby.persistence
 
 import io.kotest.matchers.shouldBe
+import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
@@ -16,10 +17,10 @@ class GetPartyByPlayerFromDatabaseTest {
             otherPlayers = listOf(player)
         )
 
-        val saveParty = SavePartyToDatabase()
+        val saveParty = SavePartyToDatabase(mockk<PartyRepository>())
         saveParty(party)
 
-        val getPartyByPlayer = GetPartyByPlayerFromDatabase(saveParty.parties, RestoreParty())
+        val getPartyByPlayer = GetPartyByPlayerFromDatabase(mapOf(), RestoreParty())
 
         getPartyByPlayer(player.id)!!.apply {
             id shouldBe party.id
