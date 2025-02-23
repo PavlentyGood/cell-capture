@@ -1,10 +1,6 @@
 package ru.pavlentygood.cellcapture.lobby.persistence.dto
 
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.util.UUID
 
 @Entity
@@ -20,6 +16,6 @@ class PartyDto(
 
     val playerLimit: Int,
 
-    @OneToMany(mappedBy = "party", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "party", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     var players: List<PlayerDto>
 )

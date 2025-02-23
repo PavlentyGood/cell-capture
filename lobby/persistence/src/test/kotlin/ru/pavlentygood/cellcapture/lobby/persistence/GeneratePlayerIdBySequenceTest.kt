@@ -4,14 +4,17 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
+import org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration
+import org.springframework.context.annotation.Import
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.test.context.ContextConfiguration
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
 
-@JdbcTest
+@JdbcTest(excludeAutoConfiguration = [TestDatabaseAutoConfiguration::class])
 @ContextConfiguration(classes = [TestPersistenceConfig::class])
+@Import(value = [GeneratePlayerIdBySequence::class])
 class GeneratePlayerIdBySequenceTest {
 
     @Autowired

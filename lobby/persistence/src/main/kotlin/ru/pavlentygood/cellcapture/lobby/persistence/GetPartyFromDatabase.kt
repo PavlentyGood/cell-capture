@@ -5,8 +5,12 @@ import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 
 class GetPartyFromDatabase(
-    val parties: Map<PartyId, Party>
+    private val partyRepository: PartyRepository,
+    private val mapPartyToDomain: MapPartyToDomain
 ) : GetParty {
+
     override fun invoke(partyId: PartyId): Party? =
-        parties[partyId]
+        partyRepository.findById(partyId.toUUID())
+            .map { mapPartyToDomain(it) }
+            .orElse(null)
 }
