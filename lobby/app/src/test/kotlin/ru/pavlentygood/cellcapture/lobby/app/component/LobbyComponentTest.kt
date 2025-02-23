@@ -7,6 +7,7 @@ import org.junit.jupiter.api.RepeatedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
@@ -14,31 +15,31 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.domain.Party
-import ru.pavlentygood.cellcapture.lobby.persistence.GetPartyFromDatabase
+import ru.pavlentygood.cellcapture.lobby.persistence.TestPersistenceConfig
 import ru.pavlentygood.cellcapture.lobby.rest.*
+import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import java.util.*
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(value = [TestPersistenceConfig::class])
 class LobbyComponentTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
-
     @Autowired
-    lateinit var getPartyFromDatabase: GetPartyFromDatabase
+    lateinit var getParty: GetParty
 
     @RepeatedTest(10)
-    fun `test all usecases together`() {
+    fun `all use cases as process`() {
         val ownerName = playerName()
         val playerName = playerName()
 
-        val created: CreatePartyResponse = createParty(ownerName)
-        joinPlayer(created.id, playerName)
-        startParty(created.ownerId)
+        val created: CreatePartyResponse = createParty(ownerName) // use case
+        joinPlayer(created.id, playerName) // use case
+        startParty(created.ownerId) // use case
 
-        val party: Party = getPartyFromDatabase(created.id)
-
+        val party: Party = getParty(PartyId(created.id))!!
         party.started shouldBe true
         party.getPlayers().size shouldBe 2
         party.getPlayers().map { it.id.toInt() } shouldContain created.ownerId
@@ -67,7 +68,4 @@ class LobbyComponentTest {
             queryParam("playerId", playerId.toString())
             contentType = MediaType.APPLICATION_JSON
         }.andExpect { status { isOk() } }
-
-    private fun getPartyFromDatabase(partyId: UUID) =
-        getPartyFromDatabase.parties[PartyId(partyId)]!!
 }

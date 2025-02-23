@@ -12,6 +12,7 @@ dependencies {
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWeb)
+    implementation(Lib.springBootStarterDataJpa)
 
     testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
@@ -24,4 +25,5 @@ dependencies {
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))
     testImplementation(testFixtures(project(Module.lobbyRest)))
+    testImplementation(testFixtures(project(Module.lobbyPersistence)))
 }

@@ -6,7 +6,7 @@ import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
 
 class GeneratePlayerIdBySequence(
     private val jdbcTemplate: JdbcTemplate
-): GeneratePlayerId {
+) : GeneratePlayerId {
 
     override fun invoke(): PlayerId {
         val id = jdbcTemplate.queryForObject(

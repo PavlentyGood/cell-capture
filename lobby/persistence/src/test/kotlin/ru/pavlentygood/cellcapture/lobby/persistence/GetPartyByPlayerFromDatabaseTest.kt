@@ -12,12 +12,14 @@ import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 @JpaTest
-@Import(value = [
-    SavePartyToDatabase::class,
-    GetPartyByPlayerFromDatabase::class,
-    MapPartyToDomain::class,
-    RestoreParty::class
-])
+@Import(
+    value = [
+        SavePartyToDatabase::class,
+        GetPartyByPlayerFromDatabase::class,
+        MapPartyToDomain::class,
+        RestoreParty::class
+    ]
+)
 class GetPartyByPlayerFromDatabaseTest {
 
     @Autowired
