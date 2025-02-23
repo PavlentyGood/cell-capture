@@ -1,14 +1,29 @@
 package ru.pavlentygood.cellcapture.lobby.persistence
 
 import io.kotest.matchers.shouldBe
-import io.mockk.mockk
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Import
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.domain.party
 import ru.pavlentygood.cellcapture.lobby.domain.player
+import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
+@JpaTest
+@Import(value = [
+    SavePartyToDatabase::class,
+    GetPartyByPlayerFromDatabase::class,
+    MapPartyToDomain::class,
+    RestoreParty::class
+])
 class GetPartyByPlayerFromDatabaseTest {
+
+    @Autowired
+    private lateinit var saveParty: SaveParty
+    @Autowired
+    private lateinit var getPartyByPlayer: GetPartyByPlayer
 
     @Test
     fun `get party by player`() {
@@ -16,24 +31,19 @@ class GetPartyByPlayerFromDatabaseTest {
         val party = party(
             otherPlayers = listOf(player)
         )
-
-        val saveParty = SavePartyToDatabase(mockk<PartyRepository>())
         saveParty(party)
-
-        val getPartyByPlayer = GetPartyByPlayerFromDatabase(mapOf(), RestoreParty())
 
         getPartyByPlayer(player.id)!!.apply {
             id shouldBe party.id
             started shouldBe party.started
+            ownerId shouldBe party.ownerId
             playerLimit shouldBe party.playerLimit
             getPlayers() shouldBe party.getPlayers()
-            ownerId shouldBe ownerId
         }
     }
 
     @Test
     fun `get party by player - not found`() {
-        val getPartyByPlayer = GetPartyByPlayerFromDatabase(mapOf(), RestoreParty())
         getPartyByPlayer(playerId()) shouldBe null
     }
 }
