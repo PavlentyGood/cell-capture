@@ -15,6 +15,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.lobby.usecase.port.PublishPartyStartedEvent
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 @Configuration
@@ -52,8 +53,12 @@ class Config {
         GeneratePlayerIdBySequence(jdbcTemplate)
 
     @Bean
-    fun startParty(getPartyByPlayer: GetPartyByPlayer, saveParty: SaveParty) =
-        StartPartyUseCase(getPartyByPlayer, saveParty)
+    fun startParty(
+        getPartyByPlayer: GetPartyByPlayer,
+        saveParty: SaveParty,
+        publishPartyStartedEvent: PublishPartyStartedEvent
+    ) =
+        StartPartyUseCase(getPartyByPlayer, saveParty, publishPartyStartedEvent)
 
     @Bean
     fun getPartyByPlayer(partyRepository: PartyRepository) =

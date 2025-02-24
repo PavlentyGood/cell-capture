@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
+import ru.pavlentygood.cellcapture.lobby.usecase.port.PublishPartyStartedEvent
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 class StartPartyUseCaseTest {
@@ -28,7 +29,10 @@ class StartPartyUseCaseTest {
         val saveParty = mockk<SaveParty>()
         justRun { saveParty(party) }
 
-        val startParty = StartPartyUseCase(getPartyByPlayer, saveParty)
+        val publishPartyStartedEvent = mockk<PublishPartyStartedEvent>()
+        justRun { publishPartyStartedEvent(party) }
+
+        val startParty = StartPartyUseCase(getPartyByPlayer, saveParty, publishPartyStartedEvent)
 
         startParty(playerId) shouldBeRight Unit
     }
@@ -41,8 +45,9 @@ class StartPartyUseCaseTest {
         every { getPartyByPlayer(playerId) } returns null
 
         val saveParty = mockk<SaveParty>()
+        val publishPartyStartedEvent = mockk<PublishPartyStartedEvent>()
 
-        val startParty = StartPartyUseCase(getPartyByPlayer, saveParty)
+        val startParty = StartPartyUseCase(getPartyByPlayer, saveParty, publishPartyStartedEvent)
 
         startParty(playerId) shouldBeLeft StartPartyUseCase.PlayerNotFound
     }
@@ -62,8 +67,9 @@ class StartPartyUseCaseTest {
             every { getPartyByPlayer(playerId) } returns party
 
             val saveParty = mockk<SaveParty>()
+            val publishPartyStartedEvent = mockk<PublishPartyStartedEvent>()
 
-            val startParty = StartPartyUseCase(getPartyByPlayer, saveParty)
+            val startParty = StartPartyUseCase(getPartyByPlayer, saveParty, publishPartyStartedEvent)
 
             startParty(playerId) shouldBeLeft useCaseError
         }
