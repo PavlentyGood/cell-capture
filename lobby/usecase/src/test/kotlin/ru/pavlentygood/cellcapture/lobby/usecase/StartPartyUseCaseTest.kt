@@ -13,7 +13,7 @@ import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
-class StartPartyErrorPartyUseCaseTest {
+class StartPartyUseCaseTest {
 
     @Test
     fun `start party`() {
