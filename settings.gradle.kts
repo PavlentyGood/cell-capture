@@ -6,6 +6,7 @@ include("lobby:domain")
 include("lobby:usecase")
 include("lobby:rest")
 include("lobby:persistence")
+include("lobby:publishing")
 include("lobby:app")
 
 include("game:domain")
