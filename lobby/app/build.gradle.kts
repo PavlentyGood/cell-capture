@@ -8,11 +8,13 @@ dependencies {
     implementation(project(Module.lobbyUseCase))
     implementation(project(Module.lobbyRest))
     implementation(project(Module.lobbyPersistence))
+    implementation(project(Module.lobbyPublishing))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWeb)
     implementation(Lib.springBootStarterDataJpa)
+    implementation(Lib.springKafka)
 
     testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
@@ -26,4 +28,5 @@ dependencies {
     testImplementation(testFixtures(project(Module.lobbyDomain)))
     testImplementation(testFixtures(project(Module.lobbyRest)))
     testImplementation(testFixtures(project(Module.lobbyPersistence)))
+    testImplementation(testFixtures(project(Module.lobbyPublishing)))
 }

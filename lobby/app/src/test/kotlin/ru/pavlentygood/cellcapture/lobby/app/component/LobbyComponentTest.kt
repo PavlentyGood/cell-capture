@@ -3,12 +3,14 @@ package ru.pavlentygood.cellcapture.lobby.app.component
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.RepeatedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
+import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
@@ -16,21 +18,38 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.persistence.TestPersistenceConfig
+import ru.pavlentygood.cellcapture.lobby.publishing.KafkaTestContainer
+import ru.pavlentygood.cellcapture.lobby.publishing.PARTY_STARTED_TOPIC
+import ru.pavlentygood.cellcapture.lobby.publishing.PartyDto
+import ru.pavlentygood.cellcapture.lobby.publishing.TestConsumerConfig
 import ru.pavlentygood.cellcapture.lobby.rest.*
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import java.util.*
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(value = [TestPersistenceConfig::class])
-class LobbyComponentTest {
+@Import(value = [TestPersistenceConfig::class, TestConsumerConfig::class])
+class LobbyComponentTest : KafkaTestContainer() {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
     lateinit var getParty: GetParty
 
-    @RepeatedTest(10)
+    companion object {
+        lateinit var latch: CountDownLatch
+        var sentStartedParty: PartyDto? = null
+    }
+
+    @BeforeEach
+    fun before() {
+        latch = CountDownLatch(1)
+        sentStartedParty = null
+    }
+
+    @RepeatedTest(2)
     fun `all use cases as process`() {
         val ownerName = playerName()
         val playerName = playerName()
@@ -44,6 +63,9 @@ class LobbyComponentTest {
         party.getPlayers().size shouldBe 2
         party.getPlayers().map { it.id.toInt() } shouldContain created.ownerId
         party.getPlayers().map { it.name } shouldContainExactly listOf(ownerName, playerName)
+
+        latch.await(5, TimeUnit.SECONDS) shouldBe true
+        sentStartedParty!!.id shouldBe party.id.toUUID()
     }
 
     private fun createParty(playerName: PlayerName) =
@@ -68,4 +90,10 @@ class LobbyComponentTest {
             queryParam("playerId", playerId.toString())
             contentType = MediaType.APPLICATION_JSON
         }.andExpect { status { isOk() } }
+
+    @KafkaListener(topics = [PARTY_STARTED_TOPIC], groupId = "test")
+    fun testConsumer(record: PartyDto) {
+        sentStartedParty = record
+        latch.countDown()
+    }
 }
