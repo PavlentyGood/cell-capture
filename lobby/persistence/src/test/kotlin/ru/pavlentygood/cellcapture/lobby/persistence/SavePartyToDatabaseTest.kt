@@ -12,7 +12,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 @JpaTest
 @Import(value = [SavePartyToDatabase::class])
-class SavePartyToDatabaseTest {
+class SavePartyToDatabaseTest : PostgresTestContainer() {
 
     @Autowired
     private lateinit var jdbcTemplate: NamedParameterJdbcTemplate

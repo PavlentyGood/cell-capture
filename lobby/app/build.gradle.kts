@@ -21,6 +21,9 @@ dependencies {
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
     testImplementation(Lib.archUnit)
+    testImplementation(Lib.testcontainersJUnit)
+    testImplementation(Lib.testcontainersPostgresql)
+    testImplementation(Lib.testcontainersKafka)
 
     testRuntimeOnly(Lib.junitEngine)
 

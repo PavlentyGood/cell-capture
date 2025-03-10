@@ -19,7 +19,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
         RestoreParty::class
     ]
 )
-class GetPartyFromDatabaseTest {
+class GetPartyFromDatabaseTest : PostgresTestContainer() {
 
     @Autowired
     private lateinit var saveParty: SaveParty

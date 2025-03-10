@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @DataJpaTest(excludeAutoConfiguration = [TestDatabaseAutoConfiguration::class])
 @Transactional(propagation = Propagation.NEVER)
+@ContextConfiguration(classes = [JpaTest::class])
 @EnableAutoConfiguration
-@ContextConfiguration(classes = [TestPersistenceConfig::class])
 annotation class JpaTest

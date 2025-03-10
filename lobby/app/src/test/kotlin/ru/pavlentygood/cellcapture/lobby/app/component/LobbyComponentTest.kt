@@ -17,8 +17,6 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.domain.Party
-import ru.pavlentygood.cellcapture.lobby.persistence.TestPersistenceConfig
-import ru.pavlentygood.cellcapture.lobby.publishing.KafkaTestContainer
 import ru.pavlentygood.cellcapture.lobby.publishing.PARTY_STARTED_TOPIC
 import ru.pavlentygood.cellcapture.lobby.publishing.PartyDto
 import ru.pavlentygood.cellcapture.lobby.publishing.TestConsumerConfig
@@ -30,8 +28,8 @@ import java.util.concurrent.TimeUnit
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(value = [TestPersistenceConfig::class, TestConsumerConfig::class])
-class LobbyComponentTest : KafkaTestContainer() {
+@Import(value = [TestConsumerConfig::class])
+class LobbyComponentTest : TestContainers() {
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -49,7 +47,7 @@ class LobbyComponentTest : KafkaTestContainer() {
         sentStartedParty = null
     }
 
-    @RepeatedTest(2)
+    @RepeatedTest(10)
     fun `all use cases as process`() {
         val ownerName = playerName()
         val playerName = playerName()

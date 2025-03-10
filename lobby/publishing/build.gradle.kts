@@ -16,6 +16,7 @@ dependencies {
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.mockk)
+    testImplementation(Lib.testcontainersJUnit)
 
     testRuntimeOnly(Lib.junitEngine)
 
@@ -25,5 +26,4 @@ dependencies {
 
     testFixturesImplementation(Lib.springBootStarterTest)
     testFixturesImplementation(Lib.testcontainersKafka)
-    testFixturesImplementation(Lib.testcontainersJUnit)
 }

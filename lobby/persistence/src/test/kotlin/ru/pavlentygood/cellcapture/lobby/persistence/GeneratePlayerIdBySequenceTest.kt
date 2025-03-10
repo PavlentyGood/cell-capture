@@ -13,9 +13,9 @@ import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
 
 @JdbcTest(excludeAutoConfiguration = [TestDatabaseAutoConfiguration::class])
-@ContextConfiguration(classes = [TestPersistenceConfig::class])
+@ContextConfiguration(classes = [GeneratePlayerIdBySequenceTest::class])
 @Import(value = [GeneratePlayerIdBySequence::class])
-class GeneratePlayerIdBySequenceTest {
+class GeneratePlayerIdBySequenceTest : PostgresTestContainer() {
 
     @Autowired
     private lateinit var generatePlayerId: GeneratePlayerId
