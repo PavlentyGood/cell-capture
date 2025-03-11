@@ -3,17 +3,13 @@ package ru.pavlentygood.cellcapture.lobby.persistence
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
-import org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration
 import org.springframework.context.annotation.Import
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import org.springframework.test.context.ContextConfiguration
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
 
-@JdbcTest(excludeAutoConfiguration = [TestDatabaseAutoConfiguration::class])
-@ContextConfiguration(classes = [GeneratePlayerIdBySequenceTest::class])
+@JpaTest
 @Import(value = [GeneratePlayerIdBySequence::class])
 class GeneratePlayerIdBySequenceTest : PostgresTestContainer() {
 
