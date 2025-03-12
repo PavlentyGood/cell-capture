@@ -11,7 +11,7 @@ import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
 
 @JpaTest
 @Import(value = [GeneratePlayerIdBySequence::class])
-class GeneratePlayerIdBySequenceTest : PostgresTestContainer() {
+class GeneratePlayerIdBySequenceTest : BasePostgresTest {
 
     @Autowired
     private lateinit var generatePlayerId: GeneratePlayerId

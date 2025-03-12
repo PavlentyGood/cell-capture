@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 @SpringBootTest(classes = [PublishingConfig::class, TestConsumerConfig::class])
-class SendPartyStartedMessageTest : KafkaTestContainer() {
+class SendPartyStartedMessageTest : BaseKafkaTest {
 
     @Autowired
     private lateinit var sendPartyStartedMessage: SendPartyStartedMessage
@@ -30,7 +30,7 @@ class SendPartyStartedMessageTest : KafkaTestContainer() {
 
         sendPartyStartedMessage(party)
 
-        latch.await(5, TimeUnit.SECONDS) shouldBe true
+        latch.await(10, TimeUnit.SECONDS) shouldBe true
         consumedRecord.apply {
             id shouldBe party.id.toUUID()
             ownerId shouldBe owner.id.toInt()

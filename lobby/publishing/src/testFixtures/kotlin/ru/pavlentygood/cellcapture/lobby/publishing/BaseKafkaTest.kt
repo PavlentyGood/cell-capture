@@ -8,7 +8,11 @@ interface BaseKafkaTest {
 
     companion object {
 
-        val container = KafkaContainer("apache/kafka:3.8.1")
+        private val container = KafkaContainer("apache/kafka:3.8.1")
+
+        init {
+            container.start()
+        }
 
         @JvmStatic
         @DynamicPropertySource

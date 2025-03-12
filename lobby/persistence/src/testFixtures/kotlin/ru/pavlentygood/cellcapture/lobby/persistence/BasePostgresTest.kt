@@ -8,7 +8,11 @@ interface BasePostgresTest {
 
     companion object {
 
-        val container = PostgreSQLContainer<Nothing>("postgres:17.2-alpine")
+        private val container = PostgreSQLContainer<Nothing>("postgres:17.2-alpine")
+
+        init {
+            container.start()
+        }
 
         @JvmStatic
         @DynamicPropertySource

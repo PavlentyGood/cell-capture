@@ -17,6 +17,8 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.domain.Party
+import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.lobby.publishing.BaseKafkaTest
 import ru.pavlentygood.cellcapture.lobby.publishing.PARTY_STARTED_TOPIC
 import ru.pavlentygood.cellcapture.lobby.publishing.PartyDto
 import ru.pavlentygood.cellcapture.lobby.publishing.TestConsumerConfig
@@ -29,7 +31,7 @@ import java.util.concurrent.TimeUnit
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(value = [TestConsumerConfig::class])
-class LobbyComponentTest : TestContainers() {
+class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
