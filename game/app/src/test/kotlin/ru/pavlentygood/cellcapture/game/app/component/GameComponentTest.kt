@@ -3,23 +3,24 @@ package ru.pavlentygood.cellcapture.game.app.component
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.RepeatedTest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration
+import org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.*
+import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
-import ru.pavlentygood.cellcapture.game.persistence.TestPersistenceConfig
 import ru.pavlentygood.cellcapture.game.rest.*
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(value = [TestPersistenceConfig::class])
-class GameComponentTest {
+@ImportAutoConfiguration(exclude = [TestDatabaseAutoConfiguration::class])
+class GameComponentTest : BasePostgresTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc

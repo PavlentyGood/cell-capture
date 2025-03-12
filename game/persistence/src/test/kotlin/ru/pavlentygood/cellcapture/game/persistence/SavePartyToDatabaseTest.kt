@@ -4,17 +4,14 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import org.springframework.test.context.ContextConfiguration
 import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 
-@JdbcTest
-@ContextConfiguration(classes = [TestPersistenceConfig::class])
-class SavePartyToDatabaseTest {
+@PersistenceTest
+class SavePartyToDatabaseTest : BasePostgresTest {
 
     @Autowired
     private lateinit var jdbcTemplate: NamedParameterJdbcTemplate

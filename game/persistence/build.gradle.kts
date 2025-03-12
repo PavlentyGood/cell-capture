@@ -20,7 +20,6 @@ dependencies {
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.mockk)
-    testImplementation(Lib.testcontainersPostgresql)
 
     testRuntimeOnly(Lib.junitEngine)
 

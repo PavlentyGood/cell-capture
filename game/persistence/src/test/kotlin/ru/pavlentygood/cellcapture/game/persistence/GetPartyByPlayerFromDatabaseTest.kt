@@ -3,16 +3,13 @@ package ru.pavlentygood.cellcapture.game.persistence
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
-import org.springframework.test.context.ContextConfiguration
 import ru.pavlentygood.cellcapture.game.domain.party
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
-@JdbcTest
-@ContextConfiguration(classes = [TestPersistenceConfig::class])
-class GetPartyByPlayerFromDatabaseTest {
+@PersistenceTest
+class GetPartyByPlayerFromDatabaseTest : BasePostgresTest {
 
     @Autowired
     private lateinit var saveParty: SaveParty
