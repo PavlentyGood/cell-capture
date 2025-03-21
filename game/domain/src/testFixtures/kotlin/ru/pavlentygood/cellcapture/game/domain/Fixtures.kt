@@ -65,11 +65,12 @@ fun Array<Array<Cell>>.capturedCellCount() =
     capturedCells().count()
 
 fun partyInfo(
+    partyId: PartyId = partyId(),
     ownerId: PlayerId = playerId(),
     players: List<Player> = listOf(player(ownerId), player())
 ) =
     PartyInfo(
-        partyId = partyId(),
+        partyId = partyId,
         playerList = playerList(
             ownerId = ownerId,
             players = players
