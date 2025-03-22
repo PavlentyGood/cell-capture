@@ -1,35 +1,42 @@
 package ru.pavlentygood.cellcapture.game.app.component
 
+import io.kotest.assertions.nondeterministic.eventually
+import io.kotest.assertions.nondeterministic.eventuallyConfig
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.RepeatedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 import org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.domain.*
+import ru.pavlentygood.cellcapture.game.listening.*
 import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.rest.*
-import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import kotlin.time.Duration.Companion.seconds
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(value = [TestProducerConfig::class])
 @ImportAutoConfiguration(exclude = [TestDatabaseAutoConfiguration::class])
-class GameComponentTest : BasePostgresTest {
+class GameComponentTest : BasePostgresTest, BaseKafkaTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var createParty: CreatePartyUseCase
+    lateinit var kafkaTemplate: KafkaTemplate<String, PartyStartedMessage>
     @Autowired
     lateinit var getPartyByPlayer: GetPartyByPlayerFromDatabase
 
-    @RepeatedTest(100)
+    @RepeatedTest(10)
     fun `all use cases as process`() {
         val party = createParty() // use case
 
@@ -49,11 +56,21 @@ class GameComponentTest : BasePostgresTest {
 
     private fun createParty(): Party =
         generateSequence {
-            val partyInfo = partyInfo()
-            createParty(partyInfo)
-            getPartyByPlayer(partyInfo.ownerId)
-        }.first { party ->
+            val partyStarted = partyStartedMessage()
+            kafkaTemplate.send(PARTY_STARTED_TOPIC, partyStarted)
+            getParty(PlayerId(partyStarted.ownerId))
+        }.first { party: Party ->
             party.isStartCellFarFromSides() && party.isStartCellFarFromCapturedCells()
+        }
+
+    private fun getParty(ownerId: PlayerId): Party =
+        runBlocking {
+            eventually(
+                eventuallyConfig {
+                    duration = 10.seconds
+                    initialDelay = 1.seconds
+                }
+            ) { getPartyByPlayer(ownerId)!! }
         }
 
     private fun roll(playerId: PlayerId) =

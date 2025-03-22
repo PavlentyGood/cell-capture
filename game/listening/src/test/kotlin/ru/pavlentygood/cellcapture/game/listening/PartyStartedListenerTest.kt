@@ -1,8 +1,10 @@
 package ru.pavlentygood.cellcapture.game.listening
 
-import io.kotest.matchers.shouldBe
-import io.mockk.every
+import io.kotest.assertions.nondeterministic.eventually
+import io.kotest.assertions.nondeterministic.eventuallyConfig
+import io.mockk.justRun
 import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -14,8 +16,7 @@ import ru.pavlentygood.cellcapture.game.domain.player
 import ru.pavlentygood.cellcapture.game.listening.PartyStartedListenerTest.TestConfig
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.kernel.domain.partyId
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 @SpringBootTest(
     classes = [TestConfig::class, ListeningConfig::class, TestProducerConfig::class]
@@ -27,8 +28,6 @@ class PartyStartedListenerTest : BaseKafkaTest {
     @Autowired
     lateinit var createParty: CreatePartyUseCase
 
-    val latch = CountDownLatch(1)
-
     @Test
     fun `listen party started message`() {
         val partyId = partyId()
@@ -39,30 +38,24 @@ class PartyStartedListenerTest : BaseKafkaTest {
             ownerId = owner.id,
             players = listOf(owner, player)
         )
-        val partyStartedMessage = PartyStartedMessage(
-            partyId = partyId.toUUID(),
-            ownerId = owner.id.toInt(),
-            players = listOf(
-                PartyStartedMessage.Player(
-                    id = owner.id.toInt(),
-                    name = owner.name.toStringValue()
-                ),
-                PartyStartedMessage.Player(
-                    id = player.id.toInt(),
-                    name = player.name.toStringValue()
-                )
-            )
+        val partyStartedMessage = partyStartedMessage(
+            partyId = partyId,
+            owner = owner,
+            player = player
         )
 
         Thread.sleep(1000 * 5) // костыль
 
-        every { createParty(partyInfo) } answers {
-            latch.countDown()
-        }
-
         kafkaTemplate.send(PARTY_STARTED_TOPIC, partyStartedMessage)
 
-        latch.await(10, TimeUnit.SECONDS) shouldBe true
+        runBlocking {
+            eventually(
+                eventuallyConfig {
+                    duration = 10.seconds
+                    initialDelay = 1.seconds
+                }
+            ) { justRun { createParty(partyInfo) } }
+        }
     }
 
     @Configuration

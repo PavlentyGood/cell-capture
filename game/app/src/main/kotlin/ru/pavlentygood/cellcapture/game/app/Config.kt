@@ -3,9 +3,11 @@ package ru.pavlentygood.cellcapture.game.app
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import ru.pavlentygood.cellcapture.game.domain.CreateParty
 import ru.pavlentygood.cellcapture.game.domain.RestoreParty
+import ru.pavlentygood.cellcapture.game.listening.ListeningConfig
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.persistence.SavePartyToDatabase
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
@@ -16,6 +18,7 @@ import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 
 @Configuration
 @ComponentScan("ru.pavlentygood.cellcapture.game.rest")
+@Import(value = [ListeningConfig::class])
 class Config {
 
     @Bean

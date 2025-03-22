@@ -21,6 +21,8 @@ dependencies {
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))
 
+    testFixturesImplementation(testFixtures(project(Module.kernelDomain)))
+
     testFixturesImplementation(Lib.springBootStarterTest)
     testFixturesImplementation(Lib.testcontainersKafka)
 }

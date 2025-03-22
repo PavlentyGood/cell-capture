@@ -17,6 +17,7 @@ object Module {
     const val gameUseCase = "$game:usecase"
     const val gameRest = "$game:rest"
     const val gamePersistence = "$game:persistence"
+    const val gameListening = "$game:listening"
 }
 
 object Version {
