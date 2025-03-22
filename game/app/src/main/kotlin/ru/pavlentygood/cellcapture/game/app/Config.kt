@@ -22,8 +22,8 @@ import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 class Config {
 
     @Bean
-    fun createParty(saveParty: SaveParty) =
-        CreatePartyUseCase(partyFactory(), saveParty)
+    fun createParty(getPartyByPlayer: GetPartyByPlayer, saveParty: SaveParty) =
+        CreatePartyUseCase(getPartyByPlayer, partyFactory(), saveParty)
 
     @Bean
     fun partyFactory() = CreateParty()

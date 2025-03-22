@@ -1,8 +1,9 @@
 package ru.pavlentygood.cellcapture.game.listening
 
+import arrow.core.right
 import io.kotest.assertions.nondeterministic.eventually
 import io.kotest.assertions.nondeterministic.eventuallyConfig
-import io.mockk.justRun
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
@@ -54,7 +55,9 @@ class PartyStartedListenerTest : BaseKafkaTest {
                     duration = 10.seconds
                     initialDelay = 1.seconds
                 }
-            ) { justRun { createParty(partyInfo) } }
+            ) {
+                every { createParty(partyInfo) } returns Unit.right()
+            }
         }
     }
 
