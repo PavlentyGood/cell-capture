@@ -2,6 +2,15 @@ plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
 }
 
+docker {
+    name = project.parent!!.name
+    copySpec.from("build/libs").into("build/libs")
+}
+
+tasks.dockerPrepare {
+    dependsOn(tasks.build)
+}
+
 dependencies {
     implementation(project(Module.kernelDomain))
     implementation(project(Module.lobbyDomain))

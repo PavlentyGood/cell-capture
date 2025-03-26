@@ -34,6 +34,7 @@ object Version {
     const val postgresql = "42.7.5"
     const val flyway = "11.3.1"
     const val testcontainers = "1.20.5"
+    const val docker = "0.36.0"
 }
 
 object Plugin {
@@ -42,6 +43,7 @@ object Plugin {
     const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
     const val kotlinSpring = "org.jetbrains.kotlin.plugin.spring"
     const val kotlinJpa = "org.jetbrains.kotlin.plugin.jpa"
+    const val docker = "com.palantir.docker"
 }
 
 object Lib {
