@@ -41,6 +41,7 @@ object Plugin {
     const val jvm = "org.jetbrains.kotlin.jvm"
     const val detekt = "io.gitlab.arturbosch.detekt"
     const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
+    const val springBoot = "org.springframework.boot"
     const val kotlinSpring = "org.jetbrains.kotlin.plugin.spring"
     const val kotlinJpa = "org.jetbrains.kotlin.plugin.jpa"
     const val docker = "com.palantir.docker"

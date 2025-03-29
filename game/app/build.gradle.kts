@@ -1,4 +1,5 @@
 plugins {
+    id(Plugin.springBoot) version Version.springBoot
     id(Plugin.kotlinSpring) version Version.kotlin
 }
 
@@ -7,8 +8,14 @@ docker {
     copySpec.from("build/libs").into("build/libs")
 }
 
-tasks.dockerPrepare {
-    dependsOn(tasks.build)
+tasks {
+    bootJar {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    dockerPrepare {
+        dependsOn(build)
+    }
 }
 
 dependencies {

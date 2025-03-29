@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id(Plugin.jvm) version Version.kotlin apply false
     id(Plugin.detekt) version Version.detekt
@@ -62,6 +64,12 @@ subprojects {
                     }
                 })
             )
+        }
+
+        withType<KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
         }
 
         withType<Test> {
