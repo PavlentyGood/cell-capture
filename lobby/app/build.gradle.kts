@@ -9,10 +9,6 @@ docker {
 }
 
 tasks {
-    bootJar {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    }
-
     dockerPrepare {
         dependsOn(build)
     }
