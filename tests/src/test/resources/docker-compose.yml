@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+
+  kafka:
+    container_name: kafka
+    image: apache/kafka:3.8.1
+    restart: always
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENERS: PLAINTEXT://kafka:9092,CONTROLLER://localhost:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+    ports:
+      - '9092:9092'
+
+  postgres-lobby:
+    container_name: postgres-lobby
+    image: postgres:17.4-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: lobby
+      POSTGRES_USER: lobby
+      POSTGRES_PASSWORD: lobby
+    ports:
+      - '5432:5432'
+
+  postgres-game:
+    container_name: postgres-game
+    image: postgres:17.4-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: game
+      POSTGRES_USER: game
+      POSTGRES_PASSWORD: game
+    ports:
+      - '5433:5432'
+
+  lobby:
+    image: lobby
+    restart: always
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      DB_URL: jdbc:postgresql://postgres-lobby:5432/lobby
+      DB_USER: lobby
+      DB_PASSWORD: lobby
+    ports:
+      - '8080:8080'
+    depends_on:
+      - kafka
+      - postgres-lobby
+
+  game:
+    image: game
+    restart: always
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      DB_URL: jdbc:postgresql://postgres-game:5432/game
+      DB_USER: game
+      DB_PASSWORD: game
+    ports:
+      - '8081:8080'
+    depends_on:
+      - kafka
+      - postgres-game
