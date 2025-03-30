@@ -3,7 +3,6 @@ version: '3.9'
 services:
 
   kafka:
-    container_name: kafka
     image: apache/kafka:3.8.1
     restart: always
     environment:
@@ -18,7 +17,6 @@ services:
       - '9092:9092'
 
   postgres-lobby:
-    container_name: postgres-lobby
     image: postgres:17.4-alpine
     restart: always
     environment:
@@ -29,7 +27,6 @@ services:
       - '5432:5432'
 
   postgres-game:
-    container_name: postgres-game
     image: postgres:17.4-alpine
     restart: always
     environment:
