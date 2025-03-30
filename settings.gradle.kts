@@ -15,3 +15,5 @@ include("game:rest")
 include("game:persistence")
 include("game:listening")
 include("game:app")
+
+include("tests")
