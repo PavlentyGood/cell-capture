@@ -23,6 +23,12 @@ services:
       POSTGRES_PASSWORD: lobby
     ports:
       - '5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lobby -d lobby"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   postgres-game:
     image: postgres:17.4-alpine
@@ -33,6 +39,12 @@ services:
       POSTGRES_PASSWORD: game
     ports:
       - '5433:5432'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U game -d game" ]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   lobby:
     image: lobby
@@ -45,8 +57,10 @@ services:
     ports:
       - '8080:8080'
     depends_on:
-      - kafka
-      - postgres-lobby
+      kafka:
+        condition: service_started
+      postgres-lobby:
+        condition: service_healthy
 
   game:
     image: game
@@ -59,5 +73,7 @@ services:
     ports:
       - '8081:8080'
     depends_on:
-      - kafka
-      - postgres-game
+      kafka:
+        condition: service_started
+      postgres-game:
+        condition: service_healthy
