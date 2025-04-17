@@ -18,7 +18,8 @@ dependencies {
     implementation(project(Module.kernelDomain))
     implementation(project(Module.lobbyDomain))
     implementation(project(Module.lobbyUseCase))
-    implementation(project(Module.lobbyRest))
+    implementation(project(Module.lobbyRestApi))
+    implementation(project(Module.lobbyRestEndpoint))
     implementation(project(Module.lobbyPersistence))
     implementation(project(Module.lobbyPublishing))
 
@@ -41,7 +42,7 @@ dependencies {
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))
-    testImplementation(testFixtures(project(Module.lobbyRest)))
+    testImplementation(testFixtures(project(Module.lobbyRestEndpoint)))
     testImplementation(testFixtures(project(Module.lobbyPersistence)))
     testImplementation(testFixtures(project(Module.lobbyPublishing)))
 }

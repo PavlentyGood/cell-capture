@@ -22,7 +22,9 @@ import ru.pavlentygood.cellcapture.lobby.publishing.BaseKafkaTest
 import ru.pavlentygood.cellcapture.lobby.publishing.PARTY_STARTED_TOPIC
 import ru.pavlentygood.cellcapture.lobby.publishing.PartyDto
 import ru.pavlentygood.cellcapture.lobby.publishing.TestConsumerConfig
-import ru.pavlentygood.cellcapture.lobby.rest.*
+import ru.pavlentygood.cellcapture.lobby.rest.api.*
+import ru.pavlentygood.cellcapture.lobby.rest.endpoint.mapper
+import ru.pavlentygood.cellcapture.lobby.rest.endpoint.with
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import java.util.*
 import java.util.concurrent.CountDownLatch
