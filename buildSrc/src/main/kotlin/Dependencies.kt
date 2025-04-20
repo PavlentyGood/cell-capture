@@ -16,7 +16,8 @@ object Module {
 
     const val gameDomain = "$game:domain"
     const val gameUseCase = "$game:usecase"
-    const val gameRest = "$game:rest"
+    const val gameRestApi = "$game:rest:api"
+    const val gameRestEndpoint = "$game:rest:endpoint"
     const val gamePersistence = "$game:persistence"
     const val gameListening = "$game:listening"
 }

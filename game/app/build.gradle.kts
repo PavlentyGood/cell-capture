@@ -18,7 +18,8 @@ dependencies {
     implementation(project(Module.kernelDomain))
     implementation(project(Module.gameDomain))
     implementation(project(Module.gameUseCase))
-    implementation(project(Module.gameRest))
+    implementation(project(Module.gameRestApi))
+    implementation(project(Module.gameRestEndpoint))
     implementation(project(Module.gamePersistence))
     implementation(project(Module.gameListening))
 
@@ -39,7 +40,8 @@ dependencies {
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))
-    testImplementation(testFixtures(project(Module.gameRest)))
+    testImplementation(testFixtures(project(Module.gameRestApi)))
+    testImplementation(testFixtures(project(Module.gameRestEndpoint)))
     testImplementation(testFixtures(project(Module.gamePersistence)))
     testImplementation(testFixtures(project(Module.gameListening)))
 }

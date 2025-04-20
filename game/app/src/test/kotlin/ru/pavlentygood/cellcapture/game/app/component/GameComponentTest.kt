@@ -19,7 +19,13 @@ import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.listening.*
 import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
-import ru.pavlentygood.cellcapture.game.rest.*
+import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_CELLS
+import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_DICES
+import ru.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi.Request
+import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.DicesResponse
+import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.RollResponse
+import ru.pavlentygood.cellcapture.game.rest.endpoint.mapper
+import ru.pavlentygood.cellcapture.game.rest.endpoint.with
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import kotlin.time.Duration.Companion.seconds
 
@@ -77,21 +83,21 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
         mockMvc.post(API_V1_PLAYERS_DICES.with("playerId", playerId.toInt()))
             .andExpect { status { isOk() } }
             .andReturn().response.contentAsString
-            .let { mapper.readValue(it, RollEndpoint.RollResponse::class.java) }
+            .let { mapper.readValue(it, RollResponse::class.java) }
             .dices
 
     private fun captureCells(
         playerId: PlayerId,
-        dices: RollEndpoint.DicesResponse,
+        dices: DicesResponse,
         startCell: Cell,
     ) {
         val x1 = startCell.x + 1
         val x2 = x1 + dices.first - 1
         val y1 = startCell.y
         val y2 = y1 + dices.second - 1
-        val request = CaptureCellsEndpoint.Request(
-            first = CaptureCellsEndpoint.Request.Point(x = x1, y = y1),
-            second = CaptureCellsEndpoint.Request.Point(x = x2, y = y2)
+        val request = Request(
+            first = Request.Point(x = x1, y = y1),
+            second = Request.Point(x = x2, y = y2)
         )
         mockMvc.post(API_V1_PLAYERS_CELLS.with("playerId", playerId.toInt())) {
             contentType = MediaType.APPLICATION_JSON
