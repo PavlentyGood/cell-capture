@@ -14,7 +14,7 @@ class RollDicesEndpoint(
     private val roll: RollUseCase
 ) : RollDicesApi {
 
-    override fun invoke(playerId: Int): Any? =
+    override fun invoke(playerId: Int): ResponseEntity<RollDicesApi.RollResponse> =
         roll(PlayerId(playerId))
             .fold(
                 { it.toError() },
@@ -27,7 +27,7 @@ class RollDicesEndpoint(
     private fun RolledDices.toResponse() =
         DicesResponse(firstValue, secondValue)
 
-    private fun RollUseCaseError.toError(): ResponseEntity<Unit> =
+    private fun RollUseCaseError.toError(): ResponseEntity<RollDicesApi.RollResponse> =
         when (this) {
             RollUseCaseError.PlayerNotFound -> ResponseEntity.notFound().build()
             RollUseCaseError.PlayerNotCurrent,
