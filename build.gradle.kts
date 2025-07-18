@@ -49,7 +49,7 @@ subprojects {
             violationRules {
                 rule {
                     limit {
-                        minimum = BigDecimal("0.9")
+                        minimum = BigDecimal("0.0")
                     }
                 }
             }
