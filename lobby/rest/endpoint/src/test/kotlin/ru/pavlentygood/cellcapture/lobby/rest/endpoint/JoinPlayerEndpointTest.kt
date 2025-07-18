@@ -19,10 +19,8 @@ import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES_PLAYERS
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
-import ru.pavlentygood.cellcapture.lobby.usecase.AlreadyStartedUseCaseError
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
-import ru.pavlentygood.cellcapture.lobby.usecase.PartyNotFoundUseCaseError
-import ru.pavlentygood.cellcapture.lobby.usecase.PlayerCountLimitUseCaseError
+import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCaseError.*
 import java.util.*
 
 @WebMvcTest

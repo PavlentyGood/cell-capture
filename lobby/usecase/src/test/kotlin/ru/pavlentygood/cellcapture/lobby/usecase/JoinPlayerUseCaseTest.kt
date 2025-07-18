@@ -50,14 +50,14 @@ class JoinPlayerUseCaseTest {
 
         val joinPlayer = JoinPlayerUseCase(getParty, saveParty, generatePlayerId)
 
-        joinPlayer(partyId, playerName) shouldBeLeft PartyNotFoundUseCaseError
+        joinPlayer(partyId, playerName) shouldBeLeft JoinPlayerUseCaseError.PartyNotFoundUseCaseError
     }
 
     @Test
     fun `join player - domain errors`() {
         mapOf(
-            Party.AlreadyStarted to AlreadyStartedUseCaseError,
-            Party.PlayerCountLimit to PlayerCountLimitUseCaseError
+            Party.AlreadyStarted to JoinPlayerUseCaseError.AlreadyStartedUseCaseError,
+            Party.PlayerCountLimit to JoinPlayerUseCaseError.PlayerCountLimitUseCaseError
         ).forEach { (domainError, useCaseError) ->
             val party = mockk<Party>()
             every { party.joinPlayer(playerName, generatePlayerId) } returns domainError.left()

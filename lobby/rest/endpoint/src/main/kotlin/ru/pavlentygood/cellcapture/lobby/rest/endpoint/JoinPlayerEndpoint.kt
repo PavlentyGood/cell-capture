@@ -8,6 +8,7 @@ import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerApi
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerResponse
 import ru.pavlentygood.cellcapture.lobby.usecase.*
+import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCaseError.*
 import java.util.*
 
 @RestController

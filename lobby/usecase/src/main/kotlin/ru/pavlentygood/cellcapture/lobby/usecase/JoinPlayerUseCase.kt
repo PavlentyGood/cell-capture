@@ -7,6 +7,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.lobby.domain.GeneratePlayerId
 import ru.pavlentygood.cellcapture.lobby.domain.Party
+import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCaseError.*
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
@@ -33,7 +34,8 @@ class JoinPlayerUseCase(
         }
 }
 
-sealed interface JoinPlayerUseCaseError
-data object PartyNotFoundUseCaseError : JoinPlayerUseCaseError
-data object AlreadyStartedUseCaseError : JoinPlayerUseCaseError
-data object PlayerCountLimitUseCaseError : JoinPlayerUseCaseError
+sealed interface JoinPlayerUseCaseError {
+    data object PartyNotFoundUseCaseError : JoinPlayerUseCaseError
+    data object AlreadyStartedUseCaseError : JoinPlayerUseCaseError
+    data object PlayerCountLimitUseCaseError : JoinPlayerUseCaseError
+}

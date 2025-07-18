@@ -13,6 +13,7 @@ import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.persistence.*
 import ru.pavlentygood.cellcapture.lobby.publishing.PublishingConfig
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
+import ru.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetParty
@@ -24,7 +25,12 @@ import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 @ComponentScan("ru.pavlentygood.cellcapture.lobby.rest")
 @EnableJpaRepositories("ru.pavlentygood.cellcapture.lobby.persistence")
 @EntityScan("ru.pavlentygood.cellcapture.lobby.persistence")
-@Import(PublishingConfig::class)
+@Import(
+    value = [
+        GetPartyUseCase::class,
+        PublishingConfig::class
+    ]
+)
 class Config {
 
     @Bean
