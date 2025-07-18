@@ -12,13 +12,19 @@ import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.persistence.SavePartyToDatabase
 import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
+import ru.pavlentygood.cellcapture.game.usecase.GetPartyByPlayerUseCase
 import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 
 @Configuration
 @ComponentScan("ru.pavlentygood.cellcapture.game.rest")
-@Import(value = [ListeningConfig::class])
+@Import(
+    value = [
+        GetPartyByPlayerUseCase::class,
+        ListeningConfig::class
+    ]
+)
 class Config {
 
     @Bean
