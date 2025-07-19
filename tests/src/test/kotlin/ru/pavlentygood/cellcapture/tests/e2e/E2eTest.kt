@@ -8,16 +8,19 @@ import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.cloud.openfeign.FeignAutoConfiguration
+import org.springframework.http.ResponseEntity
 import org.testcontainers.containers.ComposeContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
+import ru.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
+import ru.pavlentygood.cellcapture.lobby.rest.api.CreatePartyResponse
 import java.io.File
 import java.time.Duration
 
 @EnableFeignClients
 @SpringBootTest(classes = [
-    LobbyClient::class,
+    CreatePartyClient::class,
     FeignAutoConfiguration::class,
     JacksonAutoConfiguration::class,
     HttpMessageConvertersAutoConfiguration::class
@@ -25,7 +28,7 @@ import java.time.Duration
 class E2eTest {
 
     @Autowired
-    lateinit var lobbyClient: LobbyClient
+    lateinit var createParty: CreatePartyClient
 
     init {
         ComposeContainer(File("docker-compose.yml"))
@@ -49,8 +52,8 @@ class E2eTest {
             ownerName = ownerName.toStringValue()
         )
 
-        val response: CreatePartyResponse = lobbyClient.createParty(request)
+        val response: ResponseEntity<CreatePartyResponse> = createParty(request)
 
-        response.ownerId shouldBeGreaterThan 0
+        response.body!!.ownerId shouldBeGreaterThan 0
     }
 }

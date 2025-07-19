@@ -13,6 +13,7 @@ dependencies {
     implementation(project(Module.kernelDomain))
     implementation(project(Module.lobbyDomain))
     implementation(project(Module.lobbyUseCase))
+    implementation(project(Module.lobbyRestApi))
     implementation(project(Module.lobbyRestEndpoint))
     implementation(project(Module.lobbyPersistence))
     implementation(project(Module.lobbyPublishing))
