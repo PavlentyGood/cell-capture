@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.tests.e2e
+package ru.pavlentygood.cellcapture.tests.e2e.client
 
 import org.springframework.cloud.openfeign.FeignClient
 import ru.pavlentygood.cellcapture.lobby.rest.api.CreatePartyApi

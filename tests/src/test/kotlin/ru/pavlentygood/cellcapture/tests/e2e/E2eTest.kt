@@ -14,6 +14,10 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
+import ru.pavlentygood.cellcapture.tests.e2e.client.CreatePartyClient
+import ru.pavlentygood.cellcapture.tests.e2e.client.JoinPlayerClient
+import ru.pavlentygood.cellcapture.tests.e2e.client.RollDicesClient
+import ru.pavlentygood.cellcapture.tests.e2e.client.StartPartyClient
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
