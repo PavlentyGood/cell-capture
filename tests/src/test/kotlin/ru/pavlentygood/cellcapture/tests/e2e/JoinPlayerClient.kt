@@ -1,10 +1,10 @@
 package ru.pavlentygood.cellcapture.tests.e2e
 
 import org.springframework.cloud.openfeign.FeignClient
-import ru.pavlentygood.cellcapture.lobby.rest.api.CreatePartyApi
+import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerApi
 
 @FeignClient(
-    name = "create-party-client",
+    name = "join-player-client",
     url = "\${lobby.url}"
 )
-interface CreatePartyClient : CreatePartyApi
+interface JoinPlayerClient : JoinPlayerApi

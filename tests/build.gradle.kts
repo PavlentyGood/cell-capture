@@ -17,6 +17,7 @@ dependencies {
     implementation(project(Module.lobbyRestEndpoint))
     implementation(project(Module.lobbyPersistence))
     implementation(project(Module.lobbyPublishing))
+    implementation(project(Module.gameRestApi))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)

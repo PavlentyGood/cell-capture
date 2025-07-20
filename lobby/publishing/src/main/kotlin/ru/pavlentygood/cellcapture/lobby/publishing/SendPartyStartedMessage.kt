@@ -18,7 +18,7 @@ class SendPartyStartedMessage(
 
 fun Party.toDto() =
     PartyDto(
-        id = id.toUUID(),
+        partyId = id.toUUID(),
         ownerId = ownerId.toInt(),
         players = getPlayers().map { it.toDto() }
     )

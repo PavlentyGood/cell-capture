@@ -67,7 +67,7 @@ class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
         party.getPlayers().map { it.name } shouldContainExactly listOf(ownerName, playerName)
 
         latch.await(5, TimeUnit.SECONDS) shouldBe true
-        sentStartedParty!!.id shouldBe party.id.toUUID()
+        sentStartedParty!!.partyId shouldBe party.id.toUUID()
     }
 
     private fun createParty(playerName: PlayerName) =

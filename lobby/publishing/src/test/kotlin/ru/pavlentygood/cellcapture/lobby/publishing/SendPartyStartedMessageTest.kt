@@ -32,7 +32,7 @@ class SendPartyStartedMessageTest : BaseKafkaTest {
 
         latch.await(10, TimeUnit.SECONDS) shouldBe true
         consumedRecord.apply {
-            id shouldBe party.id.toUUID()
+            partyId shouldBe party.id.toUUID()
             ownerId shouldBe owner.id.toInt()
             players.first().id shouldBe owner.id.toInt()
             players.first().name shouldBe owner.name.toStringValue()

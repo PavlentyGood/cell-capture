@@ -18,12 +18,14 @@ class PublishingConfig(
 ) {
     @Bean
     fun <T> kafkaTemplate(): KafkaTemplate<String, T> {
-        val properties = mapOf(
-            BOOTSTRAP_SERVERS_CONFIG to bootstrapServers,
-            KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
-            VALUE_SERIALIZER_CLASS_CONFIG to JsonSerializer::class.java
+        val properties = mapOf(BOOTSTRAP_SERVERS_CONFIG to bootstrapServers)
+        val serializer = JsonSerializer<T>()
+        serializer.noTypeInfo()
+        val factory = DefaultKafkaProducerFactory(
+            properties,
+            StringSerializer(),
+            serializer
         )
-        val factory = DefaultKafkaProducerFactory<String, T>(properties)
         return KafkaTemplate(factory)
     }
 

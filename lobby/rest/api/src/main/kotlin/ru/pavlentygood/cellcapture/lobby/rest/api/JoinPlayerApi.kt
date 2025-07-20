@@ -9,10 +9,10 @@ import java.util.*
 fun interface JoinPlayerApi {
 
     @PostMapping(API_V1_PARTIES_PLAYERS)
-    fun invoke(
+    operator fun invoke(
         @PathVariable partyId: UUID,
         @RequestBody request: JoinPlayerRequest
-    ): ResponseEntity<*>
+    ): ResponseEntity<JoinPlayerResponse>
 }
 
 data class JoinPlayerRequest(

@@ -18,12 +18,14 @@ class TestProducerConfig(
 ) {
     @Bean
     fun kafkaTemplate(): KafkaTemplate<String, PartyStartedMessage> {
-        val properties = mapOf(
-            BOOTSTRAP_SERVERS_CONFIG to bootstrapServers,
-            KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
-            VALUE_SERIALIZER_CLASS_CONFIG to JsonSerializer::class.java
+        val properties = mapOf(BOOTSTRAP_SERVERS_CONFIG to bootstrapServers)
+        val serializer = JsonSerializer<PartyStartedMessage>()
+        serializer.noTypeInfo()
+        val factory = DefaultKafkaProducerFactory(
+            properties,
+            StringSerializer(),
+            serializer
         )
-        val factory = DefaultKafkaProducerFactory<String, PartyStartedMessage>(properties)
         return KafkaTemplate(factory)
     }
 

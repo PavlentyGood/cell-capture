@@ -21,13 +21,14 @@ class ListeningConfig(
     @Bean
     fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, PartyStartedMessage> {
         val properties = mapOf(BOOTSTRAP_SERVERS_CONFIG to bootstrapServers)
-        val jsonDeserializer = JsonDeserializer(PartyStartedMessage::class.java)
-        jsonDeserializer.addTrustedPackages("*")
+        val deserializer = JsonDeserializer(PartyStartedMessage::class.java)
+        deserializer.addTrustedPackages(PartyStartedMessage::class.java.packageName)
+        deserializer.ignoreTypeHeaders()
         val listenerFactory = ConcurrentKafkaListenerContainerFactory<String, PartyStartedMessage>()
         listenerFactory.consumerFactory = DefaultKafkaConsumerFactory(
             properties,
             StringDeserializer(),
-            jsonDeserializer
+            deserializer
         )
         return listenerFactory
     }

@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RequestParam
 fun interface StartPartyApi {
 
     @PostMapping(API_V1_PARTIES_START)
-    fun invoke(@RequestParam playerId: Int): ResponseEntity<Unit>
+    operator fun invoke(@RequestParam playerId: Int): ResponseEntity<Unit>
 }

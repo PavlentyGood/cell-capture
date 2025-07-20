@@ -7,7 +7,8 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerApi
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerResponse
-import ru.pavlentygood.cellcapture.lobby.usecase.*
+import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
+import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCaseError
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCaseError.*
 import java.util.*
 
@@ -16,7 +17,10 @@ class JoinPlayerEndpoint(
     private val joinPlayer: JoinPlayerUseCase
 ) : JoinPlayerApi {
 
-    override fun invoke(partyId: UUID, request: JoinPlayerRequest): ResponseEntity<*> =
+    override fun invoke(
+        partyId: UUID,
+        request: JoinPlayerRequest
+    ): ResponseEntity<JoinPlayerResponse> =
         PlayerName.from(request.name).fold(
             { ResponseEntity.badRequest().build() },
             { name ->
@@ -28,7 +32,7 @@ class JoinPlayerEndpoint(
         )
 }
 
-fun JoinPlayerUseCaseError.toRestError(): ResponseEntity<Unit> =
+fun JoinPlayerUseCaseError.toRestError(): ResponseEntity<JoinPlayerResponse> =
     when (this) {
         PartyNotFoundUseCaseError -> ResponseEntity.notFound().build()
         AlreadyStartedUseCaseError -> ResponseEntity.unprocessableEntity().build()
