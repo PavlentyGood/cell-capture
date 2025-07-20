@@ -10,14 +10,10 @@ import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.cloud.openfeign.FeignAutoConfiguration
-import org.testcontainers.containers.ComposeContainer
-import org.testcontainers.containers.wait.strategy.Wait
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
 import ru.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
-import java.io.File
-import java.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -43,18 +39,7 @@ class E2eTest {
     lateinit var rollDices: RollDicesClient
 
     init {
-        ComposeContainer(File("docker-compose.yml"))
-            .waitingFor(
-                "lobby",
-                Wait.forLogMessage(".*Started LobbyApplicationKt.*", 1)
-                    .withStartupTimeout(Duration.ofMinutes(5))
-            )
-            .withLogConsumer("kafka")
-            .withLogConsumer("postgres-lobby")
-            .withLogConsumer("postgres-game")
-            .withLogConsumer("lobby")
-            .withLogConsumer("game")
-            .start()
+        Container.init()
     }
 
     @Test
