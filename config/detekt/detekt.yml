@@ -12,6 +12,10 @@ formatting:
 style:
   WildcardImport:
     active: false
+  MagicNumber:
+    excludes:
+      - "**/test/**"
+      - "**/*CreateParty*"
 complexity:
   LongParameterList:
     constructorThreshold: 8

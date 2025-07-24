@@ -31,6 +31,13 @@ class CreatePartyTest {
         party.players shouldContainExactly partyInfo.players
         party.cells shouldHaveSize Field.HEIGHT
         party.cells[0] shouldHaveSize Field.WIDTH
+        party.cells[0][0] shouldBe Cell(owner.id, 0, 0)
+        party.cells[Field.HEIGHT - 1][Field.WIDTH - 1] shouldBe
+                Cell(players[1].id, Field.WIDTH - 1, Field.HEIGHT - 1)
+        party.cells[Field.HEIGHT / 4][0] shouldBe
+                Cell(players[MAX_PLAYER_COUNT - 2].id, 0, Field.HEIGHT / 4)
+        party.cells[Field.HEIGHT / 4 * 3][Field.WIDTH - 1] shouldBe
+                Cell(players[MAX_PLAYER_COUNT - 1].id, Field.WIDTH - 1, Field.HEIGHT / 4 * 3)
         party.cells.capturedCellCount() shouldBe partyInfo.players.size
         party.cells.flatten().map { it.playerId } shouldContainAll partyInfo.playerList.playerIds
     }

@@ -1,9 +1,39 @@
 package ru.pavlentygood.cellcapture.game.domain
 
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
-import kotlin.random.Random
 
 class CreateParty {
+
+    private val widthLimit = Field.WIDTH - 1
+    private val heightLimit = Field.HEIGHT - 1
+    private val widthHalf = Field.WIDTH / 2
+    private val heightHalf = Field.HEIGHT / 2
+    private val widthQuarter = Field.WIDTH / 4
+    private val heightQuarter = Field.HEIGHT / 4
+    private val widthThreeQuarter = Field.WIDTH / 4 * 3
+    private val heightThreeQuarter = Field.HEIGHT / 4 * 3
+
+    private val playerStartCells: List<Point> = listOf(
+        point(0, 0),
+        point(widthLimit, heightLimit),
+        point(widthLimit, 0),
+        point(0, heightLimit),
+        point(widthHalf, 0),
+        point(widthHalf, heightLimit),
+        point(0, heightHalf),
+        point(widthLimit, heightHalf),
+        point(widthQuarter, 0),
+        point(widthThreeQuarter, heightLimit),
+        point(widthLimit, heightQuarter),
+        point(0, heightThreeQuarter),
+        point(widthThreeQuarter, 0),
+        point(widthQuarter, heightLimit),
+        point(0, heightQuarter),
+        point(widthLimit, heightThreeQuarter)
+    )
+
+    private fun point(x: Int, y: Int) =
+        Point.from(x, y).getOrNull()!!
 
     operator fun invoke(partyInfo: PartyInfo): Party {
         return ActiveParty(
@@ -27,23 +57,8 @@ class CreateParty {
         return Field(cells)
     }
 
-    private tailrec fun generateStartCells(
-        playerIds: List<PlayerId>,
-        cells: List<Cell> = listOf()
-    ): List<Cell> =
-        if (playerIds.isEmpty()) {
-            cells
-        } else {
-            val cell = generateSequence {
-                Cell(
-                    playerId = playerIds.first(),
-                    x = Random.nextInt(Field.WIDTH),
-                    y = Random.nextInt(Field.HEIGHT)
-                )
-            }.first { cell ->
-                cells.none { it.x == cell.x && it.y == cell.y }
-            }
-
-            generateStartCells(playerIds.drop(1), cells.plus(cell))
+    private fun generateStartCells(playerIds: List<PlayerId>): List<Cell> =
+        playerIds.zip(playerStartCells) { playerId, point ->
+            Cell(playerId, point.x, point.y)
         }
 }
