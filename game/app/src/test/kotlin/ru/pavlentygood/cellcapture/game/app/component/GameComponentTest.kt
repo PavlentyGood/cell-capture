@@ -15,7 +15,10 @@ import org.springframework.http.MediaType
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import ru.pavlentygood.cellcapture.game.domain.*
+import ru.pavlentygood.cellcapture.game.domain.Party
+import ru.pavlentygood.cellcapture.game.domain.Point
+import ru.pavlentygood.cellcapture.game.domain.capturedCellCount
+import ru.pavlentygood.cellcapture.game.domain.point
 import ru.pavlentygood.cellcapture.game.listening.*
 import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
@@ -42,17 +45,18 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
     @Autowired
     lateinit var getPartyByPlayer: GetPartyByPlayerFromDatabase
 
+    private val ownerStartCell = point(x = 0, y = 0)
+
     @RepeatedTest(10)
     fun `all use cases as process`() {
         val party = createParty() // use case
 
         val ownerId = party.ownerId
         val startCellCount = party.cells.capturedCellCount()
-        val startCell = party.cells.findStartCell(ownerId)
 
         val dices = roll(ownerId) // use case
 
-        captureCells(ownerId, dices, startCell) // use case
+        captureCells(ownerId, dices, ownerStartCell) // use case
 
         val partyAfterCapture = getPartyByPlayer(ownerId)!!
         val expectedCapturedCellCount = startCellCount + dices.first * dices.second
@@ -60,14 +64,11 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
         partyAfterCapture.cells.capturedCellCount() shouldBe expectedCapturedCellCount
     }
 
-    private fun createParty(): Party =
-        generateSequence {
-            val partyStarted = partyStartedMessage()
-            kafkaTemplate.send(PARTY_STARTED_TOPIC, partyStarted)
-            getParty(PlayerId(partyStarted.ownerId))
-        }.first { party: Party ->
-            party.isStartCellFarFromSides() && party.isStartCellFarFromCapturedCells()
-        }
+    private fun createParty(): Party {
+        val partyStarted = partyStartedMessage()
+        kafkaTemplate.send(PARTY_STARTED_TOPIC, partyStarted)
+        return getParty(PlayerId(partyStarted.ownerId))
+    }
 
     private fun getParty(ownerId: PlayerId): Party =
         runBlocking {
@@ -89,7 +90,7 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
     private fun captureCells(
         playerId: PlayerId,
         dices: DicesResponse,
-        startCell: Cell,
+        startCell: Point
     ) {
         val x1 = startCell.x + 1
         val x2 = x1 + dices.first - 1
@@ -104,28 +105,4 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
             content = mapper.writeValueAsString(request)
         }.andExpect { status { isOk() } }
     }
-
-    private fun Party.isStartCellFarFromSides(): Boolean {
-        fun Cell.isFarFromRightSide() =
-            this.x + 1 + Dice.MAX < Field.WIDTH
-
-        fun Cell.isFarFromBottomSide() =
-            this.y + 1 + Dice.MAX < Field.HEIGHT
-
-        val cell = cells.findStartCell(ownerId)
-        return cell.isFarFromRightSide() && cell.isFarFromBottomSide()
-    }
-
-    private fun Party.isStartCellFarFromCapturedCells(): Boolean {
-        val cell = cells.findStartCell(ownerId)
-        return cells.capturedCells().none {
-            this.ownerId != it.playerId &&
-                    cell.x + Dice.MAX >= it.x &&
-                    cell.y + Dice.MAX >= it.y
-        }
-    }
-
-    private fun Array<Array<Cell>>.findStartCell(forPlayer: PlayerId): Cell =
-        capturedCells()
-            .single { it.playerId == forPlayer }
 }
