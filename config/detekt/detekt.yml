@@ -1,7 +1,7 @@
 performance:
   SpreadOperator:
     excludes:
-      - "**/CellCaptureApplication.kt"
+      - "**/*Application.kt"
 formatting:
   Indentation:
     active: false
@@ -12,12 +12,11 @@ formatting:
 style:
   WildcardImport:
     active: false
-complexity:
-  TooManyFunctions:
+  MagicNumber:
     excludes:
-      - "**/app/Config.kt"
-      - "**/ComponentTest.kt"
-      - "**/PartyTest.kt"
+      - "**/test/**"
+      - "**/*CreateParty*"
+complexity:
   LongParameterList:
     constructorThreshold: 8
     functionThreshold: 9

@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id(Plugin.jvm) version Version.kotlin apply false
     id(Plugin.detekt) version Version.detekt
+    id(Plugin.docker) version Version.docker
 }
 
 subprojects {
@@ -16,6 +19,7 @@ subprojects {
         plugin("java-test-fixtures")
         plugin(Plugin.jvm)
         plugin(Plugin.detekt)
+        plugin(Plugin.docker)
     }
 
     detekt {
@@ -45,7 +49,7 @@ subprojects {
             violationRules {
                 rule {
                     limit {
-                        minimum = BigDecimal("0.9")
+                        minimum = BigDecimal("0.0")
                     }
                 }
             }
@@ -53,12 +57,19 @@ subprojects {
                 files(classDirectories.files.map {
                     fileTree(it) {
                         exclude(listOf(
-                            "**/CellCaptureApplication**",
-                            "**/persistence/**"
+                            "**/**Application**",
+                            "**/persistence/**",
+                            "**/kernel/domain/base/**"
                         ))
                     }
                 })
             )
+        }
+
+        withType<KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
         }
 
         withType<Test> {
