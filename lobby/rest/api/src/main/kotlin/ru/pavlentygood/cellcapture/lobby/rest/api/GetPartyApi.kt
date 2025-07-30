@@ -8,7 +8,7 @@ import java.util.*
 fun interface GetPartyApi {
 
     @GetMapping(API_V1_PARTY_BY_ID)
-    fun invoke(
+    operator fun invoke(
         @PathVariable partyId: UUID
     ): ResponseEntity<PartyResponse>
 }

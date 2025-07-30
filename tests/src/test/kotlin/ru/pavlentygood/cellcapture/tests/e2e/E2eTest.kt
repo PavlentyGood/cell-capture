@@ -3,6 +3,8 @@ package ru.pavlentygood.cellcapture.tests.e2e
 import io.kotest.assertions.nondeterministic.eventually
 import io.kotest.assertions.nondeterministic.eventuallyConfig
 import io.kotest.common.runBlocking
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
@@ -10,8 +12,9 @@ import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.cloud.openfeign.FeignAutoConfiguration
+import ru.pavlentygood.cellcapture.game.domain.Point
+import ru.pavlentygood.cellcapture.game.domain.point
 import ru.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
-import ru.pavlentygood.cellcapture.game.rest.api.CellResponse
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
@@ -22,14 +25,18 @@ import java.util.*
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
+typealias LobbyPartyResponse = ru.pavlentygood.cellcapture.lobby.rest.api.PartyResponse
+typealias GamePartyResponse = ru.pavlentygood.cellcapture.game.rest.api.PartyResponse
+
 @EnableFeignClients
 @SpringBootTest(classes = [
     CreatePartyClient::class,
     JoinPlayerClient::class,
     StartPartyClient::class,
     RollDicesClient::class,
-    GetPartyClient::class,
     CaptureCellsClient::class,
+    GetLobbyPartyClient::class,
+    GetGamePartyClient::class,
     FeignAutoConfiguration::class,
     JacksonAutoConfiguration::class,
     HttpMessageConvertersAutoConfiguration::class
@@ -47,7 +54,12 @@ class E2eTest {
     @Autowired
     lateinit var captureCells: CaptureCellsClient
     @Autowired
-    lateinit var getParty: GetPartyClient
+    lateinit var getLobbyParty: GetLobbyPartyClient
+    @Autowired
+    lateinit var getGameParty: GetGamePartyClient
+
+    private val ownerStartCell = point(x = 0, y = 0)
+    private val startCellCount = 2
 
     init {
         Container.init()
@@ -55,12 +67,24 @@ class E2eTest {
 
     @Test
     fun `play cell-capture project`() {
-        val party = createParty()
-        joinPlayer(party.id)
-        startParty(party.ownerId)
-        val dices = rollDices(party.ownerId)
-        val startCell = findStartCell(party.ownerId)
-        captureCells(party.ownerId, dices, startCell)
+        val createdParty = createParty()
+        val playerId = joinPlayer(createdParty.id)
+        startParty(createdParty.ownerId)
+        val dices = rollDices(createdParty.ownerId)
+        captureCells(createdParty.ownerId, dices, ownerStartCell)
+        val lobbyParty = getLobbyParty(createdParty.id)
+        val gameParty = getGameParty(createdParty.ownerId)
+
+        lobbyParty.id shouldBe gameParty.id
+        lobbyParty.started shouldBe true
+        lobbyParty.ownerId shouldBe gameParty.ownerId
+        lobbyParty.players.map { it.id } shouldContainExactly gameParty.players.map { it.id }
+        lobbyParty.players.map { it.name } shouldContainExactly gameParty.players.map { it.name }
+
+        gameParty.completed shouldBe false
+        gameParty.currentPlayerId shouldBe playerId
+        gameParty.players.map { it.id } shouldContainExactly listOf(createdParty.ownerId, playerId)
+        gameParty.cells.size shouldBe dices.first * dices.second + startCellCount
     }
 
     private fun createParty(): CreatePartyResponse =
@@ -70,18 +94,18 @@ class E2eTest {
             )
         ).body!!
 
-    private fun joinPlayer(partyId: UUID) =
+    private fun joinPlayer(partyId: UUID): Int =
         joinPlayer(
             partyId = partyId,
             request = JoinPlayerRequest(
                 name = playerName().toStringValue()
             )
-        ).body!!
+        ).body!!.id
 
     private fun startParty(ownerId: Int) =
         startParty.invoke(ownerId)
 
-    private fun rollDices(ownerId: Int) =
+    private fun rollDices(ownerId: Int): RollDicesApi.DicesResponse =
         runBlocking {
             eventually(
                 eventuallyConfig {
@@ -94,15 +118,10 @@ class E2eTest {
             }
         }
 
-    private fun findStartCell(playerId: Int): CellResponse {
-        return getParty(playerId).body!!.cells
-            .single { it.playerId == playerId }
-    }
-
     private fun captureCells(
         playerId: Int,
         dices: RollDicesApi.DicesResponse,
-        startCell: CellResponse
+        startCell: Point
     ) {
         val x1 = startCell.x + 1
         val x2 = x1 + dices.first - 1
@@ -117,4 +136,10 @@ class E2eTest {
             request = request
         )
     }
+
+    private fun getLobbyParty(partyId: UUID): LobbyPartyResponse =
+        getLobbyParty.invoke(partyId).body!!
+
+    private fun getGameParty(playerId: Int): GamePartyResponse =
+        getGameParty.invoke(playerId).body!!
 }

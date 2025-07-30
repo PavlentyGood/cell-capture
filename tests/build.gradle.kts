@@ -28,4 +28,5 @@ dependencies {
     testRuntimeOnly(Lib.junitEngine)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
+    testImplementation(testFixtures(project(Module.gameDomain)))
 }
