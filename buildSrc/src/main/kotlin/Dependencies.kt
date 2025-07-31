@@ -13,6 +13,7 @@ object Module {
     const val lobbyRestEndpoint = "$lobby:rest:endpoint"
     const val lobbyPersistence = "$lobby:persistence"
     const val lobbyPublishing = "$lobby:publishing"
+    const val lobbyApp = "$lobby:app"
 
     const val gameDomain = "$game:domain"
     const val gameUseCase = "$game:usecase"
@@ -20,6 +21,7 @@ object Module {
     const val gameRestEndpoint = "$game:rest:endpoint"
     const val gamePersistence = "$game:persistence"
     const val gameListening = "$game:listening"
+    const val gameApp = "$game:app"
 }
 
 object Version {

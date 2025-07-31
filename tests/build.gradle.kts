@@ -3,6 +3,13 @@ plugins {
     id(Plugin.springDependencyManagement) version Version.springDependencyManagement
 }
 
+tasks {
+    test {
+        dependsOn(project(Module.lobbyApp).tasks.docker)
+        dependsOn(project(Module.gameApp).tasks.docker)
+    }
+}
+
 dependencyManagement {
     imports {
         mavenBom(Lib.springCloudDependencies)

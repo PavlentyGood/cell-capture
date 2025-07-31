@@ -10,7 +10,7 @@ docker {
 
 tasks {
     dockerPrepare {
-        dependsOn(build)
+        dependsOn(assemble)
     }
 }
 
