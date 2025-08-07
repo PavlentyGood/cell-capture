@@ -13,6 +13,8 @@ tasks {
 dependencyManagement {
     imports {
         mavenBom(Lib.springCloudDependencies)
+        mavenBom(Lib.junitBom)
+        mavenBom(Lib.cucumberBom)
     }
 }
 
@@ -31,6 +33,10 @@ dependencies {
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
     testImplementation(Lib.testcontainersJUnit)
+    testImplementation(Lib.junitPlatformSuite)
+    testImplementation(Lib.cucumberJava)
+    testImplementation(Lib.cucumberSpring)
+    testImplementation(Lib.cucumberJunitPlatformEngine)
 
     testRuntimeOnly(Lib.junitEngine)
 

@@ -31,6 +31,7 @@ object Version {
     const val springDependencyManagement = "1.1.7"
     const val springCloudDependencies = "2024.0.1"
     const val jackson = "2.17.2"
+    const val junitBom = "5.13.4"
     const val junit = "5.11.0"
     const val kotest = "5.9.0"
     const val mockk = "1.13.12"
@@ -41,6 +42,7 @@ object Version {
     const val flyway = "11.3.1"
     const val testcontainers = "1.20.5"
     const val docker = "0.36.0"
+    const val cucumberBom = "7.27.0"
 }
 
 object Plugin {
@@ -64,7 +66,9 @@ object Lib {
     const val springCloudStarterFeign = "org.springframework.cloud:spring-cloud-starter-openfeign"
     const val springCloudDependencies = "org.springframework.cloud:spring-cloud-dependencies:${Version.springCloudDependencies}"
     const val springKafka = "org.springframework.kafka:spring-kafka:${Version.springBoot}"
+    const val junitBom = "org.junit:junit-bom:${Version.junitBom}"
     const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.junit}"
+    const val junitPlatformSuite = "org.junit.platform:junit-platform-suite"
     const val kotestJUnit = "io.kotest:kotest-runner-junit5:${Version.kotest}"
     const val kotestArrow = "io.kotest.extensions:kotest-assertions-arrow-jvm:${Version.kotestArrow}"
     const val arrow = "io.arrow-kt:arrow-core:${Version.arrow}"
@@ -75,4 +79,8 @@ object Lib {
     const val testcontainersPostgresql = "org.testcontainers:postgresql:${Version.testcontainers}"
     const val testcontainersKafka = "org.testcontainers:kafka:${Version.testcontainers}"
     const val testcontainersJUnit = "org.testcontainers:junit-jupiter:${Version.testcontainers}"
+    const val cucumberBom = "io.cucumber:cucumber-bom:${Version.cucumberBom}"
+    const val cucumberJava = "io.cucumber:cucumber-java8"
+    const val cucumberSpring = "io.cucumber:cucumber-spring"
+    const val cucumberJunitPlatformEngine = "io.cucumber:cucumber-junit-platform-engine"
 }
