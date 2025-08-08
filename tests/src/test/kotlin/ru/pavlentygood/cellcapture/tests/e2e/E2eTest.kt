@@ -28,15 +28,8 @@ import kotlin.time.Duration.Companion.seconds
 typealias LobbyPartyResponse = ru.pavlentygood.cellcapture.lobby.rest.api.PartyResponse
 typealias GamePartyResponse = ru.pavlentygood.cellcapture.game.rest.api.PartyResponse
 
-@EnableFeignClients
+@EnableFeignClients(basePackages = ["ru.pavlentygood.cellcapture.tests.e2e.client"])
 @SpringBootTest(classes = [
-    CreatePartyClient::class,
-    JoinPlayerClient::class,
-    StartPartyClient::class,
-    RollDicesClient::class,
-    CaptureCellsClient::class,
-    GetLobbyPartyClient::class,
-    GetGamePartyClient::class,
     FeignAutoConfiguration::class,
     JacksonAutoConfiguration::class,
     HttpMessageConvertersAutoConfiguration::class
