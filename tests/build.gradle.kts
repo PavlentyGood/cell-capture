@@ -38,7 +38,7 @@ dependencies {
     testImplementation(Lib.cucumberSpring)
     testImplementation(Lib.cucumberJunitPlatformEngine)
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly(Lib.junitEngineByBom)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))

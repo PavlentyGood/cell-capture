@@ -68,6 +68,7 @@ object Lib {
     const val springKafka = "org.springframework.kafka:spring-kafka:${Version.springBoot}"
     const val junitBom = "org.junit:junit-bom:${Version.junitBom}"
     const val junitEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.junit}"
+    const val junitEngineByBom = "org.junit.jupiter:junit-jupiter-engine"
     const val junitPlatformSuite = "org.junit.platform:junit-platform-suite"
     const val kotestJUnit = "io.kotest:kotest-runner-junit5:${Version.kotest}"
     const val kotestArrow = "io.kotest.extensions:kotest-assertions-arrow-jvm:${Version.kotestArrow}"
