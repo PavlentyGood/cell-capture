@@ -33,6 +33,10 @@ class BddSteps(
     private var firstDice: Int = 0
     private var secondDice: Int = 0
 
+    /*
+    Необходимо рассмотреть анти-паттерны Cucumber
+    https://cucumber.io/docs/guides/anti-patterns
+     */
     init {
         Given("имя владельца {word}") { name: String ->
             ownerName = name
