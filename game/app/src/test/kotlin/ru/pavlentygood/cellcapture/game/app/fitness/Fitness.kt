@@ -46,7 +46,7 @@ class Fitness {
             .adapter("listening", "ru.pavlentygood.cellcapture.game.listening..")
 
     /**
-     * Доменный слой имеет минимальное количество зависимостей
+     * Доменная модель имеет минимальное количество зависимостей
      */
     @ArchTest
     val domainDependencies =
@@ -98,4 +98,40 @@ class Fitness {
         noClasses()
             .that().haveSimpleNameEndingWith("UseCase")
             .should().dependOnClassesThat().haveSimpleNameEndingWith("UseCase")
+
+    /**
+     * В классах эндпоинтов не более одного публичного метода
+     */
+    @ArchTest
+    val singlePublicMethodInEndpoint =
+        classes()
+            .that().haveSimpleNameEndingWith("Endpoint")
+            .should(haveSinglePublicMethod())
+
+    /**
+     * В юскейсах не более одного публичного метода
+     */
+    @ArchTest
+    val singlePublicMethodInUseCase =
+        classes()
+            .that().haveSimpleNameEndingWith("UseCase")
+            .should(haveSinglePublicMethod())
+
+    /**
+     * В портах не более одного метода
+     */
+    @ArchTest
+    val singleMethodInPort =
+        classes()
+            .that().resideInAPackage("ru.pavlentygood.cellcapture.game.usecase.port..")
+            .should(haveSinglePublicMethod())
+
+    /**
+     * В доменной модели и в юскейсах отсутствуют исключения
+     */
+    @ArchTest
+    val noExceptionsInDomainAndUseCase =
+        classes()
+            .that().resideInAnyPackage("ru.pavlentygood.cellcapture.game.domain..", "ru.pavlentygood.cellcapture.game.usecase..")
+            .should(notThrowAnyException())
 }

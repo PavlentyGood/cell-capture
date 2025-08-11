@@ -38,7 +38,7 @@ class CaptureCellsEndpoint(
     private fun Request.Point.toDomain() =
         Point.from(x = x, y = y)
 
-    fun CaptureCellsUseCaseError.toRestError(): ResponseEntity<Unit> =
+    private fun CaptureCellsUseCaseError.toRestError(): ResponseEntity<Unit> =
         when (this) {
             CaptureCellsUseCaseError.PlayerNotFound -> ResponseEntity.notFound().build()
             CaptureCellsUseCaseError.PlayerNotCurrent,
