@@ -24,11 +24,17 @@ class Fitness {
 
         const val DOMAIN = "$PROJECT.domain.."
         const val USECASE = "$PROJECT.usecase.."
+        const val USECASE_PORT = "$PROJECT.usecase.port.."
         const val REST = "$PROJECT.rest.."
         const val PERSISTENCE = "$PROJECT.persistence.."
         const val PUBLISHING = "$PROJECT.publishing.."
 
         const val KERNEL_DOMAIN = "$KERNEL.domain.."
+
+        data object Postfix {
+            const val ENDPOINT = "Endpoint"
+            const val USECASE = "UseCase"
+        }
     }
 
     class DoNotIncludeAppPackage : ImportOption {
@@ -60,7 +66,7 @@ class Fitness {
             .adapter("publishing", PUBLISHING)
 
     /**
-     * Доменный слой имеет минимальное количество зависимостей
+     * Доменная модель имеет минимальное количество зависимостей
      */
     @ArchTest
     val domainDependencies =
@@ -102,7 +108,7 @@ class Fitness {
         classes()
             .that().resideInAPackage(REST)
             .and().areAnnotatedWith(RestController::class.java)
-            .should().haveSimpleNameEndingWith("Endpoint")
+            .should().haveSimpleNameEndingWith(Postfix.ENDPOINT)
 
     /**
      * Юскейсы не вызывают другие юскейсы
@@ -110,6 +116,42 @@ class Fitness {
     @ArchTest
     val useCasesShouldNotBeAccessedFromUseCases =
         noClasses()
-            .that().haveSimpleNameEndingWith("UseCase")
-            .should().dependOnClassesThat().haveSimpleNameEndingWith("UseCase")
+            .that().haveSimpleNameEndingWith(Postfix.USECASE)
+            .should().dependOnClassesThat().haveSimpleNameEndingWith(Postfix.USECASE)
+
+    /**
+     * В классах эндпоинтов не более одного публичного метода
+     */
+    @ArchTest
+    val singlePublicMethodInEndpoint =
+        classes()
+            .that().haveSimpleNameEndingWith(Postfix.ENDPOINT)
+            .should(haveSinglePublicMethod())
+
+    /**
+     * В юскейсах не более одного публичного метода
+     */
+    @ArchTest
+    val singlePublicMethodInUseCase =
+        classes()
+            .that().haveSimpleNameEndingWith(Postfix.USECASE)
+            .should(haveSinglePublicMethod())
+
+    /**
+     * В портах не более одного метода
+     */
+    @ArchTest
+    val singleMethodInPort =
+        classes()
+            .that().resideInAPackage(USECASE_PORT)
+            .should(haveSinglePublicMethod())
+
+    /**
+     * В доменной модели и в юскейсах отсутствуют исключения
+     */
+    @ArchTest
+    val noExceptionsInDomainAndUseCase =
+        classes()
+            .that().resideInAnyPackage(DOMAIN, USECASE)
+            .should(notThrowAnyException())
 }
