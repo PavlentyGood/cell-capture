@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.partyId
+import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.domain.party
@@ -67,7 +68,7 @@ class StartPartyEndpointTest : BasePostgresTest {
         )
         saveParty(party)
 
-        post(owner.id).andExpect {
+        startParty(owner.id).andExpect {
             status { isOk() }
         }
 
@@ -94,13 +95,60 @@ class StartPartyEndpointTest : BasePostgresTest {
         )
     }
 
-//    @Test
-//    fun `party not found`() {
-//        mockMvc.get(API_V1_PARTY_BY_ID.with("partyId", partyId().toUUID()))
-//            .andExpect { status { isNotFound() } }
-//    }
+    @Test
+    fun `player not found`() {
+        startParty(playerId()).andExpect {
+            status { isNotFound() }
+        }
+    }
 
-    private fun post(playerId: PlayerId) =
+    @Test
+    fun `player not owner`() {
+        val owner = player()
+        val player = player()
+        val party = party(
+            id = partyId(),
+            owner = owner,
+            otherPlayers = listOf(player)
+        )
+        saveParty(party)
+
+        startParty(player.id).andExpect {
+            status { isForbidden() }
+        }
+    }
+
+    @Test
+    fun `too few players`() {
+        val owner = player()
+        val party = party(
+            id = partyId(),
+            owner = owner
+        )
+        saveParty(party)
+
+        startParty(owner.id).andExpect {
+            status { isUnprocessableEntity() }
+        }
+    }
+
+    @Test
+    fun `party already started`() {
+        val owner = player()
+        val party = party(
+            id = partyId(),
+            started = true,
+            owner = owner,
+            otherPlayers = listOf(player())
+        )
+        saveParty(party)
+
+        startParty(owner.id).andExpect {
+            status { isUnprocessableEntity() }
+        }
+    }
+
+    private fun startParty(playerId: PlayerId) =
         mockMvc.post(API_V1_PARTIES_START) {
             queryParam("playerId", playerId.toInt().toString())
         }
