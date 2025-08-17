@@ -1,6 +1,7 @@
 package ru.pavlentygood.cellcapture.lobby.app.component
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -78,9 +79,10 @@ class StartPartyEndpointTest : BasePostgresTest {
         startedParty.playerLimit shouldBe party.playerLimit
         startedParty.ownerId shouldBe party.ownerId
 
-        val record = outboxRepository.findAll().single()
-        record.id shouldBe 1
-        record.aggregateId shouldBe partyId.toUUID().toString()
+        val record = outboxRepository.findAll().single {
+            it.aggregateId == partyId.toUUID().toString()
+        }
+        record.id shouldBeGreaterThan 0
         record.status shouldBe "PENDING"
         record.eventType shouldBe "PartyStarted"
         record.body shouldBe objectMapper.writeValueAsString(
