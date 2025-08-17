@@ -13,7 +13,7 @@ class Party internal constructor(
     players: List<Player>,
     val playerLimit: PlayerLimit,
     val ownerId: PlayerId
-) : AggregateRoot<PartyId>(id) {
+) : AggregateRoot<PartyId, PartyEvent>(id) {
 
     var started = started
         private set
@@ -46,9 +46,18 @@ class Party internal constructor(
             players.size < MIN_PLAYER_COUNT -> TooFewPlayers.left()
             else -> {
                 started = true
+                addPartyStartedEvent()
                 Unit.right()
             }
         }
+
+    private fun addPartyStartedEvent() {
+        addEvent(PartyStartedEvent(
+            partyId = id,
+            ownerId = ownerId,
+            players = players
+        ))
+    }
 
     sealed interface JoinPlayerError : DomainError
     sealed interface StartPartyError : DomainError
