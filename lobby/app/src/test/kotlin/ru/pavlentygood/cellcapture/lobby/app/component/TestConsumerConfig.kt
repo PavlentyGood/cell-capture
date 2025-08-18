@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.lobby.publishing
+package ru.pavlentygood.cellcapture.lobby.app.component
 
 import org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -9,6 +9,7 @@ import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.support.serializer.JsonDeserializer
+import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
 
 @EnableKafka
 @Configuration
@@ -17,11 +18,11 @@ class TestConsumerConfig(
     private val bootstrapServers: String
 ) {
     @Bean
-    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, PartyDto> {
+    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, PartyStartedEventDto> {
         val properties = mapOf(BOOTSTRAP_SERVERS_CONFIG to bootstrapServers)
-        val jsonDeserializer = JsonDeserializer(PartyDto::class.java)
+        val jsonDeserializer = JsonDeserializer(PartyStartedEventDto::class.java)
         jsonDeserializer.addTrustedPackages("*")
-        val listenerFactory = ConcurrentKafkaListenerContainerFactory<String, PartyDto>()
+        val listenerFactory = ConcurrentKafkaListenerContainerFactory<String, PartyStartedEventDto>()
         listenerFactory.consumerFactory = DefaultKafkaConsumerFactory(
             properties,
             StringDeserializer(),

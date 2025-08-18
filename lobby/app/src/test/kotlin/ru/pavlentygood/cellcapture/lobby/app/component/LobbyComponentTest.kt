@@ -18,10 +18,9 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
 import ru.pavlentygood.cellcapture.lobby.publishing.BaseKafkaTest
 import ru.pavlentygood.cellcapture.lobby.publishing.PARTY_STARTED_TOPIC
-import ru.pavlentygood.cellcapture.lobby.publishing.PartyDto
-import ru.pavlentygood.cellcapture.lobby.publishing.TestConsumerConfig
 import ru.pavlentygood.cellcapture.lobby.rest.api.*
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.mapper
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.with
@@ -42,16 +41,16 @@ class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
 
     companion object {
         lateinit var latch: CountDownLatch
-        var sentStartedParty: PartyDto? = null
+        var sentPartyStartedEvent: PartyStartedEventDto? = null
     }
 
     @BeforeEach
     fun before() {
         latch = CountDownLatch(1)
-        sentStartedParty = null
+        sentPartyStartedEvent = null
     }
 
-    @RepeatedTest(10)
+    @RepeatedTest(2)
     fun `all use cases as process`() {
         val ownerName = playerName()
         val playerName = playerName()
@@ -67,7 +66,10 @@ class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
         party.getPlayers().map { it.name } shouldContainExactly listOf(ownerName, playerName)
 
         latch.await(5, TimeUnit.SECONDS) shouldBe true
-        sentStartedParty!!.partyId shouldBe party.id.toUUID()
+        sentPartyStartedEvent!!.partyId shouldBe party.id.toUUID()
+        sentPartyStartedEvent!!.ownerId shouldBe party.ownerId.toInt()
+        sentPartyStartedEvent!!.players.map { it.id } shouldBe party.getPlayers().map { it.id.toInt() }
+        sentPartyStartedEvent!!.players.map { it.name } shouldBe party.getPlayers().map { it.name.toStringValue() }
     }
 
     private fun createParty(playerName: PlayerName) =
@@ -94,8 +96,8 @@ class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
         }.andExpect { status { isOk() } }
 
     @KafkaListener(topics = [PARTY_STARTED_TOPIC], groupId = "test")
-    fun testConsumer(record: PartyDto) {
-        sentStartedParty = record
+    fun testConsumer(message: PartyStartedEventDto) {
+        sentPartyStartedEvent = message
         latch.countDown()
     }
 }

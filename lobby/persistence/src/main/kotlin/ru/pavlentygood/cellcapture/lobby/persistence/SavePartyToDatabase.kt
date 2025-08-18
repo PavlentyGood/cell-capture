@@ -71,7 +71,7 @@ fun PartyEvent.toDto() =
 
 fun PartyStartedEvent.toDto() =
     PartyStartedEventDto(
-        partyId = partyId.toUUID().toString(),
+        partyId = partyId.toUUID(),
         ownerId = ownerId.toInt(),
         players = players.map { it.toDto() }
     )

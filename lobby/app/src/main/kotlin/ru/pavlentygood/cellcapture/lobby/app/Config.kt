@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.scheduling.annotation.EnableScheduling
 import ru.pavlentygood.cellcapture.lobby.domain.PartyFactory
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.persistence.*
@@ -15,6 +16,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
 
 @Configuration
+@EnableScheduling
 @ComponentScan("ru.pavlentygood.cellcapture.lobby.rest")
 @EnableJpaRepositories("ru.pavlentygood.cellcapture.lobby.persistence")
 @EntityScan("ru.pavlentygood.cellcapture.lobby.persistence")
