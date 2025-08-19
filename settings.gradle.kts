@@ -8,7 +8,6 @@ include("lobby:rest")
 include("lobby:rest:api")
 include("lobby:rest:endpoint")
 include("lobby:persistence")
-include("lobby:publishing")
 include("lobby:app")
 
 include("game:domain")

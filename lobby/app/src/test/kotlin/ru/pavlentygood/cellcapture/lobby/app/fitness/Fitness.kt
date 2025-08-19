@@ -27,7 +27,6 @@ class Fitness {
         const val USECASE_PORT = "$PROJECT.usecase.port.."
         const val REST = "$PROJECT.rest.."
         const val PERSISTENCE = "$PROJECT.persistence.."
-        const val PUBLISHING = "$PROJECT.publishing.."
 
         const val KERNEL_DOMAIN = "$KERNEL.domain.."
 
@@ -63,7 +62,6 @@ class Fitness {
             .applicationServices(USECASE)
             .adapter("rest", REST)
             .adapter("persistence", PERSISTENCE)
-            .adapter("publishing", PUBLISHING)
 
     /**
      * Доменная модель имеет минимальное количество зависимостей

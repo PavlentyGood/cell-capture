@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.lobby.publishing
+package ru.pavlentygood.cellcapture.lobby.app
 
 import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
@@ -13,7 +13,7 @@ import org.springframework.kafka.core.KafkaTemplate
 const val PARTY_STARTED_TOPIC = "party-started"
 
 @Configuration
-class PublishingConfig(
+class KafkaConfig(
     @Value("\${spring.kafka.bootstrap-servers}")
     private val bootstrapServers: String
 ) {

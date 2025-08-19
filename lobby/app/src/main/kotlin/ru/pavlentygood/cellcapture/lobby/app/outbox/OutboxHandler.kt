@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import ru.pavlentygood.cellcapture.lobby.persistence.OutboxRepository
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.OutboxReadDto
-import ru.pavlentygood.cellcapture.lobby.publishing.PARTY_STARTED_TOPIC
+import ru.pavlentygood.cellcapture.lobby.app.PARTY_STARTED_TOPIC
 
 @Component
 class OutboxHandler(

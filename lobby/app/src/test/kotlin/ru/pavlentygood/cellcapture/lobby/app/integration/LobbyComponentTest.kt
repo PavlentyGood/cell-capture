@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.lobby.app.component
+package ru.pavlentygood.cellcapture.lobby.app.integration
 
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
@@ -17,11 +17,12 @@ import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
+import ru.pavlentygood.cellcapture.lobby.app.PARTY_STARTED_TOPIC
+import ru.pavlentygood.cellcapture.lobby.app.integration.config.BaseKafkaTest
+import ru.pavlentygood.cellcapture.lobby.app.integration.config.TestConsumerConfig
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
-import ru.pavlentygood.cellcapture.lobby.publishing.BaseKafkaTest
-import ru.pavlentygood.cellcapture.lobby.publishing.PARTY_STARTED_TOPIC
 import ru.pavlentygood.cellcapture.lobby.rest.api.*
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.mapper
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.with
@@ -33,7 +34,10 @@ import java.util.concurrent.TimeUnit
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(value = [TestConsumerConfig::class])
-@Sql(statements = ["truncate table outbox"])
+@Sql(
+    statements = ["truncate table outbox"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS
+)
 class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
 
     @Autowired

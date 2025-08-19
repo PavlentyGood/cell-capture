@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.lobby.app.component
+package ru.pavlentygood.cellcapture.lobby.app.integration.config
 
 import org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.common.serialization.StringDeserializer

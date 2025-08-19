@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.lobby.app.component
+package ru.pavlentygood.cellcapture.lobby.app.integration
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

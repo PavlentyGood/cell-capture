@@ -21,7 +21,6 @@ dependencies {
     implementation(project(Module.lobbyRestApi))
     implementation(project(Module.lobbyRestEndpoint))
     implementation(project(Module.lobbyPersistence))
-    implementation(project(Module.lobbyPublishing))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
@@ -44,5 +43,4 @@ dependencies {
     testImplementation(testFixtures(project(Module.lobbyDomain)))
     testImplementation(testFixtures(project(Module.lobbyRestEndpoint)))
     testImplementation(testFixtures(project(Module.lobbyPersistence)))
-    testImplementation(testFixtures(project(Module.lobbyPublishing)))
 }

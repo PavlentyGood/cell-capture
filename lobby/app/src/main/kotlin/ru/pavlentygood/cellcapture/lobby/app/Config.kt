@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 import ru.pavlentygood.cellcapture.lobby.domain.PartyFactory
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.persistence.*
-import ru.pavlentygood.cellcapture.lobby.publishing.PublishingConfig
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
@@ -33,7 +32,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
         GetPartyFromDatabase::class,
         GetPartyByPlayerFromDatabase::class,
         MapPartyToDomain::class,
-        PublishingConfig::class
+        KafkaConfig::class
     ]
 )
 class Config

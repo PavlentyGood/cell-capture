@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.lobby.app.component
+package ru.pavlentygood.cellcapture.lobby.app.integration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.kotest.matchers.longs.shouldBeGreaterThan
