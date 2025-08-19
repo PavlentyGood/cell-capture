@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.kafka.annotation.KafkaListener
+import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(value = [TestConsumerConfig::class])
+@Sql(statements = ["truncate table outbox"])
 class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
 
     @Autowired
