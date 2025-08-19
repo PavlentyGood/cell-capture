@@ -132,6 +132,8 @@ class Fitness {
     @ArchTest
     val noExceptionsInDomainAndUseCase =
         classes()
-            .that().resideInAnyPackage("ru.pavlentygood.cellcapture.game.domain..", "ru.pavlentygood.cellcapture.game.usecase..")
-            .should(notThrowAnyException())
+            .that().resideInAnyPackage(
+                "ru.pavlentygood.cellcapture.game.domain..",
+                "ru.pavlentygood.cellcapture.game.usecase.."
+            ).should(notThrowAnyException())
 }

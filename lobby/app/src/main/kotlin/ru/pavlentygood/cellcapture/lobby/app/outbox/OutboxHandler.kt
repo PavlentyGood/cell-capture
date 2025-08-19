@@ -26,5 +26,5 @@ class OutboxHandler(
 fun OutboxReadDto.getTopic() =
     when (eventType) {
         "PartyStarted" -> PARTY_STARTED_TOPIC
-        else -> throw Exception("Illegal event type")
+        else -> error("Illegal event type")
     }

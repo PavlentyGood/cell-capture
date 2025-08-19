@@ -29,11 +29,13 @@ typealias LobbyPartyResponse = ru.pavlentygood.cellcapture.lobby.rest.api.PartyR
 typealias GamePartyResponse = ru.pavlentygood.cellcapture.game.rest.api.PartyResponse
 
 @EnableFeignClients(basePackages = ["ru.pavlentygood.cellcapture.tests.e2e.client"])
-@SpringBootTest(classes = [
-    FeignAutoConfiguration::class,
-    JacksonAutoConfiguration::class,
-    HttpMessageConvertersAutoConfiguration::class
-])
+@SpringBootTest(
+    classes = [
+        FeignAutoConfiguration::class,
+        JacksonAutoConfiguration::class,
+        HttpMessageConvertersAutoConfiguration::class
+    ]
+)
 class E2eTest {
 
     @Autowired

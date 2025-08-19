@@ -52,11 +52,13 @@ class Party internal constructor(
         }
 
     private fun addPartyStartedEvent() {
-        addEvent(PartyStartedEvent(
-            partyId = id,
-            ownerId = ownerId,
-            players = players
-        ))
+        addEvent(
+            PartyStartedEvent(
+                partyId = id,
+                ownerId = ownerId,
+                players = players
+            )
+        )
     }
 
     sealed interface JoinPlayerError : DomainError

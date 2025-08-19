@@ -28,8 +28,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
-@SpringBootTest(classes = [
-    StartPartyEndpointTest::class, StartPartyEndpoint::class])
+@SpringBootTest(classes = [StartPartyEndpointTest::class, StartPartyEndpoint::class])
 @EnableAutoConfiguration
 @AutoConfigureMockMvc
 @EnableJpaRepositories("ru.pavlentygood.cellcapture.lobby.persistence")

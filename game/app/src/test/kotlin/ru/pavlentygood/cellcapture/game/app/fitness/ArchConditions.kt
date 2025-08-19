@@ -23,7 +23,8 @@ fun notThrowAnyException() =
             item.methods
                 .flatMap { it.callsFromSelf }
                 .map { it.targetOwner }
-                .filter { it.isAssignableTo(Exception::class.java) && !it.isAssignableTo(NoWhenBranchMatchedException::class.java) }
+                .filter { it.isAssignableTo(Exception::class.java) }
+                .filter { !it.isAssignableTo(NoWhenBranchMatchedException::class.java) }
                 .forEach {
                     events.add(SimpleConditionEvent.violated(item, "Exception ${it.name} in class ${item.name}"))
                 }
