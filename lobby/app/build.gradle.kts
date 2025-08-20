@@ -16,6 +16,7 @@ tasks {
 
 dependencies {
     implementation(project(Module.kernelDomain))
+    implementation(project(Module.kernelCommon))
     implementation(project(Module.lobbyDomain))
     implementation(project(Module.lobbyUseCase))
     implementation(project(Module.lobbyRestApi))

@@ -6,13 +6,13 @@ object Module {
     private const val game = ":game"
 
     const val kernelDomain = "$kernel:domain"
+    const val kernelCommon = "$kernel:common"
 
     const val lobbyDomain = "$lobby:domain"
     const val lobbyUseCase = "$lobby:usecase"
     const val lobbyRestApi = "$lobby:rest:api"
     const val lobbyRestEndpoint = "$lobby:rest:endpoint"
     const val lobbyPersistence = "$lobby:persistence"
-    const val lobbyPublishing = "$lobby:publishing"
     const val lobbyApp = "$lobby:app"
 
     const val gameDomain = "$game:domain"
@@ -43,6 +43,7 @@ object Version {
     const val testcontainers = "1.20.5"
     const val docker = "0.36.0"
     const val cucumberBom = "7.27.0"
+    const val slf4jApi = "2.0.17"
 }
 
 object Plugin {
@@ -84,4 +85,5 @@ object Lib {
     const val cucumberJava = "io.cucumber:cucumber-java8"
     const val cucumberSpring = "io.cucumber:cucumber-spring"
     const val cucumberJunitPlatformEngine = "io.cucumber:cucumber-junit-platform-engine"
+    const val slf4jApi = "org.slf4j:slf4j-api:${Version.slf4jApi}"
 }

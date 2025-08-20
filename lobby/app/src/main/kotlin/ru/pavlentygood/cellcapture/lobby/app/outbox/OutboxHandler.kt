@@ -4,6 +4,7 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import ru.pavlentygood.cellcapture.kernel.common.log
 import ru.pavlentygood.cellcapture.lobby.app.PARTY_STARTED_TOPIC
 import ru.pavlentygood.cellcapture.lobby.persistence.OutboxRepository
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.OutboxReadDto
@@ -17,6 +18,7 @@ class OutboxHandler(
     @Transactional
     fun handleOutbox() {
         val record = outboxRepository.getNextRecord() ?: return
+        log.info("Handle record: $record")
         val topic = record.getTopic()
         kafkaTemplate.send(topic, record.body)
         outboxRepository.markAsSent(record.id)
