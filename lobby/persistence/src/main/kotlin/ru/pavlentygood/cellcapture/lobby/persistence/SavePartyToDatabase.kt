@@ -7,10 +7,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.domain.PartyEvent
 import ru.pavlentygood.cellcapture.lobby.domain.PartyStartedEvent
-import ru.pavlentygood.cellcapture.lobby.persistence.dto.OutboxDto
-import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyDto
-import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
-import ru.pavlentygood.cellcapture.lobby.persistence.dto.PlayerDto
+import ru.pavlentygood.cellcapture.lobby.persistence.dto.*
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 import java.time.LocalDateTime
 
@@ -61,23 +58,22 @@ fun PartyEvent.toOutboxDto(aggregateId: PartyId, om: ObjectMapper) =
 
 fun PartyEvent.getType() =
     when (this) {
-        is PartyStartedEvent -> "PartyStarted"
+        is PartyStartedEvent -> EventTypeDto.PARTY_STARTED
     }
 
 fun PartyEvent.toDto() =
     when (this) {
-        is PartyStartedEvent -> toDto()
+        is PartyStartedEvent -> this.toDto()
     }
 
 fun PartyStartedEvent.toDto() =
     PartyStartedEventDto(
         partyId = partyId.toUUID(),
         ownerId = ownerId.toInt(),
-        players = players.map { it.toDto() }
-    )
-
-fun Player.toDto() =
-    PartyStartedEventDto.Player(
-        id = id.toInt(),
-        name = name.toStringValue()
+        players = players.map {
+            PartyStartedEventDto.Player(
+                id = it.id.toInt(),
+                name = it.name.toStringValue()
+            )
+        }
     )

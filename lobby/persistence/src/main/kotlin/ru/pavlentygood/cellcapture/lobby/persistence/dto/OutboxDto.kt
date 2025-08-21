@@ -16,7 +16,8 @@ class OutboxDto(
 
     val status: String,
 
-    val eventType: String,
+    @Enumerated(EnumType.STRING)
+    val eventType: EventTypeDto,
 
     @ColumnTransformer(write = "?::json")
     val body: String,

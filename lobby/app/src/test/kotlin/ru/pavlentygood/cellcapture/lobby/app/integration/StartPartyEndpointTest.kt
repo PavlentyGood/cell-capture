@@ -21,6 +21,7 @@ import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.domain.party
 import ru.pavlentygood.cellcapture.lobby.domain.player
 import ru.pavlentygood.cellcapture.lobby.persistence.*
+import ru.pavlentygood.cellcapture.lobby.persistence.dto.EventTypeDto
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
 import ru.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES_START
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.StartPartyEndpoint
@@ -83,7 +84,7 @@ class StartPartyEndpointTest : BasePostgresTest {
         }
         record.id shouldBeGreaterThan 0
         record.status shouldBe "PENDING"
-        record.eventType shouldBe "PartyStarted"
+        record.eventType shouldBe EventTypeDto.PARTY_STARTED
         record.body shouldBe objectMapper.writeValueAsString(
             PartyStartedEventDto(
                 partyId = partyId.toUUID(),
