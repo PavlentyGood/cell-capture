@@ -19,9 +19,10 @@ class OutboxHandler(
     @Transactional
     fun handleOutbox() {
         val record = outboxRepository.getNextRecord() ?: return
-        log.info("Handle outbox: id=${record.id}, eventType=${record.eventType}, body=${record.body}")
-        kafkaTemplate.send(record.getTopic(), record.body)
+        log.info("Handle outbox: id={}, eventType={}, body={}", record.id, record.eventType, record.body)
+        kafkaTemplate.send(record.getTopic(), record.body).get() // убрать get()!
         outboxRepository.markAsSent(record.id)
+        log.info("Outbox record was sent: id={}", record.id)
     }
 }
 
