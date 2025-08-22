@@ -57,7 +57,7 @@ class E2eTest {
     private val startCellCount = 2
 
     init {
-        Container.init()
+        startContainers()
     }
 
     @Test

@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.cloud.openfeign.FeignAutoConfiguration
-import ru.pavlentygood.cellcapture.tests.e2e.Container
+import ru.pavlentygood.cellcapture.tests.e2e.startContainers
 
 @Suite
 @IncludeEngines("cucumber")
@@ -28,6 +28,6 @@ class BddRunner
 class SpringConfig {
 
     init {
-        Container.init()
+        startContainers()
     }
 }
