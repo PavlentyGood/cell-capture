@@ -22,6 +22,7 @@ class SavePartyToDatabase(
         val partyDto = party.toDto()
         partyRepository.save(partyDto)
         party.getEvents()
+            .filterIsInstance<PartyStartedEvent>()
             .map { it.toOutboxDto(party.id, objectMapper) }
             .let { outboxRepository.saveAll(it) }
     }
