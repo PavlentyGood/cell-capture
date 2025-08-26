@@ -17,7 +17,7 @@ interface BaseKafkaTest {
         @JvmStatic
         @DynamicPropertySource
         fun kafkaProperties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.kafka.bootstrap-servers") { container.bootstrapServers }
+            registry.add("KAFKA_BOOTSTRAP_SERVERS") { container.bootstrapServers }
         }
     }
 }

@@ -8,9 +8,10 @@ import org.junit.jupiter.api.RepeatedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
-import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.MockMvc
@@ -18,9 +19,7 @@ import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
-import ru.pavlentygood.cellcapture.lobby.app.PARTY_STARTED_TOPIC
 import ru.pavlentygood.cellcapture.lobby.app.integration.config.BaseKafkaTest
-import ru.pavlentygood.cellcapture.lobby.app.integration.config.TestConsumerConfig
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
@@ -35,7 +34,7 @@ import java.util.concurrent.TimeUnit
 @SpringBootTest
 @DirtiesContext
 @AutoConfigureMockMvc
-@Import(value = [TestConsumerConfig::class])
+@Import(value = [LobbyComponentTest.TestConsumerConfig::class])
 @Sql(
     statements = ["truncate table outbox"],
     executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS
@@ -103,9 +102,12 @@ class LobbyComponentTest : BasePostgresTest, BaseKafkaTest {
             contentType = MediaType.APPLICATION_JSON
         }.andExpect { status { isOk() } }
 
-    @KafkaListener(topics = [PARTY_STARTED_TOPIC], groupId = "test")
-    fun testConsumer(message: PartyStartedEventDto) {
-        sentPartyStartedEvent = message
-        latch.countDown()
+    @TestConfiguration
+    class TestConsumerConfig {
+        @Bean
+        fun partyStarted() = { message: PartyStartedEventDto ->
+            sentPartyStartedEvent = message
+            latch.countDown()
+        }
     }
 }

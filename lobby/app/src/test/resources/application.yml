@@ -1,14 +1,14 @@
 spring:
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-
   cloud:
+    function:
+      definition: partyStarted
     stream:
       bindings:
         partyStarted-out-0:
           destination: party-started
+        partyStarted-in-0:
+          destination: party-started
+          group: test
       kafka:
         binder:
           brokers: ${KAFKA_BOOTSTRAP_SERVERS}
@@ -19,8 +19,3 @@ spring:
               configuration:
                 delivery.timeout.ms: 2000
                 request.timeout.ms: 2000
-
-  task:
-    scheduling:
-      pool:
-        size: 5

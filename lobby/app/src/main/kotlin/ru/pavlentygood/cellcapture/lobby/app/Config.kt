@@ -31,8 +31,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
         GeneratePlayerIdBySequence::class,
         GetPartyFromDatabase::class,
         GetPartyByPlayerFromDatabase::class,
-        MapPartyToDomain::class,
-        KafkaConfig::class
+        MapPartyToDomain::class
     ]
 )
 class Config
