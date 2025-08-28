@@ -43,7 +43,6 @@ class Fitness {
             .applicationServices("ru.pavlentygood.cellcapture.game.usecase..")
             .adapter("rest", "ru.pavlentygood.cellcapture.game.rest..")
             .adapter("persistence", "ru.pavlentygood.cellcapture.game.persistence..")
-            .adapter("listening", "ru.pavlentygood.cellcapture.game.listening..")
 
     /**
      * Доменная модель имеет минимальное количество зависимостей

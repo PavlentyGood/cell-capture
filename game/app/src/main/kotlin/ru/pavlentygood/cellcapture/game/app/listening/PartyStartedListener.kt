@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.game.listening
+package ru.pavlentygood.cellcapture.game.app.listening
 
 import arrow.core.getOrElse
 import org.springframework.kafka.annotation.KafkaListener

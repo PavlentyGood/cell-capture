@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.game.listening
+package ru.pavlentygood.cellcapture.game.app
 
 import org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -10,6 +10,8 @@ import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.support.serializer.JsonDeserializer
+import ru.pavlentygood.cellcapture.game.app.listening.PartyStartedListener
+import ru.pavlentygood.cellcapture.game.app.listening.PartyStartedMessage
 
 @EnableKafka
 @Configuration

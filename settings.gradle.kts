@@ -16,7 +16,6 @@ include("game:usecase")
 include("game:rest:api")
 include("game:rest:endpoint")
 include("game:persistence")
-include("game:listening")
 include("game:app")
 
 include("tests")

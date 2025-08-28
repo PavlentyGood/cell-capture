@@ -20,7 +20,6 @@ object Module {
     const val gameRestApi = "$game:rest:api"
     const val gameRestEndpoint = "$game:rest:endpoint"
     const val gamePersistence = "$game:persistence"
-    const val gameListening = "$game:listening"
     const val gameApp = "$game:app"
 }
 

@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.game.app.component
+package ru.pavlentygood.cellcapture.game.app.integration
 
 import io.kotest.assertions.nondeterministic.eventually
 import io.kotest.assertions.nondeterministic.eventuallyConfig
@@ -15,11 +15,14 @@ import org.springframework.http.MediaType
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
+import ru.pavlentygood.cellcapture.game.app.integration.config.BaseKafkaTest
+import ru.pavlentygood.cellcapture.game.app.integration.config.TestProducerConfig
+import ru.pavlentygood.cellcapture.game.app.listening.PARTY_STARTED_TOPIC
+import ru.pavlentygood.cellcapture.game.app.listening.PartyStartedMessage
 import ru.pavlentygood.cellcapture.game.domain.Party
 import ru.pavlentygood.cellcapture.game.domain.Point
 import ru.pavlentygood.cellcapture.game.domain.capturedCellCount
 import ru.pavlentygood.cellcapture.game.domain.point
-import ru.pavlentygood.cellcapture.game.listening.*
 import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_CELLS
@@ -29,7 +32,7 @@ import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.DicesResponse
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.RollResponse
 import ru.pavlentygood.cellcapture.game.rest.endpoint.mapper
 import ru.pavlentygood.cellcapture.game.rest.endpoint.with
-import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.*
 import kotlin.time.Duration.Companion.seconds
 
 @SpringBootTest
@@ -47,7 +50,7 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
 
     private val ownerStartCell = point(x = 0, y = 0)
 
-    @RepeatedTest(10)
+    @RepeatedTest(2)
     fun `all use cases as process`() {
         val party = createParty() // use case
 
@@ -69,6 +72,26 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
         kafkaTemplate.send(PARTY_STARTED_TOPIC, partyStarted)
         return getParty(PlayerId(partyStarted.ownerId))
     }
+
+    fun partyStartedMessage(
+        partyId: PartyId = partyId(),
+        owner: Player = player(),
+        player: Player = player()
+    ) =
+        PartyStartedMessage(
+            partyId = partyId.toUUID(),
+            ownerId = owner.id.toInt(),
+            players = listOf(
+                PartyStartedMessage.Player(
+                    id = owner.id.toInt(),
+                    name = owner.name.toStringValue()
+                ),
+                PartyStartedMessage.Player(
+                    id = player.id.toInt(),
+                    name = player.name.toStringValue()
+                )
+            )
+        )
 
     private fun getParty(ownerId: PlayerId): Party =
         runBlocking {

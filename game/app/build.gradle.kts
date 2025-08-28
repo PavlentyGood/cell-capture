@@ -21,10 +21,10 @@ dependencies {
     implementation(project(Module.gameRestApi))
     implementation(project(Module.gameRestEndpoint))
     implementation(project(Module.gamePersistence))
-    implementation(project(Module.gameListening))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
+    implementation(Lib.arrow)
     implementation(Lib.springBootStarterWeb)
     implementation(Lib.springKafka)
 
@@ -35,6 +35,7 @@ dependencies {
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
     testImplementation(Lib.archUnit)
+    testImplementation(Lib.testcontainersKafka)
 
     testRuntimeOnly(Lib.junitEngine)
 
@@ -43,5 +44,4 @@ dependencies {
     testImplementation(testFixtures(project(Module.gameRestApi)))
     testImplementation(testFixtures(project(Module.gameRestEndpoint)))
     testImplementation(testFixtures(project(Module.gamePersistence)))
-    testImplementation(testFixtures(project(Module.gameListening)))
 }

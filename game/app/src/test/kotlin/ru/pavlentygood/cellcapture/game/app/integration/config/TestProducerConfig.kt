@@ -1,7 +1,7 @@
-package ru.pavlentygood.cellcapture.game.listening
+package ru.pavlentygood.cellcapture.game.app.integration.config
 
 import org.apache.kafka.clients.admin.NewTopic
-import org.apache.kafka.clients.producer.ProducerConfig.*
+import org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.TestConfiguration
@@ -10,6 +10,8 @@ import org.springframework.kafka.config.TopicBuilder
 import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.support.serializer.JsonSerializer
+import ru.pavlentygood.cellcapture.game.app.listening.PARTY_STARTED_TOPIC
+import ru.pavlentygood.cellcapture.game.app.listening.PartyStartedMessage
 
 @TestConfiguration
 class TestProducerConfig(
