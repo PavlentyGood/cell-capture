@@ -10,14 +10,11 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 import org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
+import org.springframework.cloud.stream.function.StreamBridge
 import org.springframework.http.MediaType
-import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.app.integration.config.BaseKafkaTest
-import ru.pavlentygood.cellcapture.game.app.integration.config.TestProducerConfig
-import ru.pavlentygood.cellcapture.game.app.listening.PARTY_STARTED_TOPIC
 import ru.pavlentygood.cellcapture.game.app.listening.PartyStartedMessage
 import ru.pavlentygood.cellcapture.game.domain.Party
 import ru.pavlentygood.cellcapture.game.domain.Point
@@ -37,14 +34,13 @@ import kotlin.time.Duration.Companion.seconds
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(value = [TestProducerConfig::class])
 @ImportAutoConfiguration(exclude = [TestDatabaseAutoConfiguration::class])
 class GameComponentTest : BasePostgresTest, BaseKafkaTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
     @Autowired
-    lateinit var kafkaTemplate: KafkaTemplate<String, PartyStartedMessage>
+    lateinit var streamBridge: StreamBridge
     @Autowired
     lateinit var getPartyByPlayer: GetPartyByPlayerFromDatabase
 
@@ -69,7 +65,7 @@ class GameComponentTest : BasePostgresTest, BaseKafkaTest {
 
     private fun createParty(): Party {
         val partyStarted = partyStartedMessage()
-        kafkaTemplate.send(PARTY_STARTED_TOPIC, partyStarted)
+        streamBridge.send("partyStarted-out-0", partyStarted)
         return getParty(PlayerId(partyStarted.ownerId))
     }
 

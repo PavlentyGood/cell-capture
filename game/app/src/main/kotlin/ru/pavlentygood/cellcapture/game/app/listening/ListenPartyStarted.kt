@@ -1,7 +1,6 @@
 package ru.pavlentygood.cellcapture.game.app.listening
 
 import arrow.core.getOrElse
-import org.springframework.kafka.annotation.KafkaListener
 import ru.pavlentygood.cellcapture.game.domain.PartyInfo
 import ru.pavlentygood.cellcapture.game.domain.PlayerList
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
@@ -10,12 +9,9 @@ import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 
-const val PARTY_STARTED_TOPIC = "party-started"
-
-class PartyStartedListener(
+class ListenPartyStarted(
     private val createParty: CreatePartyUseCase
 ) {
-    @KafkaListener(topics = [PARTY_STARTED_TOPIC], groupId = "game")
     operator fun invoke(message: PartyStartedMessage) {
         val partyInfo: PartyInfo = message.toDomain()
         createParty(partyInfo)

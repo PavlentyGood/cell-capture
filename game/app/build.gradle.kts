@@ -1,6 +1,7 @@
 plugins {
     id(Plugin.springBoot) version Version.springBoot
     id(Plugin.kotlinSpring) version Version.kotlin
+    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
 }
 
 docker {
@@ -11,6 +12,14 @@ docker {
 tasks {
     dockerPrepare {
         dependsOn(assemble)
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(Lib.springBootDependencies)
+        mavenBom(Lib.springCloudDependencies)
+        mavenBom(Lib.junitBom)
     }
 }
 
@@ -25,19 +34,18 @@ dependencies {
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.arrow)
-    implementation(Lib.springBootStarterWeb)
-    implementation(Lib.springKafka)
+    implementation(Lib.springBootStarterWebBom)
+    implementation(Lib.springBootStarterJdbcByBom)
+    implementation(Lib.springCloudStarterStreamKafka)
 
-    implementation(Lib.springBootStarterJdbc)
-
-    testImplementation(Lib.springBootStarterTest)
+    testImplementation(Lib.springBootStarterTestBom)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
     testImplementation(Lib.archUnit)
     testImplementation(Lib.testcontainersKafka)
 
-    testRuntimeOnly(Lib.junitEngine)
+    testRuntimeOnly(Lib.junitEngineByBom)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))
