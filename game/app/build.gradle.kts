@@ -34,11 +34,11 @@ dependencies {
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.arrow)
-    implementation(Lib.springBootStarterWebBom)
+    implementation(Lib.springBootStarterWebByBom)
     implementation(Lib.springBootStarterJdbcByBom)
     implementation(Lib.springCloudStarterStreamKafka)
 
-    testImplementation(Lib.springBootStarterTestBom)
+    testImplementation(Lib.springBootStarterTestByBom)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
