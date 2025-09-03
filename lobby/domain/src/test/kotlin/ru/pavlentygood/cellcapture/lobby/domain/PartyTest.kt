@@ -2,6 +2,7 @@ package ru.pavlentygood.cellcapture.lobby.domain
 
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
@@ -36,6 +37,7 @@ class PartyTest {
 
         party.joinPlayer(playerName(), generatePlayerId) shouldBeLeft Party.AlreadyStarted
 
+        party.getEvents().isEmpty() shouldBe true
         party.started shouldBe true
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -53,6 +55,7 @@ class PartyTest {
 
         party.joinPlayer(playerName(), generatePlayerId) shouldBeLeft Party.PlayerCountLimit
 
+        party.getEvents().isEmpty() shouldBe true
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -65,9 +68,15 @@ class PartyTest {
             owner = owner,
             otherPlayers = listOf(player)
         )
+        val event = PartyStartedEvent(
+            partyId = party.id,
+            ownerId = owner.id,
+            players = listOf(owner, player)
+        )
 
         party.start(owner.id) shouldBeRight Unit
 
+        party.getEvents() shouldContainExactly listOf(event)
         party.started shouldBe true
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -83,6 +92,7 @@ class PartyTest {
 
         party.start(playerId()) shouldBeLeft Party.PlayerNotOwner
 
+        party.getEvents().isEmpty() shouldBe true
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -96,6 +106,7 @@ class PartyTest {
 
         party.start(owner.id) shouldBeLeft Party.TooFewPlayers
 
+        party.getEvents().isEmpty() shouldBe true
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner)
     }
@@ -112,6 +123,7 @@ class PartyTest {
 
         party.start(owner.id) shouldBeLeft Party.AlreadyStarted
 
+        party.getEvents().isEmpty() shouldBe true
         party.started shouldBe true
         party.getPlayers() shouldBe listOf(owner, player)
     }
