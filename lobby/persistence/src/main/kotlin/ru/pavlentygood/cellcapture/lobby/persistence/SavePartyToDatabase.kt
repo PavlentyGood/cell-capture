@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.lobby.domain.Party
-import ru.pavlentygood.cellcapture.lobby.domain.PartyEvent
-import ru.pavlentygood.cellcapture.lobby.domain.PartyStartedEvent
+import ru.pavlentygood.cellcapture.lobby.domain.event.PartyEvent
+import ru.pavlentygood.cellcapture.lobby.domain.event.PartyStartedEvent
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.*
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 import java.time.LocalDateTime

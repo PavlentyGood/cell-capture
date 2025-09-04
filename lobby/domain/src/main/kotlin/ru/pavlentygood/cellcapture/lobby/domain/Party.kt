@@ -6,6 +6,9 @@ import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.*
 import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
+import ru.pavlentygood.cellcapture.lobby.domain.event.PartyEvent
+import ru.pavlentygood.cellcapture.lobby.domain.event.PartyStartedEvent
+import ru.pavlentygood.cellcapture.lobby.domain.event.PlayerJoinedEvent
 
 class Party internal constructor(
     events: List<PartyEvent> = listOf(),
