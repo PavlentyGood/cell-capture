@@ -35,6 +35,7 @@ class Party internal constructor(
                     name = name
                 )
                 players.add(player)
+                addEvent(PlayerJoinedEvent(id, player))
                 player.id.right()
             }
         }

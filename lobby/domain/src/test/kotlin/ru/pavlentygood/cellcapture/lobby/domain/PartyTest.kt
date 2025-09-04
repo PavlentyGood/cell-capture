@@ -15,11 +15,15 @@ class PartyTest {
         val owner = player()
         val player = player()
         val party = party(owner = owner)
-
         val generatePlayerId = { player.id }
+        val event = PlayerJoinedEvent(
+            partyId = party.id,
+            player = player
+        )
 
         party.joinPlayer(player.name, generatePlayerId) shouldBeRight player.id
 
+        party.getEvents() shouldContainExactly listOf(event)
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner, player)
     }

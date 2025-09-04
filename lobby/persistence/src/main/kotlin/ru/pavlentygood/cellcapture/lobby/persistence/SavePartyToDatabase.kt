@@ -60,11 +60,13 @@ fun PartyEvent.toOutboxDto(aggregateId: PartyId, om: ObjectMapper) =
 fun PartyEvent.getType() =
     when (this) {
         is PartyStartedEvent -> EventTypeDto.PARTY_STARTED
+        else -> throw Exception("Illegal event type for outbox")
     }
 
 fun PartyEvent.toDto() =
     when (this) {
         is PartyStartedEvent -> this.toDto()
+        else -> throw Exception("Illegal event for outbox")
     }
 
 fun PartyStartedEvent.toDto() =
