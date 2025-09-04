@@ -33,6 +33,7 @@ class RestorePartyTest {
         ).shouldBeRight()
 
         restoredParty.apply {
+            getEvents().isEmpty() shouldBe true
             id shouldBe party.id
             started shouldBe party.started
             playerLimit shouldBe party.playerLimit

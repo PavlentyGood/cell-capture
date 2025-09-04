@@ -1,5 +1,6 @@
 package ru.pavlentygood.cellcapture.lobby.domain
 
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.get
@@ -14,6 +15,7 @@ class PartyFactoryTest {
 
         val party: Party = partyFactory.create(owner.name)
 
+        party.getEvents() shouldContainExactly listOf(PartyCreatedEvent(party.id))
         party.started shouldBe false
         party.playerLimit shouldBe PlayerLimit.from(DEFAULT_PLAYER_LIMIT).get()
         party.ownerId shouldBe owner.id

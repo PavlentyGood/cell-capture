@@ -13,6 +13,7 @@ class PartyFactory(
     fun create(ownerName: PlayerName): Party {
         val owner = createOwner(ownerName)
         return Party(
+            new = true,
             id = PartyId(UUID.randomUUID()),
             started = false,
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),

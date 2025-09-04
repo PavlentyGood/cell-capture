@@ -8,12 +8,19 @@ import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 class Party internal constructor(
+    new: Boolean = false,
     id: PartyId,
     started: Boolean,
     players: List<Player>,
     val playerLimit: PlayerLimit,
     val ownerId: PlayerId
 ) : AggregateRoot<PartyId, PartyEvent>(id) {
+
+    init {
+        if (new) {
+            addEvent(PartyCreatedEvent(id))
+        }
+    }
 
     var started = started
         private set
