@@ -23,7 +23,7 @@ class PartyTest {
 
         party.joinPlayer(player.name, generatePlayerId) shouldBeRight player.id
 
-        party.getEvents() shouldContainExactly listOf(event)
+        party.popEvents() shouldContainExactly listOf(event)
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -41,7 +41,7 @@ class PartyTest {
 
         party.joinPlayer(playerName(), generatePlayerId) shouldBeLeft Party.AlreadyStarted
 
-        party.getEvents().isEmpty() shouldBe true
+        party.popEvents().isEmpty() shouldBe true
         party.started shouldBe true
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -59,7 +59,7 @@ class PartyTest {
 
         party.joinPlayer(playerName(), generatePlayerId) shouldBeLeft Party.PlayerCountLimit
 
-        party.getEvents().isEmpty() shouldBe true
+        party.popEvents().isEmpty() shouldBe true
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -80,7 +80,7 @@ class PartyTest {
 
         party.start(owner.id) shouldBeRight Unit
 
-        party.getEvents() shouldContainExactly listOf(event)
+        party.popEvents() shouldContainExactly listOf(event)
         party.started shouldBe true
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -96,7 +96,7 @@ class PartyTest {
 
         party.start(playerId()) shouldBeLeft Party.PlayerNotOwner
 
-        party.getEvents().isEmpty() shouldBe true
+        party.popEvents().isEmpty() shouldBe true
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner, player)
     }
@@ -110,7 +110,7 @@ class PartyTest {
 
         party.start(owner.id) shouldBeLeft Party.TooFewPlayers
 
-        party.getEvents().isEmpty() shouldBe true
+        party.popEvents().isEmpty() shouldBe true
         party.started shouldBe false
         party.getPlayers() shouldBe listOf(owner)
     }
@@ -127,7 +127,7 @@ class PartyTest {
 
         party.start(owner.id) shouldBeLeft Party.AlreadyStarted
 
-        party.getEvents().isEmpty() shouldBe true
+        party.popEvents().isEmpty() shouldBe true
         party.started shouldBe true
         party.getPlayers() shouldBe listOf(owner, player)
     }

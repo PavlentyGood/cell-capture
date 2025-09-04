@@ -21,7 +21,7 @@ class SavePartyToDatabase(
     override fun invoke(party: Party) {
         val partyDto = party.toDto()
         partyRepository.save(partyDto)
-        party.getEvents()
+        party.popEvents()
             .filterIsInstance<PartyStartedEvent>()
             .map { it.toOutboxDto(party.id, objectMapper) }
             .let { outboxRepository.saveAll(it) }

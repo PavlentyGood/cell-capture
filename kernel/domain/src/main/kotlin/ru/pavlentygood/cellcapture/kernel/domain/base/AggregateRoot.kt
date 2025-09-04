@@ -6,7 +6,11 @@ abstract class AggregateRoot<T, E : DomainEvent> protected constructor(
 
     private val events = mutableListOf<E>()
 
-    fun getEvents() = events.toList()
+    fun popEvents(): List<DomainEvent> {
+        val result = events.toList()
+        events.clear()
+        return result
+    }
 
     protected fun addEvent(event: E) {
         events.add(event)

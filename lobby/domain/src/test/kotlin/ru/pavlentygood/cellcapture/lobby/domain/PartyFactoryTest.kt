@@ -15,7 +15,7 @@ class PartyFactoryTest {
 
         val party: Party = partyFactory.create(owner.name)
 
-        party.getEvents() shouldContainExactly listOf(PartyCreatedEvent(party.id))
+        party.popEvents() shouldContainExactly listOf(PartyCreatedEvent(party.id))
         party.started shouldBe false
         party.playerLimit shouldBe PlayerLimit.from(DEFAULT_PLAYER_LIMIT).get()
         party.ownerId shouldBe owner.id
