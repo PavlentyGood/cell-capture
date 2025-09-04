@@ -40,6 +40,7 @@ class ActiveParty internal constructor(
             else -> {
                 val rolledDices = Dices.roll()
                 dices = rolledDices
+                addEvent(DicesRolledEvent(id, playerId, rolledDices))
                 rolledDices.right()
             }
         }

@@ -4,6 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.every
@@ -23,6 +24,7 @@ class ActivePartyTest {
 
         val rolledDices = party.roll(player.id).shouldBeRight()
 
+        party.popEvents() shouldContainExactly listOf(DicesRolledEvent(party.id, player.id, rolledDices))
         party.dices shouldBe rolledDices
         rolledDices shouldNotBe Dices.notRolled()
     }
@@ -31,6 +33,7 @@ class ActivePartyTest {
     fun `roll dices - player not current`() {
         val party = party()
         party.roll(playerId()) shouldBeLeft PlayerNotCurrent
+        party.popEvents().isEmpty() shouldBe true
     }
 
     @Test
@@ -44,6 +47,7 @@ class ActivePartyTest {
 
         party.roll(player.id) shouldBeLeft DicesAlreadyRolled
 
+        party.popEvents().isEmpty() shouldBe true
         party.dices shouldBe dices
     }
 
