@@ -55,6 +55,7 @@ class ActiveParty internal constructor(
                     .onRight {
                         dices = Dices.notRolled()
                         changeCurrentPlayer()
+                        addEvent(CellsCapturedEvent(id, playerId, area))
                     }
             }
         }

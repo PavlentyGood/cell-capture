@@ -69,6 +69,7 @@ class ActivePartyTest {
 
         party.capture(player.id, area) shouldBeRight Unit
 
+        party.popEvents() shouldContainExactly listOf(CellsCapturedEvent(party.id, player.id, area))
         party.dices shouldBe Dices.notRolled()
         party.currentPlayerId shouldBe nextPlayer.id
     }
@@ -79,6 +80,7 @@ class ActivePartyTest {
         val party = party()
 
         party.capture(playerId(), area) shouldBeLeft PlayerNotCurrent
+        party.popEvents().isEmpty() shouldBe true
     }
 
     @Test
@@ -91,6 +93,7 @@ class ActivePartyTest {
         )
 
         party.capture(player.id, area) shouldBeLeft DicesNotRolled
+        party.popEvents().isEmpty() shouldBe true
     }
 
     @Test
@@ -108,6 +111,7 @@ class ActivePartyTest {
         )
 
         party.capture(player.id, area) shouldBeLeft MismatchedArea
+        party.popEvents().isEmpty() shouldBe true
     }
 
     @Test
@@ -125,6 +129,7 @@ class ActivePartyTest {
         every { field.capture(player.id, area) } returns InaccessibleArea.left()
 
         party.capture(player.id, area) shouldBeLeft InaccessibleArea
+        party.popEvents().isEmpty() shouldBe true
     }
 
     private fun dicesFor(area: Area) =
