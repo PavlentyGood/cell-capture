@@ -8,7 +8,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 class Party internal constructor(
-    new: Boolean = false,
+    events: List<PartyEvent> = listOf(),
     id: PartyId,
     started: Boolean,
     players: List<Player>,
@@ -17,9 +17,7 @@ class Party internal constructor(
 ) : AggregateRoot<PartyId, PartyEvent>(id) {
 
     init {
-        if (new) {
-            addEvent(PartyCreatedEvent(id))
-        }
+        events.forEach { addEvent(it) }
     }
 
     var started = started

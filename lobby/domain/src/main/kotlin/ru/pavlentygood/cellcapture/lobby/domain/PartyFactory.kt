@@ -11,10 +11,11 @@ class PartyFactory(
     private val generatePlayerId: GeneratePlayerId
 ) {
     fun create(ownerName: PlayerName): Party {
+        val partyId = PartyId(UUID.randomUUID())
         val owner = createOwner(ownerName)
         return Party(
-            new = true,
-            id = PartyId(UUID.randomUUID()),
+            events = listOf(PartyCreatedEvent(partyId)),
+            id = partyId,
             started = false,
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
             players = listOf(owner),
