@@ -23,6 +23,7 @@ class CreatePartyTest {
 
         val party: Party = createParty(partyInfo)
 
+        party.popEvents() shouldContainExactly listOf(PartyCreatedEvent(partyInfo.partyId))
         party.id shouldBe partyInfo.partyId
         party.completed shouldBe false
         party.dices shouldBe Dices.notRolled()

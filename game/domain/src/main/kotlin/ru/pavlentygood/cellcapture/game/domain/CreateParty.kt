@@ -37,6 +37,7 @@ class CreateParty {
 
     operator fun invoke(partyInfo: PartyInfo): Party {
         return ActiveParty(
+            events = listOf(PartyCreatedEvent(partyInfo.partyId)),
             id = partyInfo.partyId,
             dices = Dices.notRolled(),
             field = createField(partyInfo.playerList),

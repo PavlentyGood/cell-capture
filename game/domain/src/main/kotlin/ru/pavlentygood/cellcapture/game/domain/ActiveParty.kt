@@ -9,6 +9,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
 class ActiveParty internal constructor(
+    events: List<PartyEvent> = listOf(),
     id: PartyId,
     dices: Dices,
     private val field: Field,
@@ -16,6 +17,10 @@ class ActiveParty internal constructor(
     currentPlayerId: PlayerId,
     override val players: List<Player>
 ) : Party(id) {
+
+    init {
+        events.forEach { addEvent(it) }
+    }
 
     override val completed = false
 
