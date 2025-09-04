@@ -1,6 +1,7 @@
 package ru.pavlentygood.cellcapture.game.domain
 
 import arrow.core.Either
+import ru.pavlentygood.cellcapture.game.domain.event.PartyEvent
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId

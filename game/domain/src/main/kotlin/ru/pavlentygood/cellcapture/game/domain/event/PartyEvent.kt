@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.game.domain
+package ru.pavlentygood.cellcapture.game.domain.event
 
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainEvent
 

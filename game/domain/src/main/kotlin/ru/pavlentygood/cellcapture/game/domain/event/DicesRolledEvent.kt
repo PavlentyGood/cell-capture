@@ -1,5 +1,6 @@
-package ru.pavlentygood.cellcapture.game.domain
+package ru.pavlentygood.cellcapture.game.domain.event
 
+import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
