@@ -1,6 +1,7 @@
 package ru.pavlentygood.cellcapture.lobby.domain
 
 import ru.pavlentygood.cellcapture.kernel.domain.*
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
 fun party(
     id: PartyId = partyId(),
@@ -11,6 +12,7 @@ fun party(
 ) =
     Party(
         id = id,
+        version = Version.from(randomInt().toLong()).get(),
         started = started,
         playerLimit = playerLimit(playerLimit),
         players = listOf(owner).plus(otherPlayers),

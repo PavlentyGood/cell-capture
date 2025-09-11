@@ -4,6 +4,7 @@ create sequence player_id_seq;
 create table parties
 (
     id uuid primary key,
+    version bigint not null,
     started boolean not null,
     owner_id integer not null,
     player_limit integer not null,

@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.pavlentygood.cellcapture.kernel.domain.partyId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
+import ru.pavlentygood.cellcapture.kernel.domain.version
 
 class RestorePartyTest {
 
@@ -26,6 +27,7 @@ class RestorePartyTest {
 
         val restoredParty: Party = restoreParty(
             id = party.id,
+            version = party.version,
             started = party.started,
             playerLimit = party.playerLimit,
             players = party.getPlayers(),
@@ -52,6 +54,7 @@ class RestorePartyTest {
 
         restoreParty(
             id = partyId(),
+            version = version(),
             started = false,
             playerLimit = playerLimit(limit),
             players = players,
@@ -70,6 +73,7 @@ class RestorePartyTest {
 
         restoreParty(
             id = partyId(),
+            version = version(),
             started = partyStarted,
             playerLimit = playerLimit(),
             players = players,
@@ -83,6 +87,7 @@ class RestorePartyTest {
 
         restoreParty(
             id = partyId(),
+            version = version(),
             started = false,
             playerLimit = playerLimit(),
             players = listOf(player()),

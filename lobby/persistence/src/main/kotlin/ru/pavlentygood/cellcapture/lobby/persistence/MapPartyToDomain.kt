@@ -5,6 +5,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.domain.PlayerLimit
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
@@ -17,6 +18,9 @@ class MapPartyToDomain(
     operator fun invoke(dto: PartyDto): Party =
         restoreParty(
             id = PartyId(dto.id),
+            version = Version.from(dto.version).getOrElse {
+                error("Illegal version: ${dto.version}")
+            },
             started = dto.started,
             ownerId = PlayerId(dto.ownerId),
             playerLimit = PlayerLimit.from(dto.playerLimit).getOrElse {

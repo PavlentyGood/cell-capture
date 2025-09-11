@@ -1,7 +1,9 @@
 package ru.pavlentygood.cellcapture.lobby.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.transaction.annotation.Transactional
+import ru.pavlentygood.cellcapture.kernel.common.VersionConflictException
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.lobby.domain.Party
@@ -15,22 +17,37 @@ import java.time.LocalDateTime
 class SavePartyToDatabase(
     private val partyRepository: PartyRepository,
     private val outboxRepository: OutboxRepository,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val jdbcTemplate: JdbcTemplate
 ) : SaveParty {
 
     override fun invoke(party: Party) {
+        val version = getPartyVersion(party.id)
+        if (version != null && party.version.previous().value != version) {
+            throw VersionConflictException()
+        }
+
         val partyDto = party.toDto()
         partyRepository.save(partyDto)
+
         party.popEvents()
             .filterIsInstance<PartyStartedEvent>()
             .map { it.toOutboxDto(party.id, objectMapper) }
             .let { outboxRepository.saveAll(it) }
     }
+
+    private fun getPartyVersion(partyId: PartyId) =
+        jdbcTemplate.queryForList(
+            "select version from parties where id = ? for update",
+            Long::class.java,
+            partyId.toUUID()
+        ).singleOrNull()
 }
 
 fun Party.toDto(): PartyDto {
     val party = PartyDto(
         id = id.toUUID(),
+        version = version.value,
         started = started,
         ownerId = ownerId.toInt(),
         playerLimit = playerLimit.value,

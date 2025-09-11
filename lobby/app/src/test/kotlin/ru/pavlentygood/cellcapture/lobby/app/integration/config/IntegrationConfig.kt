@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import ru.pavlentygood.cellcapture.lobby.domain.PartyFactory
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.persistence.*
+import ru.pavlentygood.cellcapture.lobby.rest.endpoint.ErrorHandler
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
@@ -30,6 +31,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
         GetPartyFromDatabase::class,
         GetPartyByPlayerFromDatabase::class,
         MapPartyToDomain::class,
+        ErrorHandler::class
     ]
 )
 class IntegrationConfig

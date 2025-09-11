@@ -6,6 +6,7 @@ import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.*
 import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 import ru.pavlentygood.cellcapture.lobby.domain.event.PartyEvent
 import ru.pavlentygood.cellcapture.lobby.domain.event.PartyStartedEvent
 import ru.pavlentygood.cellcapture.lobby.domain.event.PlayerJoinedEvent
@@ -13,11 +14,12 @@ import ru.pavlentygood.cellcapture.lobby.domain.event.PlayerJoinedEvent
 class Party internal constructor(
     events: List<PartyEvent> = listOf(),
     id: PartyId,
+    version: Version,
     started: Boolean,
     players: List<Player>,
     val playerLimit: PlayerLimit,
     val ownerId: PlayerId
-) : AggregateRoot<PartyId, PartyEvent>(id) {
+) : AggregateRoot<PartyId, PartyEvent>(id, version) {
 
     init {
         events.forEach { addEvent(it) }

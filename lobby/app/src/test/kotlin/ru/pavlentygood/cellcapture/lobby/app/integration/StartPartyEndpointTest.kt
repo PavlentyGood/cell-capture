@@ -1,8 +1,14 @@
 package ru.pavlentygood.cellcapture.lobby.app.integration
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.kotest.common.runBlocking
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -132,6 +138,28 @@ class StartPartyEndpointTest : BasePostgresTest {
 
         startParty(owner.id).andExpect {
             status { isUnprocessableEntity() }
+        }
+    }
+
+    @Test
+    fun `version conflict when saving party`(): Unit = runBlocking {
+        val owner = player()
+        val party = party(
+            id = partyId(),
+            owner = owner,
+            otherPlayers = listOf(player())
+        )
+        saveParty(party)
+
+        coroutineScope {
+            val doRequest = {
+                async(Dispatchers.Default) {
+                    startParty(owner.id).andReturn().response.status
+                }
+            }
+            val statuses = listOf(doRequest(), doRequest()).awaitAll()
+
+            statuses shouldContain 409
         }
     }
 

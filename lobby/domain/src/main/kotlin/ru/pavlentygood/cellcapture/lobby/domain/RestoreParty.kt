@@ -8,11 +8,13 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
 class RestoreParty {
 
     operator fun invoke(
         id: PartyId,
+        version: Version,
         started: Boolean,
         playerLimit: PlayerLimit,
         players: List<Player>,
@@ -25,6 +27,7 @@ class RestoreParty {
             players.none { it.id == ownerId } -> IllegalOwnerId.left()
             else -> Party(
                 id = id,
+                version = version,
                 started = started,
                 playerLimit = playerLimit,
                 players = players,

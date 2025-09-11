@@ -3,6 +3,7 @@ package ru.pavlentygood.cellcapture.lobby.domain
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 import ru.pavlentygood.cellcapture.lobby.domain.event.PartyCreatedEvent
 import java.util.*
 
@@ -17,6 +18,7 @@ class PartyFactory(
         return Party(
             events = listOf(PartyCreatedEvent(partyId)),
             id = partyId,
+            version = Version.new(),
             started = false,
             playerLimit = PlayerLimit(DEFAULT_PLAYER_LIMIT),
             players = listOf(owner),
