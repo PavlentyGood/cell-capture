@@ -3,9 +3,6 @@ package ru.pavlentygood.cellcapture.game.domain
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import ru.pavlentygood.cellcapture.game.domain.event.CellsCapturedEvent
-import ru.pavlentygood.cellcapture.game.domain.event.DicesRolledEvent
-import ru.pavlentygood.cellcapture.game.domain.event.PartyEvent
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId

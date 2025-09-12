@@ -10,8 +10,6 @@ import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import ru.pavlentygood.cellcapture.game.domain.event.CellsCapturedEvent
-import ru.pavlentygood.cellcapture.game.domain.event.DicesRolledEvent
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 
 class ActivePartyTest {
