@@ -15,6 +15,7 @@ class RestorePartyTest {
 
         val restoredParty = restoreParty(
             id = party.id,
+            version = party.version,
             completed = partyCompleted,
             dices = party.dices,
             cells = party.cells,
@@ -25,6 +26,7 @@ class RestorePartyTest {
 
         restoredParty.apply {
             id shouldBe party.id
+            version shouldBe party.version
             completed shouldBe partyCompleted
             dices shouldBe party.dices
             cells shouldBe party.cells

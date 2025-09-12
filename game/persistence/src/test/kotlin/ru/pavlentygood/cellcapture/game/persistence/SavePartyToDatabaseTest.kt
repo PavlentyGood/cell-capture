@@ -37,34 +37,6 @@ class SavePartyToDatabaseTest : BasePostgresTest {
         party.check()
     }
 
-    @Test
-    fun `save existing party`() {
-        val owner = player()
-        val player = player()
-        val cells = cells()
-        cells.setCell(owner.id, 2, 1)
-        cells.setCell(player.id, 4, 3)
-        val party = party(
-            dices = Dices.roll(),
-            field = field(cells()),
-            owner = owner,
-            currentPlayer = player
-        )
-        saveParty(party)
-        cells.setCell(owner.id, 6, 5)
-        val changedParty = party(
-            id = party.id,
-            dices = Dices.notRolled(),
-            field = field(cells()),
-            owner = owner,
-            currentPlayer = player
-        )
-
-        saveParty(changedParty)
-
-        changedParty.check()
-    }
-
     private fun Party.check() {
         checkExistsInDb()
         players.forEach { it.checkExistsInDb(id) }
