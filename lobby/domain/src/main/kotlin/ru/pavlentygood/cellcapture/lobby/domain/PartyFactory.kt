@@ -4,7 +4,6 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.base.Version
-import ru.pavlentygood.cellcapture.lobby.domain.event.PartyCreatedEvent
 import java.util.*
 
 const val DEFAULT_PLAYER_LIMIT = 4

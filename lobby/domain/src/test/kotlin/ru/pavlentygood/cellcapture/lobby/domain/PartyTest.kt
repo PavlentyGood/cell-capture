@@ -7,8 +7,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
-import ru.pavlentygood.cellcapture.lobby.domain.event.PartyStartedEvent
-import ru.pavlentygood.cellcapture.lobby.domain.event.PlayerJoinedEvent
 
 class PartyTest {
 

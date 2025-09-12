@@ -4,7 +4,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import ru.pavlentygood.cellcapture.kernel.domain.get
-import ru.pavlentygood.cellcapture.lobby.domain.event.PartyCreatedEvent
 
 class PartyFactoryTest {
 
