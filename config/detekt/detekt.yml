@@ -18,5 +18,5 @@ style:
       - "**/*CreateParty*"
 complexity:
   LongParameterList:
-    constructorThreshold: 8
+    constructorThreshold: 9
     functionThreshold: 9

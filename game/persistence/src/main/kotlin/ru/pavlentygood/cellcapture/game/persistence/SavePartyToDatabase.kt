@@ -6,6 +6,7 @@ import ru.pavlentygood.cellcapture.game.domain.Cell
 import ru.pavlentygood.cellcapture.game.domain.Field
 import ru.pavlentygood.cellcapture.game.domain.Party
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
+import ru.pavlentygood.cellcapture.kernel.common.VersionConflictException
 
 @Transactional
 class SavePartyToDatabase(
@@ -15,7 +16,7 @@ class SavePartyToDatabase(
     override fun invoke(party: Party) {
         if (party.isExists()) {
             party.updatePartyInfo()
-            party.updateCells()
+                .also { party.updateCells() }
         } else {
             party.insertPartyInfo()
             party.insertPlayers()
@@ -32,15 +33,19 @@ class SavePartyToDatabase(
     private fun Party.updatePartyInfo() {
         val sql = """
             update parties set
+            version = :version,
             completed = :completed,
             first_dice = :first_dice,
             second_dice = :second_dice,
             owner_id = :owner_id,
             current_player_id = :current_player_id,
             updated = current_timestamp
-            where id = :id
+            where id = :id and version + 1 = :version
         """
-        jdbcTemplate.update(sql, toParams())
+        val updated = jdbcTemplate.update(sql, toParams())
+        if (updated == 0) {
+            throw VersionConflictException()
+        }
     }
 
     private fun Party.updateCells() {
@@ -63,8 +68,8 @@ class SavePartyToDatabase(
 
     private fun Party.insertPartyInfo() {
         val sql = """
-            insert into parties (id, completed, first_dice, second_dice, owner_id, current_player_id)
-            values (:id, :completed, :first_dice, :second_dice, :owner_id, :current_player_id)
+            insert into parties (id, version, completed, first_dice, second_dice, owner_id, current_player_id)
+            values (:id, :version, :completed, :first_dice, :second_dice, :owner_id, :current_player_id)
         """
         jdbcTemplate.update(sql, toParams())
     }
@@ -107,6 +112,7 @@ class SavePartyToDatabase(
     private fun Party.toParams(): Map<String, Any?> {
         return mapOf(
             "id" to id.toUUID(),
+            "version" to version.value,
             "completed" to completed,
             "first_dice" to dices.firstValue,
             "second_dice" to dices.secondValue,

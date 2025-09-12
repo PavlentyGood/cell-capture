@@ -6,6 +6,7 @@ import java.util.*
 val partyDtoMapper = { rs: ResultSet, _: Int ->
     PartyDto(
         id = rs.getObject("id", UUID::class.java),
+        version = rs.getLong("version"),
         completed = rs.getBoolean("completed"),
         firstDice = rs.getIntOrNull("first_dice"),
         secondDice = rs.getIntOrNull("second_dice"),

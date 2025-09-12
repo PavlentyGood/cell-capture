@@ -6,6 +6,7 @@ import java.util.UUID
 
 data class PartyDto(
     val id: UUID,
+    val version: Long,
     val completed: Boolean,
     val firstDice: Int?,
     val secondDice: Int?,

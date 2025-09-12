@@ -10,16 +10,18 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
 class ActiveParty internal constructor(
     events: List<PartyEvent> = listOf(),
     id: PartyId,
+    version: Version,
     dices: Dices,
     private val field: Field,
     override val ownerId: PlayerId,
     currentPlayerId: PlayerId,
     override val players: List<Player>
-) : Party(id) {
+) : Party(id, version) {
 
     init {
         events.forEach { addEvent(it) }

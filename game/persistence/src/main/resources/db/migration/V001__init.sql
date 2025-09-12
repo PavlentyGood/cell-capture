@@ -2,6 +2,7 @@
 create table parties
 (
     id UUID primary key,
+    version bigint not null,
     completed boolean not null,
     first_dice integer,
     second_dice integer,

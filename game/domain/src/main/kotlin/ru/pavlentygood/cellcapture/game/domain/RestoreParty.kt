@@ -8,11 +8,13 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
 class RestoreParty {
 
     operator fun invoke(
         id: PartyId,
+        version: Version,
         completed: Boolean,
         dices: Dices,
         cells: Array<Array<Cell>>,
@@ -23,6 +25,7 @@ class RestoreParty {
         if (completed) {
             return CompletedParty(
                 id = id,
+                version = version,
                 dices = dices,
                 cells = cells,
                 players = players,
@@ -38,6 +41,7 @@ class RestoreParty {
             if (playerList.playerIds.contains(currentPlayerId)) {
                 ActiveParty(
                     id = id,
+                    version = version,
                     dices = dices,
                     field = Field(
                         cells = cells

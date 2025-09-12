@@ -2,6 +2,7 @@ package ru.pavlentygood.cellcapture.game.domain
 
 import ru.pavlentygood.cellcapture.game.domain.event.PartyCreatedEvent
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
 class CreateParty {
 
@@ -40,6 +41,7 @@ class CreateParty {
         return ActiveParty(
             events = listOf(PartyCreatedEvent(partyInfo.partyId)),
             id = partyInfo.partyId,
+            version = Version.new(),
             dices = Dices.notRolled(),
             field = createField(partyInfo.playerList),
             ownerId = partyInfo.ownerId,

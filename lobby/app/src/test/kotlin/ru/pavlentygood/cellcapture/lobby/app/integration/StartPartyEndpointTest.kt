@@ -144,11 +144,7 @@ class StartPartyEndpointTest : BasePostgresTest {
     @Test
     fun `version conflict when saving party`(): Unit = runBlocking {
         val owner = player()
-        val party = party(
-            id = partyId(),
-            owner = owner,
-            otherPlayers = listOf(player())
-        )
+        val party = party(owner = owner)
         saveParty(party)
 
         coroutineScope {

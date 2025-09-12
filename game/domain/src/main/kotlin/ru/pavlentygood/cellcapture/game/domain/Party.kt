@@ -6,10 +6,12 @@ import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
 sealed class Party(
-    id: PartyId
-) : AggregateRoot<PartyId, PartyEvent>(id) {
+    id: PartyId,
+    version: Version
+) : AggregateRoot<PartyId, PartyEvent>(id, version) {
 
     abstract val completed: Boolean
     abstract val ownerId: PlayerId

@@ -4,15 +4,17 @@ import arrow.core.left
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
 class CompletedParty(
     id: PartyId,
+    version: Version,
     override val dices: Dices,
     override val cells: Array<Array<Cell>>,
     override val ownerId: PlayerId,
     override val currentPlayerId: PlayerId,
     override val players: List<Player>
-) : Party(id) {
+) : Party(id, version) {
 
     override val completed = true
 

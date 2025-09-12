@@ -10,6 +10,7 @@ import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
 import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
+import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 import java.util.*
 
 class GetPartyByPlayerFromDatabase(
@@ -21,6 +22,9 @@ class GetPartyByPlayerFromDatabase(
         val partyDto: PartyDto = getParty(playerId) ?: return null
         return restoreParty(
             id = PartyId(partyDto.id),
+            version = Version.from(partyDto.version).getOrElse {
+                error("Illegal version: $it")
+            },
             completed = partyDto.completed,
             dices = partyDto.restoreDices(),
             players = getPlayers(partyDto.id),

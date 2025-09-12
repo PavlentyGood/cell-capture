@@ -12,6 +12,7 @@ fun party(
 ) =
     ActiveParty(
         id = id,
+        version = version(),
         dices = dices,
         field = field,
         ownerId = owner.id,
