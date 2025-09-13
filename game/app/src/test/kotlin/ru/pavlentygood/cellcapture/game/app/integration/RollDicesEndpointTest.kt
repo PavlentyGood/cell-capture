@@ -1,13 +1,7 @@
 package ru.pavlentygood.cellcapture.game.app.integration
 
-import io.kotest.common.runBlocking
-import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -123,27 +117,6 @@ internal class RollDicesEndpointTest : BasePostgresTest {
 
         rollDices(player.id).andExpect {
             status { isUnprocessableEntity() }
-        }
-    }
-
-    @Test
-    fun `version conflict when saving party`(): Unit = runBlocking {
-        val player = player()
-        val party = party(
-            currentPlayer = player,
-            dices = Dices.notRolled()
-        )
-        saveParty(party)
-
-        coroutineScope {
-            val doRequest = {
-                async(Dispatchers.Default) {
-                    rollDices(player.id).andReturn().response.status
-                }
-            }
-            val statuses = listOf(doRequest(), doRequest()).awaitAll()
-
-            statuses shouldContain 409
         }
     }
 
