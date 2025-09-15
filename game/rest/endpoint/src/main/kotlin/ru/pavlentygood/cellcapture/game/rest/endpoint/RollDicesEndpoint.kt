@@ -6,13 +6,13 @@ import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.DicesResponse
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.RollResponse
-import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
-import ru.pavlentygood.cellcapture.game.usecase.RollUseCaseError
+import ru.pavlentygood.cellcapture.game.usecase.RollDicesUseCase
+import ru.pavlentygood.cellcapture.game.usecase.RollDicesUseCaseError
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @RestController
 class RollDicesEndpoint(
-    private val roll: RollUseCase
+    private val roll: RollDicesUseCase
 ) : RollDicesApi {
 
     override fun invoke(playerId: Int): ResponseEntity<RollResponse> =
@@ -28,11 +28,11 @@ class RollDicesEndpoint(
     private fun RolledDices.toResponse() =
         DicesResponse(firstValue, secondValue)
 
-    private fun RollUseCaseError.toError(): ResponseEntity<RollResponse> =
+    private fun RollDicesUseCaseError.toError(): ResponseEntity<RollResponse> =
         when (this) {
-            RollUseCaseError.PlayerNotFound -> ResponseEntity.notFound().build()
-            RollUseCaseError.PlayerNotCurrent,
-            RollUseCaseError.DicesAlreadyRolled,
-            RollUseCaseError.PartyCompleted -> ResponseEntity.unprocessableEntity().build()
+            RollDicesUseCaseError.PlayerNotFound -> ResponseEntity.notFound().build()
+            RollDicesUseCaseError.PlayerNotCurrent,
+            RollDicesUseCaseError.DicesAlreadyRolled,
+            RollDicesUseCaseError.PartyCompleted -> ResponseEntity.unprocessableEntity().build()
         }
 }

@@ -7,14 +7,14 @@ import ru.pavlentygood.cellcapture.game.domain.RestoreParty
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.persistence.SavePartyToDatabase
 import ru.pavlentygood.cellcapture.game.rest.endpoint.ErrorHandler
-import ru.pavlentygood.cellcapture.game.usecase.RollUseCase
+import ru.pavlentygood.cellcapture.game.usecase.RollDicesUseCase
 
 @TestConfiguration
 @EnableAutoConfiguration
 @Import(
     value = [
         RestoreParty::class,
-        RollUseCase::class,
+        RollDicesUseCase::class,
         SavePartyToDatabase::class,
         GetPartyByPlayerFromDatabase::class,
         ErrorHandler::class
