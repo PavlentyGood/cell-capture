@@ -5,8 +5,7 @@ import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
 
 class GetPartyByPlayerFromDatabase(
-    private val partyRepository: PartyRepository,
-    private val mapPartyToDomain: MapPartyToDomain
+    private val partyRepository: PartyRepository
 ) : GetPartyByPlayer {
 
     override operator fun invoke(playerId: PlayerId): Party? =

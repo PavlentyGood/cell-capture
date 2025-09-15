@@ -10,8 +10,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 import java.util.*
 
 class GetPartyByPlayerFromDatabase(
-    private val jdbcTemplate: NamedParameterJdbcTemplate,
-    private val restoreParty: RestoreParty
+    private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : GetPartyByPlayer {
 
     override operator fun invoke(playerId: PlayerId): Party? {

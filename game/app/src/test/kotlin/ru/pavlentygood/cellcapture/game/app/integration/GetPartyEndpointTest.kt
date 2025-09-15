@@ -26,8 +26,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.playerId
     value = [
         GetPartyByPlayerUseCase::class,
         SavePartyToDatabase::class,
-        GetPartyByPlayerFromDatabase::class,
-        RestoreParty::class
+        GetPartyByPlayerFromDatabase::class
     ]
 )
 class GetPartyEndpointTest : BasePostgresTest {

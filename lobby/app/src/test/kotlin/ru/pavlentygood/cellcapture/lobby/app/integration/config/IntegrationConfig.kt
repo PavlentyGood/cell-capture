@@ -6,8 +6,10 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Import
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import ru.pavlentygood.cellcapture.lobby.domain.PartyFactory
-import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
-import ru.pavlentygood.cellcapture.lobby.persistence.*
+import ru.pavlentygood.cellcapture.lobby.persistence.GeneratePlayerIdBySequence
+import ru.pavlentygood.cellcapture.lobby.persistence.GetPartyByPlayerFromDatabase
+import ru.pavlentygood.cellcapture.lobby.persistence.GetPartyFromDatabase
+import ru.pavlentygood.cellcapture.lobby.persistence.SavePartyToDatabase
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.ErrorHandler
 import ru.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCase
@@ -25,12 +27,10 @@ import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
         StartPartyUseCase::class,
         GetPartyUseCase::class,
         PartyFactory::class,
-        RestoreParty::class,
         SavePartyToDatabase::class,
         GeneratePlayerIdBySequence::class,
         GetPartyFromDatabase::class,
         GetPartyByPlayerFromDatabase::class,
-        MapPartyToDomain::class,
         ErrorHandler::class
     ]
 )

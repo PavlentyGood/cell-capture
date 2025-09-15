@@ -5,13 +5,12 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class RestorePartyTest {
+class RestorePartyKtTest {
 
     @ParameterizedTest
     @ValueSource(booleans = [false, true])
     fun `restore party`(partyCompleted: Boolean) {
         val party = party()
-        val restoreParty = RestoreParty()
 
         val restoredParty = restoreParty(
             id = party.id,

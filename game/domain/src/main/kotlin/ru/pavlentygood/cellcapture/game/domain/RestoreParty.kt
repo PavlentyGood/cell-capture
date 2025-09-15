@@ -9,49 +9,46 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 
-class RestoreParty {
+fun restoreParty(
+    id: PartyId,
+    version: Version,
+    completed: Boolean,
+    dices: Dices,
+    cells: Array<Array<Cell>>,
+    players: List<Player>,
+    currentPlayerId: PlayerId,
+    ownerId: PlayerId
+): Either<DomainError, Party> {
+    if (completed) {
+        return CompletedParty(
+            id = id,
+            version = version,
+            dices = dices,
+            cells = cells,
+            players = players,
+            currentPlayerId = currentPlayerId,
+            ownerId = ownerId
+        ).right()
+    }
 
-    operator fun invoke(
-        id: PartyId,
-        version: Version,
-        completed: Boolean,
-        dices: Dices,
-        cells: Array<Array<Cell>>,
-        players: List<Player>,
-        currentPlayerId: PlayerId,
-        ownerId: PlayerId
-    ): Either<DomainError, Party> {
-        if (completed) {
-            return CompletedParty(
+    return PlayerList.from(
+        ownerId = ownerId,
+        players = players
+    ).flatMap { playerList ->
+        if (playerList.playerIds.contains(currentPlayerId)) {
+            ActiveParty(
                 id = id,
                 version = version,
                 dices = dices,
-                cells = cells,
-                players = players,
+                field = Field(
+                    cells = cells
+                ),
+                ownerId = ownerId,
                 currentPlayerId = currentPlayerId,
-                ownerId = ownerId
+                players = playerList.players
             ).right()
-        }
-
-        return PlayerList.from(
-            ownerId = ownerId,
-            players = players
-        ).flatMap { playerList ->
-            if (playerList.playerIds.contains(currentPlayerId)) {
-                ActiveParty(
-                    id = id,
-                    version = version,
-                    dices = dices,
-                    field = Field(
-                        cells = cells
-                    ),
-                    ownerId = ownerId,
-                    currentPlayerId = currentPlayerId,
-                    players = playerList.players
-                ).right()
-            } else {
-                IllegalCurrentPlayerId.left()
-            }
+        } else {
+            IllegalCurrentPlayerId.left()
         }
     }
 }

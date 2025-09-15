@@ -10,7 +10,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.partyId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
 import ru.pavlentygood.cellcapture.kernel.domain.version
 
-class RestorePartyTest {
+class RestorePartyKtTest {
 
     @ParameterizedTest
     @ValueSource(ints = [1, 2])
@@ -23,7 +23,6 @@ class RestorePartyTest {
             owner = players.first(),
             otherPlayers = players.drop(1)
         )
-        val restoreParty = RestoreParty()
 
         val restoredParty: Party = restoreParty(
             id = party.id,
@@ -47,7 +46,6 @@ class RestorePartyTest {
     @Test
     fun `restore party - too many players`() {
         val limit = 2
-        val restoreParty = RestoreParty()
         val players = generateSequence { player() }
             .take(limit + 1)
             .toList()
@@ -66,7 +64,6 @@ class RestorePartyTest {
     @ValueSource(booleans = [false, true])
     fun `restore party - too few players`(partyStarted: Boolean) {
         val playerCount = if (partyStarted) 1 else 0
-        val restoreParty = RestoreParty()
         val players = generateSequence { player() }
             .take(playerCount)
             .toList()
@@ -83,8 +80,6 @@ class RestorePartyTest {
 
     @Test
     fun `restore party - illegal owner id`() {
-        val restoreParty = RestoreParty()
-
         restoreParty(
             id = partyId(),
             version = version(),
