@@ -19,7 +19,7 @@ class MapPartyToDomain(
         restoreParty(
             id = PartyId(dto.id),
             version = Version.from(dto.version).getOrElse {
-                error("Illegal version: ${dto.version}")
+                error("Illegal version: $it. version: ${dto.version}")
             },
             started = dto.started,
             ownerId = PlayerId(dto.ownerId),

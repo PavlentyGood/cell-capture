@@ -23,7 +23,7 @@ class GetPartyByPlayerFromDatabase(
         return restoreParty(
             id = PartyId(partyDto.id),
             version = Version.from(partyDto.version).getOrElse {
-                error("Illegal version: $it")
+                error("Illegal version: $it. version: ${partyDto.version}")
             },
             completed = partyDto.completed,
             dices = partyDto.restoreDices(),
