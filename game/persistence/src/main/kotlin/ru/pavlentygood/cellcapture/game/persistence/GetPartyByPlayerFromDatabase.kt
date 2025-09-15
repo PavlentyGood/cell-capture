@@ -2,13 +2,9 @@ package ru.pavlentygood.cellcapture.game.persistence
 
 import arrow.core.getOrElse
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import ru.pavlentygood.cellcapture.game.domain.Cell
-import ru.pavlentygood.cellcapture.game.domain.Party
-import ru.pavlentygood.cellcapture.game.domain.RestoreParty
-import ru.pavlentygood.cellcapture.game.domain.createCells
+import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
-import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 import java.util.*

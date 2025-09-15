@@ -1,7 +1,6 @@
 package ru.pavlentygood.cellcapture.lobby.domain
 
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
-import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainEvent
 

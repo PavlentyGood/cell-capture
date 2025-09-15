@@ -2,10 +2,10 @@ package ru.pavlentygood.cellcapture.game.app.listening
 
 import arrow.core.getOrElse
 import ru.pavlentygood.cellcapture.game.domain.PartyInfo
+import ru.pavlentygood.cellcapture.game.domain.Player
 import ru.pavlentygood.cellcapture.game.domain.PlayerList
 import ru.pavlentygood.cellcapture.game.usecase.CreatePartyUseCase
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
-import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 

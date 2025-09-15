@@ -1,7 +1,7 @@
 package ru.pavlentygood.cellcapture.game.persistence
 
 import arrow.core.getOrElse
-import ru.pavlentygood.cellcapture.kernel.domain.Player
+import ru.pavlentygood.cellcapture.game.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import java.sql.ResultSet

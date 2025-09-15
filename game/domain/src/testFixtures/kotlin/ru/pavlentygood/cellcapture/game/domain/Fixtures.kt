@@ -20,10 +20,13 @@ fun party(
         players = listOf(owner).plus(otherPlayers)
     )
 
-fun player(id: PlayerId = playerId()) =
+fun player(
+    playerId: PlayerId = playerId(),
+    playerName: PlayerName = playerName()
+) =
     Player(
-        id = id,
-        name = playerName()
+        id = playerId,
+        name = playerName
     )
 
 fun area(distanceToEdges: Int = 0) =

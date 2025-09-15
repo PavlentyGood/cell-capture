@@ -29,12 +29,3 @@ fun playerId() =
 
 fun playerName(value: String = "Bob ${randomInt()}") =
     PlayerName.from(value).get()
-
-fun player(
-    playerId: PlayerId = playerId(),
-    playerName: PlayerName = playerName()
-) =
-    Player(
-        id = playerId,
-        name = playerName
-    )

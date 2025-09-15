@@ -18,10 +18,13 @@ fun party(
         ownerId = owner.id
     )
 
-fun player() =
+fun player(
+    playerId: PlayerId = playerId(),
+    playerName: PlayerName = playerName()
+) =
     Player(
-        id = playerId(),
-        name = playerName()
+        id = playerId,
+        name = playerName
     )
 
 fun playerLimit(value: Int = 2) =

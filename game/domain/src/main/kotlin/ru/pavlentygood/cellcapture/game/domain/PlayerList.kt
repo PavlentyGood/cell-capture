@@ -5,7 +5,6 @@ import arrow.core.left
 import arrow.core.right
 import ru.pavlentygood.cellcapture.kernel.domain.MAX_PLAYER_COUNT
 import ru.pavlentygood.cellcapture.kernel.domain.MIN_PLAYER_COUNT
-import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.base.DomainError
 

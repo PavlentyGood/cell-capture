@@ -2,11 +2,11 @@ package ru.pavlentygood.cellcapture.lobby.persistence
 
 import arrow.core.getOrElse
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
-import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.base.Version
 import ru.pavlentygood.cellcapture.lobby.domain.Party
+import ru.pavlentygood.cellcapture.lobby.domain.Player
 import ru.pavlentygood.cellcapture.lobby.domain.PlayerLimit
 import ru.pavlentygood.cellcapture.lobby.domain.RestoreParty
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyDto

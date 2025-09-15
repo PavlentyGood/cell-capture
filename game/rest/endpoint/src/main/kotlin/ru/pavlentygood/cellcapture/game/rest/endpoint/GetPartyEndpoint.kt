@@ -2,15 +2,11 @@ package ru.pavlentygood.cellcapture.game.rest.endpoint
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
-import ru.pavlentygood.cellcapture.game.domain.Cell
-import ru.pavlentygood.cellcapture.game.domain.Dices
-import ru.pavlentygood.cellcapture.game.domain.Field
-import ru.pavlentygood.cellcapture.game.domain.Party
+import ru.pavlentygood.cellcapture.game.domain.*
 import ru.pavlentygood.cellcapture.game.rest.api.*
 import ru.pavlentygood.cellcapture.game.usecase.GetPartyByPlayerUseCase
 import ru.pavlentygood.cellcapture.game.usecase.GetPartyUseCaseError
 import ru.pavlentygood.cellcapture.game.usecase.GetPartyUseCaseError.PartyNotFoundUseCaseError
-import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 @RestController

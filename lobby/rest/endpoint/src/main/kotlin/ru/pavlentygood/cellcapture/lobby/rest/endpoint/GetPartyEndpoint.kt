@@ -3,8 +3,8 @@ package ru.pavlentygood.cellcapture.lobby.rest.endpoint
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
-import ru.pavlentygood.cellcapture.kernel.domain.Player
 import ru.pavlentygood.cellcapture.lobby.domain.Party
+import ru.pavlentygood.cellcapture.lobby.domain.Player
 import ru.pavlentygood.cellcapture.lobby.rest.api.GetPartyApi
 import ru.pavlentygood.cellcapture.lobby.rest.api.PartyResponse
 import ru.pavlentygood.cellcapture.lobby.rest.api.PlayerResponse
