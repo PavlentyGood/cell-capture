@@ -4,13 +4,16 @@ import io.kotest.assertions.throwables.shouldThrow
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import ru.pavlentygood.cellcapture.kernel.common.VersionConflictException
 import ru.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import ru.pavlentygood.cellcapture.lobby.domain.party
+import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
-@SpringBootTest(classes = [IntegrationConfig::class])
-class PartyVersionConflictTest {
+@SpringBootTest(classes = [PartyVersionConflictTest::class])
+@Import(IntegrationConfig::class)
+class PartyVersionConflictTest : BasePostgresTest {
 
     @Autowired
     lateinit var saveParty: SaveParty

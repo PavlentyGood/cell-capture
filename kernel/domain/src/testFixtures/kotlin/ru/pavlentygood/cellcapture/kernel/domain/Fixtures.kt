@@ -24,8 +24,8 @@ fun version(
 fun partyId(value: UUID = UUID.randomUUID()) =
     PartyId(value)
 
-fun playerId() =
-    PlayerId(counter.incrementAndGet())
+fun playerId(value: Int = counter.incrementAndGet()) =
+    PlayerId(value)
 
 fun playerName(value: String = "Bob ${randomInt()}") =
     PlayerName.from(value).get()
