@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Import
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.persistence.SavePartyToDatabase
 import ru.pavlentygood.cellcapture.game.rest.endpoint.ErrorHandler
+import ru.pavlentygood.cellcapture.game.usecase.CaptureCellsUseCase
 import ru.pavlentygood.cellcapture.game.usecase.RollDicesUseCase
 
 @TestConfiguration
@@ -13,6 +14,7 @@ import ru.pavlentygood.cellcapture.game.usecase.RollDicesUseCase
 @Import(
     value = [
         RollDicesUseCase::class,
+        CaptureCellsUseCase::class,
         SavePartyToDatabase::class,
         GetPartyByPlayerFromDatabase::class,
         ErrorHandler::class

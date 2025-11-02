@@ -20,6 +20,21 @@ fun party(
         players = listOf(owner).plus(otherPlayers)
     )
 
+fun completedParty(
+    id: PartyId = partyId(),
+    owner: Player = player(),
+    currentPlayer: Player = player(),
+) =
+    CompletedParty(
+        id = id,
+        version = version(),
+        dices = Dices.notRolled(),
+        cells = cells(),
+        ownerId = owner.id,
+        currentPlayerId = currentPlayer.id,
+        players = listOf(owner, currentPlayer)
+    )
+
 fun player(
     playerId: PlayerId = playerId(),
     playerName: PlayerName = playerName()
@@ -27,6 +42,12 @@ fun player(
     Player(
         id = playerId,
         name = playerName
+    )
+
+fun area(fromX: Int, fromY: Int, toX: Int, toY: Int) =
+    Area.from(
+        first = point(x = fromX, y = fromY),
+        second = point(x = toX, y = toY)
     )
 
 fun area(distanceToEdges: Int = 0) =
@@ -50,10 +71,19 @@ fun point(distanceToEdges: Int = 0) =
 fun dices() =
     Dices.roll()
 
+fun dices(firstValue: Int, secondValue: Int) =
+    RolledDices(
+        first = Dice.from(firstValue).get(),
+        second = Dice.from(secondValue).get()
+    )
+
 fun field(cells: Array<Array<Cell>> = cells()) =
     Field(
         cells = cells
     )
+
+fun cell(playerId: PlayerId, x: Int, y: Int) =
+    Cell(playerId, x, y)
 
 fun cells(): Array<Array<Cell>> =
     createCells()

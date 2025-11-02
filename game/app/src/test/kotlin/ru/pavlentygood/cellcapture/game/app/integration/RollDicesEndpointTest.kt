@@ -10,7 +10,10 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.app.integration.config.IntegrationConfig
-import ru.pavlentygood.cellcapture.game.domain.*
+import ru.pavlentygood.cellcapture.game.domain.Dices
+import ru.pavlentygood.cellcapture.game.domain.completedParty
+import ru.pavlentygood.cellcapture.game.domain.party
+import ru.pavlentygood.cellcapture.game.domain.player
 import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_DICES
 import ru.pavlentygood.cellcapture.game.rest.endpoint.RollDicesEndpoint
@@ -20,7 +23,6 @@ import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.domain.PlayerId
 import ru.pavlentygood.cellcapture.kernel.domain.partyId
 import ru.pavlentygood.cellcapture.kernel.domain.playerId
-import ru.pavlentygood.cellcapture.kernel.domain.version
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = [RollDicesEndpoint::class])
@@ -83,6 +85,9 @@ internal class RollDicesEndpointTest : BasePostgresTest {
 
         rollDices(nextPlayer.id).andExpect {
             status { isUnprocessableEntity() }
+            content {
+                jsonPath("$.type") { value("PLAYER_NOT_CURRENT") }
+            }
         }
     }
 
@@ -97,26 +102,26 @@ internal class RollDicesEndpointTest : BasePostgresTest {
 
         rollDices(player.id).andExpect {
             status { isUnprocessableEntity() }
+            content {
+                jsonPath("$.type") { value("DICES_ALREADY_ROLLED") }
+            }
         }
     }
 
     @Test
     fun `party completed`() {
-        val owner = player()
         val player = player()
-        val party = CompletedParty(
+        val party = completedParty(
             id = partyId(),
-            version = version(),
-            dices = Dices.notRolled(),
-            cells = cells(),
-            ownerId = owner.id,
-            currentPlayerId = player.id,
-            players = listOf(owner, player)
+            currentPlayer = player
         )
         saveParty(party)
 
         rollDices(player.id).andExpect {
             status { isUnprocessableEntity() }
+            content {
+                jsonPath("$.type") { value("PARTY_COMPLETED") }
+            }
         }
     }
 

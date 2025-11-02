@@ -11,7 +11,7 @@ fun interface CaptureCellsApi {
     fun invoke(
         @PathVariable playerId: Int,
         @RequestBody request: Request
-    ): ResponseEntity<Unit>
+    ): ResponseEntity<Any>
 
     data class Request(
         val first: Point,
@@ -21,5 +21,13 @@ fun interface CaptureCellsApi {
             val x: Int,
             val y: Int
         )
+    }
+
+    enum class ErrorType : BaseErrorType {
+        PLAYER_NOT_CURRENT,
+        DICES_NOT_ROLLED,
+        MISMATCHED_AREA,
+        INACCESSIBLE_AREA,
+        PARTY_COMPLETED
     }
 }
