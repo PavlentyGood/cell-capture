@@ -14,7 +14,7 @@ import ru.pavlentygood.cellcapture.lobby.persistence.dto.PlayerDto
 
 fun mapPartyToDomain(dto: PartyDto): Party =
     restoreParty(
-        id = PartyId(dto.id),
+        id = PartyId(dto.partyId),
         version = Version.from(dto.version).getOrElse {
             error("Illegal version: $it. version: ${dto.version}")
         },

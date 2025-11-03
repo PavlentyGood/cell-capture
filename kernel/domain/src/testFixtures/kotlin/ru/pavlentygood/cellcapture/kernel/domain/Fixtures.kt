@@ -17,7 +17,7 @@ fun randomInt(from: Int = 0, until: Int = 10000) =
     Random.nextInt(from, until)
 
 fun version(
-    value: Long = randomInt().toLong()
+    value: Long = 1
 ) =
     Version.from(value).get()
 

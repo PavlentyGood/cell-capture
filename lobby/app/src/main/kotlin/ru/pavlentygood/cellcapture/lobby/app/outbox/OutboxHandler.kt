@@ -18,8 +18,8 @@ class OutboxHandler(
     @Transactional
     fun handleOutbox() {
         val record = outboxRepository.getNextRecord() ?: return
-        log.info("Handle outbox: id={}, eventType={}, body={}", record.id, record.eventType, record.body)
-        streamBridge.send(record.getBinding(), record.body)
+        log.info("Handle outbox: id={}, eventType={}, body={}", record.id, record.eventType, record.body.value)
+        streamBridge.send(record.getBinding(), record.body.value)
         outboxRepository.markAsSent(record.id)
         log.info("Outbox record sent: id={}", record.id)
     }

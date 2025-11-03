@@ -1,8 +1,12 @@
 package ru.pavlentygood.cellcapture.lobby.persistence.dto
 
-interface OutboxReadDto {
+import org.postgresql.util.PGobject
 
-    val id: Long
-    val eventType: EventTypeDto
-    val body: String
-}
+class OutboxReadDto(
+
+    val id: Long,
+
+    val eventType: EventTypeDto,
+
+    val body: PGobject
+)

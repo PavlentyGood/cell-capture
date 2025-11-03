@@ -9,7 +9,7 @@ class GetPartyByPlayerFromDatabase(
 ) : GetPartyByPlayer {
 
     override operator fun invoke(playerId: PlayerId): Party? =
-        partyRepository.getByPlayersId(playerId.toInt())
+        partyRepository.getByPlayer(playerId.toInt())
             .map { mapPartyToDomain(it) }
             .orElse(null)
 }

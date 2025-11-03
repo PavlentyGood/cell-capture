@@ -1,10 +1,9 @@
 package ru.pavlentygood.cellcapture.lobby.app.integration.config
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Import
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
 import ru.pavlentygood.cellcapture.lobby.domain.PartyFactory
 import ru.pavlentygood.cellcapture.lobby.persistence.GeneratePlayerIdBySequence
 import ru.pavlentygood.cellcapture.lobby.persistence.GetPartyByPlayerFromDatabase
@@ -18,8 +17,7 @@ import ru.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
 
 @TestConfiguration
 @EnableAutoConfiguration
-@EnableJpaRepositories("ru.pavlentygood.cellcapture.lobby.persistence")
-@EntityScan("ru.pavlentygood.cellcapture.lobby.persistence")
+@EnableJdbcRepositories("ru.pavlentygood.cellcapture.lobby.persistence")
 @Import(
     value = [
         CreatePartyUseCase::class,

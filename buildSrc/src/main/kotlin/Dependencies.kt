@@ -64,7 +64,7 @@ object Lib {
     const val springBootStarterWebByBom = "org.springframework.boot:spring-boot-starter-web"
     const val springBootStarterJdbc = "org.springframework.boot:spring-boot-starter-jdbc:${Version.springBoot}"
     const val springBootStarterJdbcByBom = "org.springframework.boot:spring-boot-starter-jdbc"
-    const val springBootStarterDataJpa = "org.springframework.boot:spring-boot-starter-data-jpa:${Version.springBoot}"
+    const val springBootStarterDataJdbc = "org.springframework.boot:spring-boot-starter-data-jdbc"
     const val springBootStarterDataJpaByBom = "org.springframework.boot:spring-boot-starter-data-jpa"
     const val springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${Version.springBoot}"
     const val springBootStarterTestByBom = "org.springframework.boot:spring-boot-starter-test"

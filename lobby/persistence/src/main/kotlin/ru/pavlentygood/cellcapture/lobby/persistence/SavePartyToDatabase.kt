@@ -1,7 +1,7 @@
 package ru.pavlentygood.cellcapture.lobby.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.springframework.jdbc.core.JdbcTemplate
+import org.postgresql.util.PGobject
 import org.springframework.transaction.annotation.Transactional
 import ru.pavlentygood.cellcapture.kernel.common.VersionConflictException
 import ru.pavlentygood.cellcapture.kernel.domain.PartyId
@@ -11,18 +11,16 @@ import ru.pavlentygood.cellcapture.lobby.domain.PartyStartedEvent
 import ru.pavlentygood.cellcapture.lobby.domain.Player
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.*
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
-import java.time.LocalDateTime
 
 @Transactional
 class SavePartyToDatabase(
     private val partyRepository: PartyRepository,
     private val outboxRepository: OutboxRepository,
-    private val objectMapper: ObjectMapper,
-    private val jdbcTemplate: JdbcTemplate
+    private val objectMapper: ObjectMapper
 ) : SaveParty {
 
     override fun invoke(party: Party) {
-        val version = getPartyVersion(party.id)
+        val version = partyRepository.getVersion(party.id.toUUID())
         if (version != null && party.version.previous().value != version) {
             throw VersionConflictException()
         }
@@ -35,33 +33,22 @@ class SavePartyToDatabase(
             .map { it.toOutboxDto(party.id, objectMapper) }
             .let { outboxRepository.saveAll(it) }
     }
-
-    private fun getPartyVersion(partyId: PartyId) =
-        jdbcTemplate.queryForList(
-            "select version from parties where id = ? for update",
-            Long::class.java,
-            partyId.toUUID()
-        ).singleOrNull()
 }
 
-fun Party.toDto(): PartyDto {
-    val party = PartyDto(
-        id = id.toUUID(),
+fun Party.toDto() =
+    PartyDto(
+        partyId = id.toUUID(),
         version = version.value,
         started = started,
         ownerId = ownerId.toInt(),
         playerLimit = playerLimit.value,
-        players = listOf()
+        players = getPlayers().map { it.toDto() }
     )
-    party.players = getPlayers().map { it.toDto(party) }
-    return party
-}
 
-fun Player.toDto(party: PartyDto) =
+fun Player.toDto() =
     PlayerDto(
         id = id.toInt(),
-        name = name.toStringValue(),
-        party = party
+        name = name.toStringValue()
     )
 
 fun PartyEvent.toOutboxDto(aggregateId: PartyId, om: ObjectMapper) =
@@ -69,9 +56,10 @@ fun PartyEvent.toOutboxDto(aggregateId: PartyId, om: ObjectMapper) =
         aggregateId = aggregateId.toUUID().toString(),
         status = "PENDING",
         eventType = this.getType(),
-        body = om.writeValueAsString(this.toDto()),
-        created = LocalDateTime.now(),
-        updated = LocalDateTime.now()
+        body = PGobject().apply {
+            type = "json"
+            value = om.writeValueAsString(this@toOutboxDto.toDto())
+        }
     )
 
 fun PartyEvent.getType() =

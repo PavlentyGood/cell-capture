@@ -35,8 +35,10 @@ dependencies {
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWebByBom)
-    implementation(Lib.springBootStarterDataJpaByBom)
     implementation(Lib.springCloudStarterStreamKafka)
+
+    implementation(Lib.springBootStarterDataJdbc)
+    implementation(Lib.postgresql)
 
     testImplementation(Lib.springBootStarterTestByBom)
     testImplementation(Lib.kotestJUnit)

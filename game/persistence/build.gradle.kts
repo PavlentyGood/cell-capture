@@ -1,6 +1,5 @@
 plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
-    id(Plugin.kotlinJpa) version Version.kotlin
 }
 
 dependencies {

@@ -1,6 +1,4 @@
 spring:
-  jpa:
-    show-sql: true
   cloud:
     function:
       definition: partyStarted

@@ -70,7 +70,7 @@ class StartPartyEndpointTest : BasePostgresTest {
         record.id shouldBeGreaterThan 0
         record.status shouldBe "PENDING"
         record.eventType shouldBe EventTypeDto.PARTY_STARTED
-        record.body shouldBe objectMapper.writeValueAsString(
+        record.body.value shouldBe objectMapper.writeValueAsString(
             PartyStartedEventDto(
                 partyId = partyId.toUUID(),
                 ownerId = owner.id.toInt(),

@@ -1,14 +1,18 @@
 package ru.pavlentygood.cellcapture.lobby.persistence.dto
 
-import jakarta.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.domain.Persistable
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.MappedCollection
+import org.springframework.data.relational.core.mapping.Table
 import java.util.*
 
-@Entity
 @Table(name = "parties")
 class PartyDto(
 
     @Id
-    val id: UUID,
+    @Column("id")
+    val partyId: UUID,
 
     val version: Long,
 
@@ -18,6 +22,11 @@ class PartyDto(
 
     val playerLimit: Int,
 
-    @OneToMany(mappedBy = "party", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @MappedCollection(idColumn = "party_id", keyColumn = "id")
     var players: List<PlayerDto>
-)
+
+) : Persistable<UUID> {
+
+    override fun getId() = partyId
+    override fun isNew() = version == 1L
+}

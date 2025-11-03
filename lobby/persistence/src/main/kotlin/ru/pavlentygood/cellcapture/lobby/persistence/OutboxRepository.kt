@@ -1,15 +1,14 @@
 package ru.pavlentygood.cellcapture.lobby.persistence
 
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Modifying
-import org.springframework.data.jpa.repository.Query
+import org.springframework.data.jdbc.repository.query.Modifying
+import org.springframework.data.jdbc.repository.query.Query
+import org.springframework.data.repository.CrudRepository
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.OutboxDto
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.OutboxReadDto
 
-interface OutboxRepository : JpaRepository<OutboxDto, Long> {
+interface OutboxRepository : CrudRepository<OutboxDto, Long> {
 
     @Query(
-        nativeQuery = true,
         value = """
             select id, event_type, body
             from outbox
@@ -22,7 +21,6 @@ interface OutboxRepository : JpaRepository<OutboxDto, Long> {
     fun getNextRecord(): OutboxReadDto?
 
     @Query(
-        nativeQuery = true,
         value = """
             update outbox
             set status = 'SENT', updated = current_timestamp

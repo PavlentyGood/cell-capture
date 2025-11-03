@@ -6,8 +6,8 @@ create table outbox
     status varchar not null,
     event_type varchar not null,
     body json not null,
-    created timestamp not null,
-    updated timestamp not null
+    created timestamp not null default current_timestamp,
+    updated timestamp not null default current_timestamp
 );
 
 create index outbox_index on outbox (status, created)

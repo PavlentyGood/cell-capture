@@ -1,6 +1,12 @@
 plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
-    id(Plugin.kotlinJpa) version Version.kotlin
+    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(Lib.springBootDependencies)
+    }
 }
 
 dependencies {
@@ -13,11 +19,11 @@ dependencies {
     implementation(Lib.jacksonKotlin)
     implementation(Lib.arrow)
 
-    implementation(Lib.springBootStarterDataJpa)
+    implementation(Lib.springBootStarterDataJdbc)
     implementation(Lib.postgresql)
     implementation(Lib.flywayPostgresql)
 
-    testImplementation(Lib.springBootStarterTest)
+    testImplementation(Lib.springBootStarterTestByBom)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.mockk)
@@ -28,6 +34,6 @@ dependencies {
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))
 
-    testFixturesImplementation(Lib.springBootStarterTest)
+    testFixturesImplementation(Lib.springBootStarterTestByBom)
     testFixturesImplementation(Lib.testcontainersPostgresql)
 }
