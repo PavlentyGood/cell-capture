@@ -1,5 +1,12 @@
 plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
+    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(Lib.springBootDependencies)
+    }
 }
 
 dependencies {
@@ -15,16 +22,6 @@ dependencies {
     implementation(Lib.springBootStarterJdbc)
     implementation(Lib.postgresql)
     implementation(Lib.flywayPostgresql)
-
-    testImplementation(Lib.springBootStarterTest)
-    testImplementation(Lib.kotestJUnit)
-    testImplementation(Lib.kotestArrow)
-    testImplementation(Lib.mockk)
-
-    testRuntimeOnly(Lib.junitEngine)
-
-    testImplementation(testFixtures(project(Module.kernelDomain)))
-    testImplementation(testFixtures(project(Module.gameDomain)))
 
     testFixturesImplementation(Lib.springBootStarterTest)
     testFixturesImplementation(Lib.testcontainersPostgresql)

@@ -34,13 +34,13 @@ dependencies {
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
-    implementation(Lib.springBootStarterWebByBom)
+    implementation(Lib.springBootStarterWeb)
     implementation(Lib.springCloudStarterStreamKafka)
 
     implementation(Lib.springBootStarterDataJdbc)
     implementation(Lib.postgresql)
 
-    testImplementation(Lib.springBootStarterTestByBom)
+    testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
@@ -49,7 +49,7 @@ dependencies {
     testImplementation(Lib.testcontainersPostgresql)
     testImplementation(Lib.testcontainersKafka)
 
-    testRuntimeOnly(Lib.junitEngineByBom)
+    testRuntimeOnly(Lib.junitEngine)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))

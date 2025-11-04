@@ -23,7 +23,7 @@ dependencies {
     implementation(Lib.postgresql)
     implementation(Lib.flywayPostgresql)
 
-    testImplementation(Lib.springBootStarterTestByBom)
+    testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.mockk)
@@ -34,6 +34,6 @@ dependencies {
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))
 
-    testFixturesImplementation(Lib.springBootStarterTestByBom)
+    testFixturesImplementation(Lib.springBootStarterTest)
     testFixturesImplementation(Lib.testcontainersPostgresql)
 }

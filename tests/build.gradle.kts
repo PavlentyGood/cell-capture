@@ -12,6 +12,7 @@ tasks {
 
 dependencyManagement {
     imports {
+        mavenBom(Lib.springBootDependencies)
         mavenBom(Lib.springCloudDependencies)
         mavenBom(Lib.junitBom)
         mavenBom(Lib.cucumberBom)
@@ -38,7 +39,7 @@ dependencies {
     testImplementation(Lib.cucumberSpring)
     testImplementation(Lib.cucumberJunitPlatformEngine)
 
-    testRuntimeOnly(Lib.junitEngineByBom)
+    testRuntimeOnly(Lib.junitEngine)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))

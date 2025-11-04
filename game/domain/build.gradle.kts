@@ -1,3 +1,13 @@
+plugins {
+    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(Lib.springBootDependencies)
+    }
+}
+
 dependencies {
     implementation(project(Module.kernelDomain))
 

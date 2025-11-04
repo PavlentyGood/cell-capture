@@ -35,18 +35,18 @@ dependencies {
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.arrow)
-    implementation(Lib.springBootStarterWebByBom)
-    implementation(Lib.springBootStarterJdbcByBom)
+    implementation(Lib.springBootStarterWeb)
+    implementation(Lib.springBootStarterJdbc)
     implementation(Lib.springCloudStarterStreamKafka)
 
-    testImplementation(Lib.springBootStarterTestByBom)
+    testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
     testImplementation(Lib.archUnit)
     testImplementation(Lib.testcontainersKafka)
 
-    testRuntimeOnly(Lib.junitEngineByBom)
+    testRuntimeOnly(Lib.junitEngine)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.gameDomain)))
