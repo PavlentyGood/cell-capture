@@ -1,18 +1,10 @@
-plugins {
-    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
-}
-
-dependencyManagement {
-    imports {
-        mavenBom(Lib.springBootDependencies)
-    }
-}
-
 tasks.jar {
     archiveFileName = "${parent!!.name}-${project.name}.jar"
 }
 
 dependencies {
+    implementation(platform(Lib.springBootDependencies))
+
     implementation(Lib.kotlinReflect)
     implementation(Lib.arrow)
 

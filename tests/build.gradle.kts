@@ -1,6 +1,5 @@
 plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
-    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
 }
 
 tasks {
@@ -10,19 +9,15 @@ tasks {
     }
 }
 
-dependencyManagement {
-    imports {
-        mavenBom(Lib.springBootDependencies)
-        mavenBom(Lib.springCloudDependencies)
-        mavenBom(Lib.junitBom)
-        mavenBom(Lib.cucumberBom)
-    }
-}
-
 dependencies {
     implementation(project(Module.kernelDomain))
     implementation(project(Module.lobbyRestApi))
     implementation(project(Module.gameRestApi))
+
+    implementation(platform(Lib.springBootDependencies))
+    implementation(platform(Lib.springCloudDependencies))
+    implementation(platform(Lib.junitBom))
+    implementation(platform(Lib.cucumberBom))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)

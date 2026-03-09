@@ -1,15 +1,10 @@
 plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
-    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
-}
-
-dependencyManagement {
-    imports {
-        mavenBom(Lib.springBootDependencies)
-    }
 }
 
 dependencies {
+    implementation(platform(Lib.springBootDependencies))
+
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWeb)

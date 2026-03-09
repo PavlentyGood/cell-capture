@@ -27,7 +27,6 @@ object Version {
     const val kotlin = "1.9.23"
     const val detekt = "1.23.6"
     const val springBoot = "3.3.2"
-    const val springDependencyManagement = "1.1.7"
     const val springBootDependencies = "3.5.5"
     const val springCloudDependencies = "2024.0.1"
     const val jackson = "2.17.2"
@@ -51,7 +50,6 @@ object Plugin {
     const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
     const val springBoot = "org.springframework.boot"
     const val kotlinSpring = "org.jetbrains.kotlin.plugin.spring"
-    const val springDependencyManagement = "io.spring.dependency-management"
     const val docker = "com.palantir.docker"
 }
 

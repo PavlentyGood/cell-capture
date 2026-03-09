@@ -1,7 +1,6 @@
 plugins {
     id(Plugin.springBoot) version Version.springBoot
     id(Plugin.kotlinSpring) version Version.kotlin
-    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
 }
 
 docker {
@@ -15,14 +14,6 @@ tasks {
     }
 }
 
-dependencyManagement {
-    imports {
-        mavenBom(Lib.springBootDependencies)
-        mavenBom(Lib.springCloudDependencies)
-        mavenBom(Lib.junitBom)
-    }
-}
-
 dependencies {
     implementation(project(Module.kernelDomain))
     implementation(project(Module.kernelCommon))
@@ -31,6 +22,10 @@ dependencies {
     implementation(project(Module.lobbyRestApi))
     implementation(project(Module.lobbyRestEndpoint))
     implementation(project(Module.lobbyPersistence))
+
+    implementation(platform(Lib.springBootDependencies))
+    implementation(platform(Lib.springCloudDependencies))
+    implementation(platform(Lib.junitBom))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)

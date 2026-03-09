@@ -1,12 +1,5 @@
 plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
-    id(Plugin.springDependencyManagement) version Version.springDependencyManagement
-}
-
-dependencyManagement {
-    imports {
-        mavenBom(Lib.springBootDependencies)
-    }
 }
 
 dependencies {
@@ -15,6 +8,8 @@ dependencies {
     implementation(project(Module.gameDomain))
     implementation(project(Module.gameUseCase))
     implementation(project(Module.gameRestApi))
+
+    implementation(platform(Lib.springBootDependencies))
 
     implementation(Lib.kotlinReflect)
     implementation(Lib.jacksonKotlin)
