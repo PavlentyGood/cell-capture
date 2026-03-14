@@ -1,9 +1,11 @@
 package ru.pavlentygood.cellcapture.game.rest.endpoint
 
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.rest.api.ErrorResponse
+import ru.pavlentygood.cellcapture.game.rest.api.RestException
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.*
 import ru.pavlentygood.cellcapture.game.rest.api.RollDicesApi.ErrorType.*
@@ -16,10 +18,10 @@ class RollDicesEndpoint(
     private val roll: RollDicesUseCase
 ) : RollDicesApi {
 
-    override fun invoke(playerId: Int): ResponseEntity<Any> =
+    override fun invoke(playerId: Int): ResponseEntity<RollResponse> =
         roll(PlayerId(playerId))
             .fold(
-                { it.toError() },
+                { it.throwError() },
                 { dices ->
                     val response = RollResponse(dices.toResponse())
                     ResponseEntity.ok(response)
@@ -29,7 +31,7 @@ class RollDicesEndpoint(
     private fun RolledDices.toResponse() =
         DicesResponse(firstValue, secondValue)
 
-    private fun RollDicesUseCaseError.toError(): ResponseEntity<Any> =
+    private fun RollDicesUseCaseError.throwError(): ResponseEntity<RollResponse> =
         when (this) {
             RollDicesUseCaseError.PlayerNotFound -> ResponseEntity.notFound().build()
             RollDicesUseCaseError.PlayerNotCurrent -> buildError(PLAYER_NOT_CURRENT)
@@ -37,6 +39,12 @@ class RollDicesEndpoint(
             RollDicesUseCaseError.PartyCompleted -> buildError(PARTY_COMPLETED)
         }
 
-    private fun buildError(type: ErrorType): ResponseEntity<Any> =
-        ResponseEntity.unprocessableEntity().body(ErrorResponse(type))
+    private fun buildError(type: ErrorType): ResponseEntity<RollResponse> {
+        val response = ResponseEntity.unprocessableEntity().body(ErrorResponse(type))
+        throw RestException(response)
+    }
+
+    @ExceptionHandler(RestException::class)
+    fun handleException(e: RestException) =
+        e.responseEntity
 }

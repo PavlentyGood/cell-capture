@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping
 fun interface RollDicesApi {
 
     @PostMapping(API_V1_PLAYERS_DICES)
-    operator fun invoke(@PathVariable playerId: Int): ResponseEntity<Any>
+    operator fun invoke(@PathVariable playerId: Int): ResponseEntity<RollResponse>
 
     data class RollResponse(
         val dices: DicesResponse
