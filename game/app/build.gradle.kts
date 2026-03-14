@@ -48,4 +48,7 @@ dependencies {
     testImplementation(testFixtures(project(Module.gameRestApi)))
     testImplementation(testFixtures(project(Module.gameRestEndpoint)))
     testImplementation(testFixtures(project(Module.gamePersistence)))
+
+    testFixturesImplementation(testFixtures(project(Module.kernelDomain)))
+    testFixturesImplementation(testFixtures(project(Module.gameDomain)))
 }
