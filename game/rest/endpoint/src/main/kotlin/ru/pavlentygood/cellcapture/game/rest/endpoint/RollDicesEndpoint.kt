@@ -1,7 +1,6 @@
 package ru.pavlentygood.cellcapture.game.rest.endpoint
 
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestController
 import ru.pavlentygood.cellcapture.game.domain.RolledDices
 import ru.pavlentygood.cellcapture.game.rest.api.ErrorResponse
@@ -43,8 +42,4 @@ class RollDicesEndpoint(
         val response = ResponseEntity.unprocessableEntity().body(ErrorResponse(type))
         throw RestException(response)
     }
-
-    @ExceptionHandler(RestException::class)
-    fun handleException(e: RestException) =
-        e.responseEntity
 }
