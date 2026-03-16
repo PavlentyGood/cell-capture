@@ -17,18 +17,4 @@ dependencies {
     implementation(Lib.springBootStarterDataJdbc)
     implementation(Lib.postgresql)
     implementation(Lib.flywayPostgresql)
-
-    testImplementation(Lib.springBootStarterTest)
-    testImplementation(Lib.kotestJUnit)
-    testImplementation(Lib.kotestArrow)
-    testImplementation(Lib.mockk)
-    testImplementation(Lib.testcontainersJUnit)
-
-    testRuntimeOnly(Lib.junitEngine)
-
-    testImplementation(testFixtures(project(Module.kernelDomain)))
-    testImplementation(testFixtures(project(Module.lobbyDomain)))
-
-    testFixturesImplementation(Lib.springBootStarterTest)
-    testFixturesImplementation(Lib.testcontainersPostgresql)
 }

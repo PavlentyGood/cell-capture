@@ -11,7 +11,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.partyId
 import ru.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import ru.pavlentygood.cellcapture.lobby.domain.party
 import ru.pavlentygood.cellcapture.lobby.domain.player
-import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTY_BY_ID
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.GetPartyEndpoint
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.with

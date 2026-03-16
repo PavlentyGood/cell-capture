@@ -20,7 +20,7 @@ import ru.pavlentygood.cellcapture.game.domain.Party
 import ru.pavlentygood.cellcapture.game.domain.Point
 import ru.pavlentygood.cellcapture.game.domain.capturedCellCount
 import ru.pavlentygood.cellcapture.game.domain.point
-import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
 import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_CELLS
 import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_DICES

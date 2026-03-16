@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import ru.pavlentygood.cellcapture.game.app.integration.config.IntegrationConfig
 import ru.pavlentygood.cellcapture.game.domain.*
-import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_CELLS
 import ru.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
 import ru.pavlentygood.cellcapture.game.rest.endpoint.CaptureCellsEndpoint

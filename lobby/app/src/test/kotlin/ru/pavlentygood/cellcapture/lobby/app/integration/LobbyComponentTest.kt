@@ -21,7 +21,7 @@ import ru.pavlentygood.cellcapture.kernel.domain.PlayerName
 import ru.pavlentygood.cellcapture.kernel.domain.playerName
 import ru.pavlentygood.cellcapture.lobby.app.integration.config.BaseKafkaTest
 import ru.pavlentygood.cellcapture.lobby.domain.Party
-import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
 import ru.pavlentygood.cellcapture.lobby.rest.api.*
 import ru.pavlentygood.cellcapture.lobby.rest.endpoint.mapper

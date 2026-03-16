@@ -14,7 +14,7 @@ import ru.pavlentygood.cellcapture.game.domain.Dices
 import ru.pavlentygood.cellcapture.game.domain.completedParty
 import ru.pavlentygood.cellcapture.game.domain.party
 import ru.pavlentygood.cellcapture.game.domain.player
-import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_DICES
 import ru.pavlentygood.cellcapture.game.rest.endpoint.RollDicesEndpoint
 import ru.pavlentygood.cellcapture.game.rest.endpoint.with

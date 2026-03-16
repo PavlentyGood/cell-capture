@@ -17,7 +17,4 @@ dependencies {
     implementation(Lib.springBootStarterJdbc)
     implementation(Lib.postgresql)
     implementation(Lib.flywayPostgresql)
-
-    testFixturesImplementation(Lib.springBootStarterTest)
-    testFixturesImplementation(Lib.testcontainersPostgresql)
 }

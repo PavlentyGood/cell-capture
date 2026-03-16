@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import ru.pavlentygood.cellcapture.game.app.integration.config.BaseKafkaTest
 import ru.pavlentygood.cellcapture.game.app.partyStartedMessage
-import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_PARTY
 import ru.pavlentygood.cellcapture.game.rest.endpoint.with
 import kotlin.time.Duration.Companion.seconds

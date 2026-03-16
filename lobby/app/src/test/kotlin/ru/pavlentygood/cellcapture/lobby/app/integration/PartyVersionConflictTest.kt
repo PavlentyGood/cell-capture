@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import
 import ru.pavlentygood.cellcapture.kernel.common.VersionConflictException
 import ru.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import ru.pavlentygood.cellcapture.lobby.domain.party
-import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 
 @SpringBootTest(classes = [PartyVersionConflictTest::class])

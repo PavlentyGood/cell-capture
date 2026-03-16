@@ -17,7 +17,7 @@ import ru.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfi
 import ru.pavlentygood.cellcapture.lobby.domain.Party
 import ru.pavlentygood.cellcapture.lobby.domain.party
 import ru.pavlentygood.cellcapture.lobby.domain.player
-import ru.pavlentygood.cellcapture.lobby.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.lobby.persistence.OutboxRepository
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.EventTypeDto
 import ru.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto

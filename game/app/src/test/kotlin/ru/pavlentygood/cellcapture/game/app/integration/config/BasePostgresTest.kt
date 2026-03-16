@@ -1,4 +1,4 @@
-package ru.pavlentygood.cellcapture.lobby.persistence
+package ru.pavlentygood.cellcapture.game.app.integration.config
 
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource

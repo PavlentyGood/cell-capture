@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.pavlentygood.cellcapture.game.app.integration.config.IntegrationConfig
 import ru.pavlentygood.cellcapture.game.domain.party
-import ru.pavlentygood.cellcapture.game.persistence.BasePostgresTest
+import ru.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
 import ru.pavlentygood.cellcapture.game.usecase.port.SaveParty
 import ru.pavlentygood.cellcapture.kernel.common.VersionConflictException
 
