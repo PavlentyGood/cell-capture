@@ -7,7 +7,7 @@ plugins {
 }
 
 subprojects {
-    group = "ru.pavlentygood.cellcapture"
+    group = "io.github.pavlentygood.cellcapture"
 
     repositories {
         mavenCentral()

@@ -1,3 +1,3 @@
 subprojects {
-    group = "ru.pavlentygood.cellcapture.game.rest"
+    group = "io.github.pavlentygood.cellcapture.game.rest"
 }

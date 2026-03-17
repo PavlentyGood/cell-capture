@@ -1,0 +1,34 @@
+package io.github.pavlentygood.cellcapture.tests.e2e.bdd
+
+import io.cucumber.spring.CucumberContextConfiguration
+import io.github.pavlentygood.cellcapture.tests.e2e.startContainers
+import org.junit.platform.suite.api.IncludeEngines
+import org.junit.platform.suite.api.SelectPackages
+import org.junit.platform.suite.api.Suite
+import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.cloud.openfeign.EnableFeignClients
+import org.springframework.cloud.openfeign.FeignAutoConfiguration
+
+@Suite
+@IncludeEngines("cucumber")
+@SelectPackages(value = ["bdd"])
+class BddRunner
+
+@Suppress("unused")
+@CucumberContextConfiguration
+@EnableFeignClients(basePackages = ["io.github.pavlentygood.cellcapture.tests.e2e.client"])
+@SpringBootTest(
+    classes = [
+        FeignAutoConfiguration::class,
+        JacksonAutoConfiguration::class,
+        HttpMessageConvertersAutoConfiguration::class
+    ]
+)
+class SpringConfig {
+
+    init {
+        startContainers()
+    }
+}
