@@ -6,8 +6,11 @@ import io.github.pavlentygood.cellcapture.kernel.domain.partyId
 import io.github.pavlentygood.cellcapture.kernel.domain.playerId
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
+import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
+import io.github.pavlentygood.cellcapture.lobby.persistence.OutboxRepository
+import io.github.pavlentygood.cellcapture.lobby.persistence.dto.EventTypeDto
 import io.github.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
 import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES_START
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.StartPartyEndpoint
@@ -35,7 +38,7 @@ class StartPartyEndpointTest : BasePostgresTest {
     @Autowired
     lateinit var getPartyByPlayer: GetPartyByPlayer
     @Autowired
-    lateinit var outboxRepository: io.github.pavlentygood.cellcapture.lobby.persistence.OutboxRepository
+    lateinit var outboxRepository: OutboxRepository
     @Autowired
     lateinit var objectMapper: ObjectMapper
 
@@ -55,7 +58,7 @@ class StartPartyEndpointTest : BasePostgresTest {
             status { isOk() }
         }
 
-        val startedParty: io.github.pavlentygood.cellcapture.lobby.domain.Party = getPartyByPlayer(owner.id)!!
+        val startedParty: Party = getPartyByPlayer(owner.id)!!
         startedParty.started shouldBe true
         startedParty.getPlayers() shouldBe party.getPlayers()
         startedParty.playerLimit shouldBe party.playerLimit
@@ -66,7 +69,7 @@ class StartPartyEndpointTest : BasePostgresTest {
         }
         record.id shouldBeGreaterThan 0
         record.status shouldBe "PENDING"
-        record.eventType shouldBe io.github.pavlentygood.cellcapture.lobby.persistence.dto.EventTypeDto.PARTY_STARTED
+        record.eventType shouldBe EventTypeDto.PARTY_STARTED
         record.body.value shouldBe objectMapper.writeValueAsString(
             PartyStartedEventDto(
                 partyId = partyId.toUUID(),

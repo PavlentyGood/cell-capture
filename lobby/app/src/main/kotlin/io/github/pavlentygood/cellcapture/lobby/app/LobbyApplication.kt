@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class LobbyApplication
 
 fun main(args: Array<String>) {
-    runApplication<io.github.pavlentygood.cellcapture.lobby.app.LobbyApplication>(*args)
+    runApplication<LobbyApplication>(*args)
 }

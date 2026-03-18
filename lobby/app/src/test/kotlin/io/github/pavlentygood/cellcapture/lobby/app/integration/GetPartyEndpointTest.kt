@@ -1,9 +1,12 @@
 package io.github.pavlentygood.cellcapture.lobby.app.integration
 
 import io.github.pavlentygood.cellcapture.kernel.domain.partyId
+import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
+import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
 import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTY_BY_ID
+import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.GetPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
 import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 import org.junit.jupiter.api.Test
@@ -15,9 +18,9 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 
 @AutoConfigureMockMvc
-@SpringBootTest(classes = [io.github.pavlentygood.cellcapture.lobby.rest.endpoint.GetPartyEndpoint::class])
-@Import(io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig::class)
-class GetPartyEndpointTest : io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest {
+@SpringBootTest(classes = [GetPartyEndpoint::class])
+@Import(IntegrationConfig::class)
+class GetPartyEndpointTest : BasePostgresTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc

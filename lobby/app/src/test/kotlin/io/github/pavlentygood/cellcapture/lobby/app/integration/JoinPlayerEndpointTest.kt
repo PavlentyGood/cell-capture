@@ -3,10 +3,13 @@ package io.github.pavlentygood.cellcapture.lobby.app.integration
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.pavlentygood.cellcapture.kernel.domain.partyId
 import io.github.pavlentygood.cellcapture.kernel.domain.playerName
+import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
+import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
 import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES_PLAYERS
 import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
+import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.JoinPlayerEndpoint
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
 import io.github.pavlentygood.cellcapture.lobby.usecase.port.GetParty
 import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
@@ -22,9 +25,9 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 
 @AutoConfigureMockMvc
-@SpringBootTest(classes = [io.github.pavlentygood.cellcapture.lobby.rest.endpoint.JoinPlayerEndpoint::class])
-@Import(io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig::class)
-class JoinPlayerEndpointTest : io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest {
+@SpringBootTest(classes = [JoinPlayerEndpoint::class])
+@Import(IntegrationConfig::class)
+class JoinPlayerEndpointTest : BasePostgresTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
