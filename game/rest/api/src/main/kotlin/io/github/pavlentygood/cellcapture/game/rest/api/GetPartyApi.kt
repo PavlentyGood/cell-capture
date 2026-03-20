@@ -2,16 +2,20 @@ package io.github.pavlentygood.cellcapture.game.rest.api
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.ModelAttribute
 import java.util.*
 
 fun interface GetPartyApi {
 
     @GetMapping(API_V1_PLAYERS_PARTY)
     operator fun invoke(
-        @PathVariable playerId: Int
+        @ModelAttribute request: GetPartyRequest
     ): ResponseEntity<PartyResponse>
 }
+
+data class GetPartyRequest(
+    val playerId: Int
+)
 
 data class PartyResponse(
     val id: UUID,
