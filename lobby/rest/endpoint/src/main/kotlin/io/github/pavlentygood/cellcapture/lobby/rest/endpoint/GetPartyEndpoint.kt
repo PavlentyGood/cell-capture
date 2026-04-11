@@ -3,9 +3,9 @@ package io.github.pavlentygood.cellcapture.lobby.rest.endpoint
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.Player
-import io.github.pavlentygood.cellcapture.lobby.rest.api.GetPartyApi
-import io.github.pavlentygood.cellcapture.lobby.rest.api.PartyResponse
-import io.github.pavlentygood.cellcapture.lobby.rest.api.PlayerResponse
+import io.github.pavlentygood.cellcapture.lobby.restapi.GetPartyApi
+import io.github.pavlentygood.cellcapture.lobby.restapi.PartyResponse
+import io.github.pavlentygood.cellcapture.lobby.restapi.PlayerResponse
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCase
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCaseError
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCaseError.PartyNotFoundUseCaseError

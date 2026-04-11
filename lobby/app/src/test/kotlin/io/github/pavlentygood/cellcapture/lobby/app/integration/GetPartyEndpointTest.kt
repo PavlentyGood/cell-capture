@@ -5,7 +5,7 @@ import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostg
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
-import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTY_BY_ID
+import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTY_BY_ID
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.GetPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty

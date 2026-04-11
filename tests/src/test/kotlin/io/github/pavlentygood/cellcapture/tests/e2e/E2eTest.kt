@@ -5,9 +5,10 @@ import io.github.pavlentygood.cellcapture.game.domain.point
 import io.github.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
 import io.github.pavlentygood.cellcapture.game.rest.api.RollDicesApi
 import io.github.pavlentygood.cellcapture.kernel.domain.playerName
-import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
-import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyResponse
-import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyResponse
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.PartyResponse
 import io.github.pavlentygood.cellcapture.tests.e2e.client.GameRestClient
 import io.github.pavlentygood.cellcapture.tests.e2e.client.LobbyRestClient
 import io.kotest.assertions.nondeterministic.eventually
@@ -26,7 +27,7 @@ import java.util.*
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-typealias LobbyPartyResponse = io.github.pavlentygood.cellcapture.lobby.rest.api.PartyResponse
+typealias LobbyPartyResponse = PartyResponse
 typealias GamePartyResponse = io.github.pavlentygood.cellcapture.game.rest.api.PartyResponse
 
 @EnableFeignClients(basePackages = ["io.github.pavlentygood.cellcapture.tests.e2e.client"])

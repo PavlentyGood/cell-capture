@@ -2,9 +2,9 @@ package io.github.pavlentygood.cellcapture.lobby.rest.endpoint
 
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerName
-import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerApi
-import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
-import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerResponse
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerApi
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerResponse
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCase
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCaseError
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCaseError.*

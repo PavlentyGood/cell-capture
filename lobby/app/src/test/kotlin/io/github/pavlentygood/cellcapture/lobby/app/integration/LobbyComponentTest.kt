@@ -7,10 +7,16 @@ import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BaseKafka
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyStartedEventDto
-import io.github.pavlentygood.cellcapture.lobby.rest.api.*
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.mapper
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetParty
+import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES
+import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES_PLAYERS
+import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES_START
+import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyResponse
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerResponse
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe

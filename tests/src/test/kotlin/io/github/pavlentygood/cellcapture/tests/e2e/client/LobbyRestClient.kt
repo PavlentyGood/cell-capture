@@ -1,9 +1,9 @@
 package io.github.pavlentygood.cellcapture.tests.e2e.client
 
-import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyApi
-import io.github.pavlentygood.cellcapture.lobby.rest.api.GetPartyApi
-import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerApi
-import io.github.pavlentygood.cellcapture.lobby.rest.api.StartPartyApi
+import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyApi
+import io.github.pavlentygood.cellcapture.lobby.restapi.GetPartyApi
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerApi
+import io.github.pavlentygood.cellcapture.lobby.restapi.StartPartyApi
 import org.springframework.cloud.openfeign.FeignClient
 
 @FeignClient(

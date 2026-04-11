@@ -1,4 +1,4 @@
-package io.github.pavlentygood.cellcapture.lobby.rest.api
+package io.github.pavlentygood.cellcapture.lobby.restapi
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
