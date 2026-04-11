@@ -3,14 +3,10 @@ plugins {
     id(Plugin.kotlinSpring) version Version.kotlin
 }
 
-docker {
-    name = project.parent!!.name
-    copySpec.from("build/libs").into("build/libs")
-}
-
 tasks {
-    dockerPrepare {
-        dependsOn(assemble)
+    bootBuildImage {
+        imageName = project.parent!!.name
+        environment.put("BP_JVM_VERSION", Version.java)
     }
 }
 

@@ -24,6 +24,7 @@ object Module {
 }
 
 object Version {
+    const val java = "17"
     const val kotlin = "2.1.21"
     const val detekt = "1.23.6"
     const val springBoot = "3.5.13"
@@ -38,7 +39,6 @@ object Version {
     const val postgresql = "42.7.5"
     const val flyway = "11.3.1"
     const val testcontainers = "1.21.4"
-    const val docker = "0.36.0"
     const val cucumberBom = "7.27.0"
     const val slf4jApi = "2.0.17"
 }
@@ -49,7 +49,6 @@ object Plugin {
     const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
     const val springBoot = "org.springframework.boot"
     const val kotlinSpring = "org.jetbrains.kotlin.plugin.spring"
-    const val docker = "com.palantir.docker"
 }
 
 object Lib {

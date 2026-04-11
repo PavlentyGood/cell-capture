@@ -1,11 +1,14 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
+    id(Plugin.springBoot) version Version.springBoot apply false
     id(Plugin.kotlinSpring) version Version.kotlin
 }
 
 tasks {
     test {
-        dependsOn(project(Module.lobbyApp).tasks.docker)
-        dependsOn(project(Module.gameApp).tasks.docker)
+        dependsOn(project(Module.lobbyApp).tasks.withType<BootBuildImage>())
+        dependsOn(project(Module.gameApp).tasks.withType<BootBuildImage>())
     }
 }
 
