@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -71,8 +72,8 @@ subprojects {
         }
 
         withType<KotlinCompile> {
-            kotlinOptions {
-                jvmTarget = Version.java
+            compilerOptions {
+                jvmTarget = JvmTarget.valueOf("JVM_${Version.java}")
             }
         }
 
