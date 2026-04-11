@@ -14,4 +14,6 @@ dependencies {
     testImplementation(Lib.mockk)
 
     testRuntimeOnly(Lib.junitEngine)
+
+    testFixturesImplementation(Lib.arrow)
 }

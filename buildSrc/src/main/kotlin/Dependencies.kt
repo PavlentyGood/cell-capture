@@ -24,11 +24,10 @@ object Module {
 }
 
 object Version {
-    const val kotlin = "1.9.23"
+    const val kotlin = "2.1.21"
     const val detekt = "1.23.6"
-    const val springBoot = "3.3.2"
-    const val springBootDependencies = "3.5.5"
-    const val springCloudDependencies = "2024.0.1"
+    const val springBoot = "3.5.13"
+    const val springCloudDependencies = "2025.0.2"
     const val jackson = "2.17.2"
     const val junitBom = "5.13.4"
     const val kotest = "5.9.0"
@@ -38,7 +37,7 @@ object Version {
     const val archUnit = "1.3.0"
     const val postgresql = "42.7.5"
     const val flyway = "11.3.1"
-    const val testcontainers = "1.20.5"
+    const val testcontainers = "1.21.4"
     const val docker = "0.36.0"
     const val cucumberBom = "7.27.0"
     const val slf4jApi = "2.0.17"
@@ -54,7 +53,7 @@ object Plugin {
 }
 
 object Lib {
-    const val springBootDependencies = "org.springframework.boot:spring-boot-dependencies:${Version.springBootDependencies}"
+    const val springBootDependencies = "org.springframework.boot:spring-boot-dependencies:${Version.springBoot}"
     const val springCloudDependencies = "org.springframework.cloud:spring-cloud-dependencies:${Version.springCloudDependencies}"
     const val junitBom = "org.junit:junit-bom:${Version.junitBom}"
     const val cucumberBom = "io.cucumber:cucumber-bom:${Version.cucumberBom}"
@@ -76,6 +75,7 @@ object Lib {
     const val archUnit = "com.tngtech.archunit:archunit-junit5:${Version.archUnit}"
     const val postgresql = "org.postgresql:postgresql:${Version.postgresql}"
     const val flywayPostgresql = "org.flywaydb:flyway-database-postgresql:${Version.flyway}"
+    const val testcontainers = "org.testcontainers:testcontainers:${Version.testcontainers}"
     const val testcontainersPostgresql = "org.testcontainers:postgresql:${Version.testcontainers}"
     const val testcontainersKafka = "org.testcontainers:kafka:${Version.testcontainers}"
     const val testcontainersJUnit = "org.testcontainers:junit-jupiter:${Version.testcontainers}"

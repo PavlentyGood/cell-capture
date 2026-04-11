@@ -40,6 +40,7 @@ dependencies {
     testImplementation(Lib.kotestArrow)
     testImplementation(Lib.arrow)
     testImplementation(Lib.archUnit)
+    testImplementation(Lib.testcontainers)
     testImplementation(Lib.testcontainersJUnit)
     testImplementation(Lib.testcontainersPostgresql)
     testImplementation(Lib.testcontainersKafka)
