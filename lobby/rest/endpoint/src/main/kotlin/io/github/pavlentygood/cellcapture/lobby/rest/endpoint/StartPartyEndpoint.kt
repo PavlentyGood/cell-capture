@@ -12,7 +12,7 @@ class StartPartyEndpoint(
     private val startParty: StartPartyUseCase
 ) : StartPartyApi {
 
-    override fun invoke(playerId: Int): ResponseEntity<Unit> =
+    override fun startParty(playerId: Int): ResponseEntity<Unit> =
         startParty(PlayerId(playerId))
             .fold(
                 { it.toRestError() },

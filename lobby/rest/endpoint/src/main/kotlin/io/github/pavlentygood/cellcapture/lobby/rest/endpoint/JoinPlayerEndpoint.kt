@@ -17,7 +17,7 @@ class JoinPlayerEndpoint(
     private val joinPlayer: JoinPlayerUseCase
 ) : JoinPlayerApi {
 
-    override fun invoke(
+    override fun joinPlayer(
         partyId: UUID,
         request: JoinPlayerRequest
     ): ResponseEntity<JoinPlayerResponse> =

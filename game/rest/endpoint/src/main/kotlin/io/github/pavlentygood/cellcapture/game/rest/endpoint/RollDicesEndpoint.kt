@@ -17,7 +17,7 @@ class RollDicesEndpoint(
     private val roll: RollDicesUseCase
 ) : RollDicesApi {
 
-    override fun invoke(playerId: Int): ResponseEntity<RollResponse> =
+    override fun rollDices(playerId: Int): ResponseEntity<RollResponse> =
         roll(PlayerId(playerId))
             .fold(
                 { it.throwError() },

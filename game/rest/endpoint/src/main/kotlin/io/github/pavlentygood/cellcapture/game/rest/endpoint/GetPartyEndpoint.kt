@@ -14,8 +14,8 @@ class GetPartyEndpoint(
     private val getParty: GetPartyByPlayerUseCase
 ) : GetPartyApi {
 
-    override fun invoke(request: GetPartyRequest): ResponseEntity<PartyResponse> =
-        getParty(PlayerId(request.playerId)).fold(
+    override fun getParty(playerId: Int): ResponseEntity<PartyResponse> =
+        getParty(PlayerId(playerId)).fold(
             { error -> error.toResponse() },
             { party -> ResponseEntity.ok(party.toResponse()) }
         )

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody
 fun interface CaptureCellsApi {
 
     @PostMapping(API_V1_PLAYERS_CELLS)
-    fun invoke(
+    fun captureCells(
         @PathVariable playerId: Int,
         @RequestBody request: Request
     ): ResponseEntity<Any>

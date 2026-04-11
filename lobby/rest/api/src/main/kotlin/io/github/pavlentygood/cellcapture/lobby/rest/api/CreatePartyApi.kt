@@ -8,7 +8,9 @@ import java.util.*
 fun interface CreatePartyApi {
 
     @PostMapping(API_V1_PARTIES)
-    operator fun invoke(@RequestBody request: CreatePartyRequest): ResponseEntity<CreatePartyResponse>
+    fun createParty(
+        @RequestBody request: CreatePartyRequest
+    ): ResponseEntity<CreatePartyResponse>
 }
 
 data class CreatePartyRequest(

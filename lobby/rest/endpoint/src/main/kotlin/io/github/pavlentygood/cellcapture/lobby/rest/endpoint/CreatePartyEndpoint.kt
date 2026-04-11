@@ -16,7 +16,7 @@ class CreatePartyEndpoint(
     private val createParty: CreatePartyUseCase
 ) : CreatePartyApi {
 
-    override fun invoke(request: CreatePartyRequest): ResponseEntity<CreatePartyResponse> {
+    override fun createParty(request: CreatePartyRequest): ResponseEntity<CreatePartyResponse> {
         return PlayerName.from(request.ownerName)
             .fold(
                 { ResponseEntity.badRequest().build() },

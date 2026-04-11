@@ -6,7 +6,8 @@ import io.github.pavlentygood.cellcapture.game.domain.point
 import io.github.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
 import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
 import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
-import io.github.pavlentygood.cellcapture.tests.e2e.client.*
+import io.github.pavlentygood.cellcapture.tests.e2e.client.GameRestClient
+import io.github.pavlentygood.cellcapture.tests.e2e.client.LobbyRestClient
 import io.kotest.assertions.nondeterministic.eventually
 import io.kotest.assertions.nondeterministic.eventuallyConfig
 import io.kotest.common.runBlocking
@@ -15,14 +16,10 @@ import java.util.*
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
+@Suppress("unused")
 class BddSteps(
-    val createParty: CreatePartyClient,
-    val joinPlayer: JoinPlayerClient,
-    val startParty: StartPartyClient,
-    val rollDices: RollDicesClient,
-    val captureCells: CaptureCellsClient,
-    val getLobbyParty: GetLobbyPartyClient,
-    val getGameParty: GetGamePartyClient
+    val lobbyRestClient: LobbyRestClient,
+    val gameRestClient: GameRestClient
 ) : En {
 
     private lateinit var ownerName: String
@@ -47,7 +44,7 @@ class BddSteps(
         }
 
         When("владелец создал партию") {
-            val response = createParty(
+            val response = lobbyRestClient.createParty(
                 CreatePartyRequest(
                     ownerName = ownerName
                 )
@@ -57,7 +54,7 @@ class BddSteps(
         }
 
         And("игрок присоединился") {
-            playerId = joinPlayer(
+            playerId = lobbyRestClient.joinPlayer(
                 partyId = partyId,
                 request = JoinPlayerRequest(
                     name = playerName
@@ -66,7 +63,7 @@ class BddSteps(
         }
 
         And("владелец начал партию") {
-            startParty(ownerId)
+            lobbyRestClient.startParty(ownerId)
         }
 
         And("владелец сделал бросок") {
@@ -78,7 +75,7 @@ class BddSteps(
                         interval = 5.seconds
                     }
                 ) {
-                    val dices = rollDices(ownerId).body!!.dices
+                    val dices = gameRestClient.rollDices(ownerId).body!!.dices
                     firstDice = dices.first
                     secondDice = dices.second
                 }
@@ -95,15 +92,15 @@ class BddSteps(
                 first = CaptureCellsApi.Request.Point(x = x1, y = y1),
                 second = CaptureCellsApi.Request.Point(x = x2, y = y2)
             )
-            captureCells.invoke(
+            gameRestClient.captureCells(
                 playerId = ownerId,
                 request = request
             )
         }
 
         Then("следующие значения соответствуют друг-другу") { table: DataTable ->
-            val lobbyParty = getLobbyParty(partyId).body!!
-            val gameParty = getGameParty(ownerId).body!!
+            val lobbyParty = lobbyRestClient.getParty(partyId).body!!
+            val gameParty = gameRestClient.getParty(ownerId).body!!
 
             val player = { id: Int ->
                 gameParty.players

@@ -19,7 +19,7 @@ class CaptureCellsEndpoint(
     private val captureCells: CaptureCellsUseCase
 ) : CaptureCellsApi {
 
-    override fun invoke(playerId: Int, request: Request): ResponseEntity<Any> =
+    override fun captureCells(playerId: Int, request: Request): ResponseEntity<Any> =
         request.toDomain().fold(
             { ResponseEntity.badRequest().build() },
             { area ->
