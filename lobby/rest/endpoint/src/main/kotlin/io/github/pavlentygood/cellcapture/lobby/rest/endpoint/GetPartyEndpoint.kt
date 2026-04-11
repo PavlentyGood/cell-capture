@@ -6,9 +6,9 @@ import io.github.pavlentygood.cellcapture.lobby.domain.Player
 import io.github.pavlentygood.cellcapture.lobby.rest.api.GetPartyApi
 import io.github.pavlentygood.cellcapture.lobby.rest.api.PartyResponse
 import io.github.pavlentygood.cellcapture.lobby.rest.api.PlayerResponse
-import io.github.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCase
-import io.github.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCaseError
-import io.github.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCaseError.PartyNotFoundUseCaseError
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCaseError
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCaseError.PartyNotFoundUseCaseError
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 import java.util.*

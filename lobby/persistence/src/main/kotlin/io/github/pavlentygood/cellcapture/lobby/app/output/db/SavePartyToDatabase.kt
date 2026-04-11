@@ -12,7 +12,7 @@ import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.PartyEvent
 import io.github.pavlentygood.cellcapture.lobby.domain.PartyStartedEvent
 import io.github.pavlentygood.cellcapture.lobby.domain.Player
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import org.postgresql.util.PGobject
 import org.springframework.transaction.annotation.Transactional
 

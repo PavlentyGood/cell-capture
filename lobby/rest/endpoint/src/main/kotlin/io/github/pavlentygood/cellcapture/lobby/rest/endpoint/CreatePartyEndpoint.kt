@@ -5,8 +5,8 @@ import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES
 import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyApi
 import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
 import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyResponse
-import io.github.pavlentygood.cellcapture.lobby.usecase.CreatePartyResult
-import io.github.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.CreatePartyResult
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.CreatePartyUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI

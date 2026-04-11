@@ -6,10 +6,10 @@ import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyByPlayerFr
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyFromDatabase
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.SavePartyToDatabase
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.ErrorHandler
-import io.github.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
-import io.github.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCase
-import io.github.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
-import io.github.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.CreatePartyUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.StartPartyUseCase
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Import

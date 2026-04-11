@@ -14,8 +14,8 @@ import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.EventTypeDto
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyStartedEventDto
 import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES_START
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.StartPartyEndpoint
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetPartyByPlayer
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

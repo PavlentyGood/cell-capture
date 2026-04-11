@@ -1,11 +1,11 @@
-package io.github.pavlentygood.cellcapture.lobby.usecase
+package io.github.pavlentygood.cellcapture.lobby.app.usecase
 
 import arrow.core.Either
 import arrow.core.left
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetPartyByPlayer
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 
 class StartPartyUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,

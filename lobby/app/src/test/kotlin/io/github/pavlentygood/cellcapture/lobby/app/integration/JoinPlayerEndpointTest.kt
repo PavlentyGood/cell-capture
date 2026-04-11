@@ -11,8 +11,8 @@ import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES_PLAYERS
 import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.JoinPlayerEndpoint
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.GetParty
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

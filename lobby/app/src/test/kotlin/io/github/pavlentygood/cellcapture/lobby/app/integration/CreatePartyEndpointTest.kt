@@ -13,7 +13,7 @@ import io.github.pavlentygood.cellcapture.lobby.domain.playerLimit
 import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES
 import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.CreatePartyEndpoint
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.GetParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetParty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

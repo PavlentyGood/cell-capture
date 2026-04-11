@@ -1,4 +1,4 @@
-package io.github.pavlentygood.cellcapture.lobby.usecase.port
+package io.github.pavlentygood.cellcapture.lobby.app.usecase.port
 
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.lobby.domain.Party

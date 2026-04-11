@@ -26,8 +26,8 @@ class Fitness {
         private const val KERNEL = "io.github.pavlentygood.cellcapture.kernel"
 
         const val DOMAIN = "$PROJECT.domain.."
-        const val USECASE = "$PROJECT.usecase.."
-        const val USECASE_PORT = "$PROJECT.usecase.port.."
+        const val USECASE = "$PROJECT.app.usecase.."
+        const val USECASE_PORT = "$PROJECT.app.usecase.port.."
         const val REST = "$PROJECT.rest.."
         const val DB = "$PROJECT.app.output.db.."
 

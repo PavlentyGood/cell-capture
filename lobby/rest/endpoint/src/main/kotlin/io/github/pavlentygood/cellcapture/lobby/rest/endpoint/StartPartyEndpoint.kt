@@ -2,7 +2,7 @@ package io.github.pavlentygood.cellcapture.lobby.rest.endpoint
 
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.lobby.rest.api.StartPartyApi
-import io.github.pavlentygood.cellcapture.lobby.usecase.StartPartyUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.StartPartyUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

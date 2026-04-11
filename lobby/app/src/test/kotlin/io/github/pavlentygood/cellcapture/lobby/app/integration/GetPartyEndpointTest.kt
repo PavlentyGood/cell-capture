@@ -8,7 +8,7 @@ import io.github.pavlentygood.cellcapture.lobby.domain.player
 import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTY_BY_ID
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.GetPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

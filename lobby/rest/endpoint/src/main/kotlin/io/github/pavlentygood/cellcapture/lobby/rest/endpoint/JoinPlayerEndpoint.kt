@@ -5,9 +5,9 @@ import io.github.pavlentygood.cellcapture.kernel.domain.PlayerName
 import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerApi
 import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
 import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerResponse
-import io.github.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCase
-import io.github.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCaseError
-import io.github.pavlentygood.cellcapture.lobby.usecase.JoinPlayerUseCaseError.*
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCase
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCaseError
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCaseError.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 import java.util.*

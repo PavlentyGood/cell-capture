@@ -10,7 +10,7 @@ import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyStartedEv
 import io.github.pavlentygood.cellcapture.lobby.rest.api.*
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.mapper
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
-import io.github.pavlentygood.cellcapture.lobby.usecase.port.GetParty
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetParty
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
