@@ -1,4 +1,4 @@
-package io.github.pavlentygood.cellcapture.lobby.persistence
+package io.github.pavlentygood.cellcapture.lobby.app.output.db
 
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.lobby.domain.Party

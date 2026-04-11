@@ -9,9 +9,9 @@ import io.github.pavlentygood.cellcapture.lobby.app.integration.config.Integrati
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
-import io.github.pavlentygood.cellcapture.lobby.persistence.OutboxRepository
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.EventTypeDto
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.OutboxRepository
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.EventTypeDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyStartedEventDto
 import io.github.pavlentygood.cellcapture.lobby.rest.api.API_V1_PARTIES_START
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.StartPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.usecase.port.GetPartyByPlayer

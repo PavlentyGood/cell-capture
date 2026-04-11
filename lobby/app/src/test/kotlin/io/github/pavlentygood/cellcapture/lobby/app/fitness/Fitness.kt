@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController
 
 @AnalyzeClasses(
     packages = [Fitness.PROJECT],
-    importOptions = [Fitness.DoNotIncludeAppPackage::class]
+    importOptions = [
+        Fitness.DoNotIncludeConfig::class,
+        ImportOption.DoNotIncludeTests::class
+    ]
 )
 class Fitness {
 
@@ -26,7 +29,7 @@ class Fitness {
         const val USECASE = "$PROJECT.usecase.."
         const val USECASE_PORT = "$PROJECT.usecase.port.."
         const val REST = "$PROJECT.rest.."
-        const val PERSISTENCE = "$PROJECT.persistence.."
+        const val DB = "$PROJECT.app.output.db.."
 
         const val KERNEL_DOMAIN = "$KERNEL.domain.."
 
@@ -36,10 +39,13 @@ class Fitness {
         }
     }
 
-    class DoNotIncludeAppPackage : ImportOption {
+    class DoNotIncludeConfig : ImportOption {
         override fun includes(location: Location) =
             PROJECT.replace(".", "/")
-                .let { !location.contains("$it/app/") }
+                .let {
+                    !location.contains("$it/app/config") &&
+                            !location.contains("$it/app/outbox")
+                }
     }
 
     /**
@@ -61,7 +67,7 @@ class Fitness {
             .domainServices(DOMAIN)
             .applicationServices(USECASE)
             .adapter("rest", REST)
-            .adapter("persistence", PERSISTENCE)
+            .adapter("db", DB)
 
     /**
      * Доменная модель имеет минимальное количество зависимостей

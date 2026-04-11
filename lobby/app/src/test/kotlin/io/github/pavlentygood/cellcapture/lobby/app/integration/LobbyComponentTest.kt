@@ -6,7 +6,7 @@ import io.github.pavlentygood.cellcapture.kernel.domain.playerName
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BaseKafkaTest
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.PartyStartedEventDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyStartedEventDto
 import io.github.pavlentygood.cellcapture.lobby.rest.api.*
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.mapper
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with

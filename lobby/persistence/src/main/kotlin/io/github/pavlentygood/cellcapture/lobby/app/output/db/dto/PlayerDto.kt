@@ -1,4 +1,4 @@
-package io.github.pavlentygood.cellcapture.lobby.persistence.dto
+package io.github.pavlentygood.cellcapture.lobby.app.output.db.dto
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table

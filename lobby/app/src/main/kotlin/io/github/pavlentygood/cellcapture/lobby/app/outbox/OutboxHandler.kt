@@ -1,9 +1,9 @@
 package io.github.pavlentygood.cellcapture.lobby.app.outbox
 
 import io.github.pavlentygood.cellcapture.kernel.common.log
-import io.github.pavlentygood.cellcapture.lobby.persistence.OutboxRepository
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.EventTypeDto
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.OutboxReadDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.OutboxRepository
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.EventTypeDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.OutboxReadDto
 import org.springframework.cloud.stream.function.StreamBridge
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component

@@ -1,6 +1,6 @@
-package io.github.pavlentygood.cellcapture.lobby.persistence
+package io.github.pavlentygood.cellcapture.lobby.app.output.db
 
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.PartyDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyDto
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param

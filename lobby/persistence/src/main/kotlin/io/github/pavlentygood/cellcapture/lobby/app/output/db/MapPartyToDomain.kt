@@ -1,4 +1,4 @@
-package io.github.pavlentygood.cellcapture.lobby.persistence
+package io.github.pavlentygood.cellcapture.lobby.app.output.db
 
 import arrow.core.getOrElse
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
@@ -9,8 +9,8 @@ import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.Player
 import io.github.pavlentygood.cellcapture.lobby.domain.PlayerLimit
 import io.github.pavlentygood.cellcapture.lobby.domain.restoreParty
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.PartyDto
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.PlayerDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PlayerDto
 
 fun mapPartyToDomain(dto: PartyDto): Party =
     restoreParty(

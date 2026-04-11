@@ -1,7 +1,7 @@
-package io.github.pavlentygood.cellcapture.lobby.persistence
+package io.github.pavlentygood.cellcapture.lobby.app.output.db
 
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.OutboxDto
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.OutboxReadDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.OutboxDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.OutboxReadDto
 import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.repository.CrudRepository

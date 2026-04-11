@@ -1,13 +1,17 @@
-package io.github.pavlentygood.cellcapture.lobby.persistence
+package io.github.pavlentygood.cellcapture.lobby.app.output.db
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.pavlentygood.cellcapture.kernel.common.VersionConflictException
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.EventTypeDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.OutboxDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyStartedEventDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PlayerDto
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.PartyEvent
 import io.github.pavlentygood.cellcapture.lobby.domain.PartyStartedEvent
 import io.github.pavlentygood.cellcapture.lobby.domain.Player
-import io.github.pavlentygood.cellcapture.lobby.persistence.dto.*
 import io.github.pavlentygood.cellcapture.lobby.usecase.port.SaveParty
 import org.postgresql.util.PGobject
 import org.springframework.transaction.annotation.Transactional

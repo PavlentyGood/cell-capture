@@ -1,10 +1,10 @@
 package io.github.pavlentygood.cellcapture.lobby.app.integration.config
 
 import io.github.pavlentygood.cellcapture.lobby.domain.PartyFactory
-import io.github.pavlentygood.cellcapture.lobby.persistence.GeneratePlayerIdBySequence
-import io.github.pavlentygood.cellcapture.lobby.persistence.GetPartyByPlayerFromDatabase
-import io.github.pavlentygood.cellcapture.lobby.persistence.GetPartyFromDatabase
-import io.github.pavlentygood.cellcapture.lobby.persistence.SavePartyToDatabase
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.GeneratePlayerIdBySequence
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyByPlayerFromDatabase
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyFromDatabase
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.SavePartyToDatabase
 import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.ErrorHandler
 import io.github.pavlentygood.cellcapture.lobby.usecase.CreatePartyUseCase
 import io.github.pavlentygood.cellcapture.lobby.usecase.GetPartyUseCase
@@ -17,7 +17,7 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
 
 @TestConfiguration
 @EnableAutoConfiguration
-@EnableJdbcRepositories("io.github.pavlentygood.cellcapture.lobby.persistence")
+@EnableJdbcRepositories("io.github.pavlentygood.cellcapture.lobby.app.output.db")
 @Import(
     value = [
         CreatePartyUseCase::class,
