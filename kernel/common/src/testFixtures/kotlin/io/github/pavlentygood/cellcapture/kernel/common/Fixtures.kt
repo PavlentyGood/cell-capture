@@ -1,4 +1,4 @@
-package io.github.pavlentygood.cellcapture.lobby.rest.endpoint
+package io.github.pavlentygood.cellcapture.kernel.common
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 

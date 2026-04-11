@@ -1,22 +1,16 @@
 package io.github.pavlentygood.cellcapture.lobby.app.integration
 
+import io.github.pavlentygood.cellcapture.kernel.common.mapper
+import io.github.pavlentygood.cellcapture.kernel.common.with
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerName
 import io.github.pavlentygood.cellcapture.kernel.domain.playerName
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BaseKafkaTest
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
-import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyStartedEventDto
-import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.mapper
-import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.with
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetParty
-import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES
-import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES_PLAYERS
-import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES_START
-import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyRequest
-import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyResponse
-import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerRequest
-import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerResponse
+import io.github.pavlentygood.cellcapture.lobby.domain.Party
+import io.github.pavlentygood.cellcapture.lobby.restapi.*
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe

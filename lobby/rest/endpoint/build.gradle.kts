@@ -15,6 +15,4 @@ dependencies {
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWeb)
     implementation(Lib.arrow)
-
-    testFixturesImplementation(Lib.jacksonKotlin)
 }

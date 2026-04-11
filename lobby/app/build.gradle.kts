@@ -44,6 +44,7 @@ dependencies {
     testRuntimeOnly(Lib.junitEngine)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
+    testImplementation(testFixtures(project(Module.kernelCommon)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))
     testImplementation(testFixtures(project(Module.lobbyRestEndpoint)))
     testImplementation(testFixtures(project(Module.lobbyPersistence)))
