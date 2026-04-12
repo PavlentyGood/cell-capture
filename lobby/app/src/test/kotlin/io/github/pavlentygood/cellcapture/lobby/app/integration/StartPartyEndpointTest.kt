@@ -14,7 +14,7 @@ import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
-import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.StartPartyEndpoint
+import io.github.pavlentygood.cellcapture.lobby.app.input.rest.StartPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES_START
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe

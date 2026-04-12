@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 
 @Configuration
 @EnableScheduling
-@ComponentScan("io.github.pavlentygood.cellcapture.lobby.rest")
+@ComponentScan("io.github.pavlentygood.cellcapture.lobby.app.input.rest")
 @EnableJdbcRepositories("io.github.pavlentygood.cellcapture.lobby.app.output.db")
 @Import(
     value = [

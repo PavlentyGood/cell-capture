@@ -1,4 +1,4 @@
-package io.github.pavlentygood.cellcapture.lobby.rest.endpoint
+package io.github.pavlentygood.cellcapture.lobby.app.input.rest
 
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.lobby.domain.Party

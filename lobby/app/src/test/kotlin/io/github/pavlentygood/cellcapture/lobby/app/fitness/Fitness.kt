@@ -28,7 +28,7 @@ class Fitness {
         const val DOMAIN = "$PROJECT.domain.."
         const val USECASE = "$PROJECT.app.usecase.."
         const val USECASE_PORT = "$PROJECT.app.usecase.port.."
-        const val REST = "$PROJECT.rest.."
+        const val REST = "$PROJECT.app.input.rest.."
         const val DB = "$PROJECT.app.output.db.."
 
         const val KERNEL_DOMAIN = "$KERNEL.domain.."

@@ -12,7 +12,7 @@ import io.github.pavlentygood.cellcapture.lobby.domain.player
 import io.github.pavlentygood.cellcapture.lobby.domain.playerLimit
 import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES
 import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyRequest
-import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.CreatePartyEndpoint
+import io.github.pavlentygood.cellcapture.lobby.app.input.rest.CreatePartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetParty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe

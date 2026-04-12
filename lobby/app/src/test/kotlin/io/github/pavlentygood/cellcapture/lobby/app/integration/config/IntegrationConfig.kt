@@ -5,7 +5,7 @@ import io.github.pavlentygood.cellcapture.lobby.app.output.db.GeneratePlayerIdBy
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyByPlayerFromDatabase
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyFromDatabase
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.SavePartyToDatabase
-import io.github.pavlentygood.cellcapture.lobby.rest.endpoint.ErrorHandler
+import io.github.pavlentygood.cellcapture.lobby.app.input.rest.ErrorHandler
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.CreatePartyUseCase
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCase
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCase
