@@ -10,7 +10,7 @@ object Module {
 
     const val lobbyDomain = "$lobby:domain"
     const val lobbyUseCase = "$lobby:usecase"
-    const val lobbyRestApi = "$lobby:rest:api"
+    const val lobbyRestApi = "$lobby:restapi"
     const val lobbyRestEndpoint = "$lobby:rest:endpoint"
     const val lobbyPersistence = "$lobby:persistence"
     const val lobbyApp = "$lobby:app"
