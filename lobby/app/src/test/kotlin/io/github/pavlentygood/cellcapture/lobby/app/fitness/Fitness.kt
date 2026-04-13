@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @AnalyzeClasses(
     packages = [Fitness.PROJECT],
     importOptions = [
-        Fitness.DoNotIncludeConfig::class,
+        Fitness.DoNotIncludeSomePackages::class,
         ImportOption.DoNotIncludeTests::class
     ]
 )
@@ -39,7 +39,7 @@ class Fitness {
         }
     }
 
-    class DoNotIncludeConfig : ImportOption {
+    class DoNotIncludeSomePackages : ImportOption {
         override fun includes(location: Location) =
             PROJECT.replace(".", "/")
                 .let {
