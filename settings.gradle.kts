@@ -6,8 +6,6 @@ include("kernel:common")
 include("lobby:domain")
 include("lobby:usecase")
 include("lobby:restapi")
-include("lobby:rest")
-include("lobby:rest:endpoint")
 include("lobby:persistence")
 include("lobby:app")
 

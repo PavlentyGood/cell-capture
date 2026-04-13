@@ -16,7 +16,6 @@ dependencies {
     implementation(project(Module.lobbyDomain))
     implementation(project(Module.lobbyUseCase))
     implementation(project(Module.lobbyRestApi))
-    implementation(project(Module.lobbyRestEndpoint))
     implementation(project(Module.lobbyPersistence))
 
     implementation(platform(Lib.springBootDependencies))
@@ -27,6 +26,7 @@ dependencies {
     implementation(Lib.jacksonKotlin)
     implementation(Lib.springBootStarterWeb)
     implementation(Lib.springCloudStarterStreamKafka)
+    implementation(Lib.arrow)
 
     implementation(Lib.springBootStarterDataJdbc)
     implementation(Lib.postgresql)
@@ -46,6 +46,5 @@ dependencies {
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.kernelCommon)))
     testImplementation(testFixtures(project(Module.lobbyDomain)))
-    testImplementation(testFixtures(project(Module.lobbyRestEndpoint)))
     testImplementation(testFixtures(project(Module.lobbyPersistence)))
 }
