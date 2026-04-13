@@ -9,7 +9,6 @@ object Module {
     const val kernelCommon = "$kernel:common"
 
     const val lobbyDomain = "$lobby:domain"
-    const val lobbyUseCase = "$lobby:usecase"
     const val lobbyRestApi = "$lobby:restapi"
     const val lobbyApp = "$lobby:app"
 

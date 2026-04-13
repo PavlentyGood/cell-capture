@@ -4,7 +4,6 @@ include("kernel:domain")
 include("kernel:common")
 
 include("lobby:domain")
-include("lobby:usecase")
 include("lobby:restapi")
 include("lobby:app")
 
