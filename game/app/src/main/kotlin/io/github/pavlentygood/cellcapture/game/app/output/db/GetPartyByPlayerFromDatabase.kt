@@ -1,0 +1,59 @@
+package io.github.pavlentygood.cellcapture.game.app.output.db
+
+import arrow.core.getOrElse
+import io.github.pavlentygood.cellcapture.game.domain.*
+import io.github.pavlentygood.cellcapture.game.app.usecase.port.GetPartyByPlayer
+import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
+import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
+import io.github.pavlentygood.cellcapture.kernel.domain.base.Version
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import java.util.*
+
+class GetPartyByPlayerFromDatabase(
+    private val jdbcTemplate: NamedParameterJdbcTemplate
+) : GetPartyByPlayer {
+
+    override operator fun invoke(playerId: PlayerId): Party? {
+        val partyDto: PartyDto = getParty(playerId) ?: return null
+        return restoreParty(
+            id = PartyId(partyDto.id),
+            version = Version.from(partyDto.version).getOrElse {
+                error("Illegal version: $it. version: ${partyDto.version}")
+            },
+            completed = partyDto.completed,
+            dices = partyDto.restoreDices(),
+            players = getPlayers(partyDto.id),
+            cells = getCells(partyDto.id),
+            currentPlayerId = PlayerId(partyDto.currentPlayerId),
+            ownerId = PlayerId(partyDto.ownerId)
+        ).getOrElse {
+            error("Restore party error: $it. #${partyDto.id}")
+        }
+    }
+
+    private fun getParty(playerId: PlayerId): PartyDto? {
+        val sql = """
+             select p.* from parties p
+             join players pl on pl.party_id = p.id
+             where pl.id = :player_id
+        """
+        val params = mapOf("player_id" to playerId.toInt())
+        return jdbcTemplate.query(sql, params, partyDtoMapper)
+            .singleOrNull()
+    }
+
+    private fun getPlayers(partyId: UUID): List<Player> {
+        val sql = "select * from players where party_id = :party_id"
+        val params = mapOf("party_id" to partyId)
+        return jdbcTemplate.query(sql, params, playerMapper)
+    }
+
+    private fun getCells(partyId: UUID): Array<Array<Cell>> {
+        val sql = "select * from cells where party_id = :party_id"
+        val params = mapOf("party_id" to partyId)
+        val cells = createCells()
+        jdbcTemplate.query(sql, params, cellMapper)
+            .forEach { cells[it.y][ it.x] = it }
+        return cells
+    }
+}

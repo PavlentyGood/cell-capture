@@ -1,8 +1,8 @@
 package io.github.pavlentygood.cellcapture.tests.e2e.client
 
-import io.github.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
-import io.github.pavlentygood.cellcapture.game.rest.api.GetPartyApi
-import io.github.pavlentygood.cellcapture.game.rest.api.RollDicesApi
+import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi
+import io.github.pavlentygood.cellcapture.game.restapi.GetPartyApi
+import io.github.pavlentygood.cellcapture.game.restapi.RollDicesApi
 import org.springframework.cloud.openfeign.FeignClient
 
 @FeignClient(

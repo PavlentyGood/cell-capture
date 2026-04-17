@@ -6,11 +6,11 @@ import io.github.pavlentygood.cellcapture.game.domain.Dices
 import io.github.pavlentygood.cellcapture.game.domain.completedParty
 import io.github.pavlentygood.cellcapture.game.domain.party
 import io.github.pavlentygood.cellcapture.game.domain.player
-import io.github.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_DICES
-import io.github.pavlentygood.cellcapture.game.rest.endpoint.RollDicesEndpoint
-import io.github.pavlentygood.cellcapture.game.rest.endpoint.with
-import io.github.pavlentygood.cellcapture.game.usecase.port.GetPartyByPlayer
-import io.github.pavlentygood.cellcapture.game.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.game.restapi.API_V1_PLAYERS_DICES
+import io.github.pavlentygood.cellcapture.game.app.input.rest.RollDicesEndpoint
+import io.github.pavlentygood.cellcapture.game.app.usecase.port.GetPartyByPlayer
+import io.github.pavlentygood.cellcapture.game.app.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.kernel.common.with
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.kernel.domain.partyId
 import io.github.pavlentygood.cellcapture.kernel.domain.playerId

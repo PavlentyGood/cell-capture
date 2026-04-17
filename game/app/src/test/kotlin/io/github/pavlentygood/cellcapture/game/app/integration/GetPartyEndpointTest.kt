@@ -2,13 +2,13 @@ package io.github.pavlentygood.cellcapture.game.app.integration
 
 import io.github.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.game.domain.*
-import io.github.pavlentygood.cellcapture.game.persistence.GetPartyByPlayerFromDatabase
-import io.github.pavlentygood.cellcapture.game.persistence.SavePartyToDatabase
-import io.github.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_PARTY
-import io.github.pavlentygood.cellcapture.game.rest.endpoint.GetPartyEndpoint
-import io.github.pavlentygood.cellcapture.game.rest.endpoint.with
-import io.github.pavlentygood.cellcapture.game.usecase.GetPartyByPlayerUseCase
-import io.github.pavlentygood.cellcapture.game.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.game.app.output.db.GetPartyByPlayerFromDatabase
+import io.github.pavlentygood.cellcapture.game.app.output.db.SavePartyToDatabase
+import io.github.pavlentygood.cellcapture.game.restapi.API_V1_PLAYERS_PARTY
+import io.github.pavlentygood.cellcapture.game.app.input.rest.GetPartyEndpoint
+import io.github.pavlentygood.cellcapture.game.app.usecase.GetPartyByPlayerUseCase
+import io.github.pavlentygood.cellcapture.game.app.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.kernel.common.with
 import io.github.pavlentygood.cellcapture.kernel.domain.playerId
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

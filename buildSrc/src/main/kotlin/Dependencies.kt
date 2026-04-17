@@ -13,10 +13,7 @@ object Module {
     const val lobbyApp = "$lobby:app"
 
     const val gameDomain = "$game:domain"
-    const val gameUseCase = "$game:usecase"
-    const val gameRestApi = "$game:rest:api"
-    const val gameRestEndpoint = "$game:rest:endpoint"
-    const val gamePersistence = "$game:persistence"
+    const val gameRestApi = "$game:restapi"
     const val gameApp = "$game:app"
 }
 

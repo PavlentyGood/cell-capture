@@ -3,7 +3,7 @@ package io.github.pavlentygood.cellcapture.tests.e2e.bdd
 import io.cucumber.datatable.DataTable
 import io.cucumber.java8.En
 import io.github.pavlentygood.cellcapture.game.domain.point
-import io.github.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
+import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi
 import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyRequest
 import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerRequest
 import io.github.pavlentygood.cellcapture.tests.e2e.client.GameRestClient

@@ -2,8 +2,8 @@ package io.github.pavlentygood.cellcapture.tests.e2e
 
 import io.github.pavlentygood.cellcapture.game.domain.Point
 import io.github.pavlentygood.cellcapture.game.domain.point
-import io.github.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
-import io.github.pavlentygood.cellcapture.game.rest.api.RollDicesApi
+import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi
+import io.github.pavlentygood.cellcapture.game.restapi.RollDicesApi
 import io.github.pavlentygood.cellcapture.kernel.domain.playerName
 import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyRequest
 import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyResponse
@@ -28,7 +28,7 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 typealias LobbyPartyResponse = PartyResponse
-typealias GamePartyResponse = io.github.pavlentygood.cellcapture.game.rest.api.PartyResponse
+typealias GamePartyResponse = io.github.pavlentygood.cellcapture.game.restapi.PartyResponse
 
 @EnableFeignClients(basePackages = ["io.github.pavlentygood.cellcapture.tests.e2e.client"])
 @SpringBootTest(

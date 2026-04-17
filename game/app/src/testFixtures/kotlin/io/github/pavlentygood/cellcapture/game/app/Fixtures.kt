@@ -1,6 +1,6 @@
 package io.github.pavlentygood.cellcapture.game.app
 
-import io.github.pavlentygood.cellcapture.game.app.listening.PartyStartedMessage
+import io.github.pavlentygood.cellcapture.game.app.input.listening.PartyStartedMessage
 import io.github.pavlentygood.cellcapture.game.domain.Player
 import io.github.pavlentygood.cellcapture.game.domain.player
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId

@@ -14,10 +14,7 @@ dependencies {
     implementation(project(Module.kernelDomain))
     implementation(project(Module.kernelCommon))
     implementation(project(Module.gameDomain))
-    implementation(project(Module.gameUseCase))
     implementation(project(Module.gameRestApi))
-    implementation(project(Module.gameRestEndpoint))
-    implementation(project(Module.gamePersistence))
 
     implementation(platform(Lib.springBootDependencies))
     implementation(platform(Lib.springCloudDependencies))
@@ -27,8 +24,11 @@ dependencies {
     implementation(Lib.jacksonKotlin)
     implementation(Lib.arrow)
     implementation(Lib.springBootStarterWeb)
-    implementation(Lib.springBootStarterJdbc)
     implementation(Lib.springCloudStarterStreamKafka)
+
+    implementation(Lib.springBootStarterJdbc)
+    implementation(Lib.postgresql)
+    implementation(Lib.flywayPostgresql)
 
     testImplementation(Lib.springBootStarterTest)
     testImplementation(Lib.kotestJUnit)
@@ -42,10 +42,9 @@ dependencies {
     testRuntimeOnly(Lib.junitEngine)
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
+    testImplementation(testFixtures(project(Module.kernelCommon)))
     testImplementation(testFixtures(project(Module.gameDomain)))
     testImplementation(testFixtures(project(Module.gameRestApi)))
-    testImplementation(testFixtures(project(Module.gameRestEndpoint)))
-    testImplementation(testFixtures(project(Module.gamePersistence)))
 
     testFixturesImplementation(testFixtures(project(Module.kernelDomain)))
     testFixturesImplementation(testFixtures(project(Module.gameDomain)))
