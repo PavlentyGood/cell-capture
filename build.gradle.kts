@@ -48,27 +48,10 @@ subprojects {
             violationRules {
                 rule {
                     limit {
-                        /*
-                        В проекте иерархия модулей, но не в каждом модуле есть тесты по причине применения классической школы тестирования.
-                        Jacoco проверяет покрытие тестами в каждом модуле по отдельности, поэтому проверку проходят не все модули.
-                        Необходимо настроить gradle и jacoco так, чтобы тестовое покрытие проверялось всквозную, а не по-модульно,
-                        либо избавиться от многомодульности
-                         */
-                        minimum = BigDecimal("0.0")
+                        minimum = BigDecimal("0.9")
                     }
                 }
             }
-            classDirectories.setFrom(
-                files(classDirectories.files.map {
-                    fileTree(it) {
-                        exclude(listOf(
-                            "**/**Application**",
-                            "**/persistence/**",
-                            "**/kernel/domain/base/**"
-                        ))
-                    }
-                })
-            )
         }
 
         withType<KotlinCompile> {
