@@ -3,8 +3,8 @@ package io.github.pavlentygood.cellcapture.lobby.app.integration
 import io.github.pavlentygood.cellcapture.kernel.common.VersionConflictException
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
-import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.kotest.assertions.throwables.shouldThrow
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

@@ -8,15 +8,19 @@ import java.util.*
 
 interface PartyRepository : CrudRepository<PartyDto, UUID> {
 
-    @Query("""
+    @Query(
+        """
         select p.* from players pl
         join parties p on p.id = pl.party_id
         where pl.id = :playerId
-        """)
+        """
+    )
     fun getByPlayer(@Param("playerId") playerId: Int): Optional<PartyDto>
 
-    @Query("""
+    @Query(
+        """
         select version from parties where id = :partyId for update
-    """)
+        """
+    )
     fun getVersion(@Param("partyId") partyId: UUID): Long?
 }

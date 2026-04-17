@@ -1,9 +1,9 @@
 package io.github.pavlentygood.cellcapture.game.app.output.db
 
+import io.github.pavlentygood.cellcapture.game.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.game.domain.Cell
 import io.github.pavlentygood.cellcapture.game.domain.Field
 import io.github.pavlentygood.cellcapture.game.domain.Party
-import io.github.pavlentygood.cellcapture.game.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.kernel.common.VersionConflictException
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.transaction.annotation.Transactional

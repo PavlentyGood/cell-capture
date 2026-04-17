@@ -3,9 +3,9 @@ package io.github.pavlentygood.cellcapture.lobby.app.usecase
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerName
+import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.PartyFactory
-import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 
 class CreatePartyUseCase(
     private val partyFactory: PartyFactory,

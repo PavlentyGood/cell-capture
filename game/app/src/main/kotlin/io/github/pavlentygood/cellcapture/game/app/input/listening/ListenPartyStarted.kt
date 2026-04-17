@@ -1,10 +1,10 @@
 package io.github.pavlentygood.cellcapture.game.app.input.listening
 
 import arrow.core.getOrElse
+import io.github.pavlentygood.cellcapture.game.app.usecase.CreatePartyUseCase
 import io.github.pavlentygood.cellcapture.game.domain.PartyInfo
 import io.github.pavlentygood.cellcapture.game.domain.Player
 import io.github.pavlentygood.cellcapture.game.domain.PlayerList
-import io.github.pavlentygood.cellcapture.game.app.usecase.CreatePartyUseCase
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerName

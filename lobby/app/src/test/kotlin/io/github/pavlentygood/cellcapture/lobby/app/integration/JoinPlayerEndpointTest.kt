@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.pavlentygood.cellcapture.kernel.common.with
 import io.github.pavlentygood.cellcapture.kernel.domain.partyId
 import io.github.pavlentygood.cellcapture.kernel.domain.playerName
+import io.github.pavlentygood.cellcapture.lobby.app.input.rest.JoinPlayerEndpoint
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.GetParty
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
-import io.github.pavlentygood.cellcapture.lobby.app.input.rest.JoinPlayerEndpoint
 import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES_PLAYERS
 import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerRequest
 import io.kotest.matchers.shouldBe

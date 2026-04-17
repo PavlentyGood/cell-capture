@@ -4,11 +4,11 @@ import io.github.pavlentygood.cellcapture.lobby.app.output.db.GeneratePlayerIdBy
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyByPlayerFromDatabase
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.GetPartyFromDatabase
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.SavePartyToDatabase
-import io.github.pavlentygood.cellcapture.lobby.domain.PartyFactory
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.CreatePartyUseCase
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.GetPartyUseCase
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.JoinPlayerUseCase
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.StartPartyUseCase
+import io.github.pavlentygood.cellcapture.lobby.domain.PartyFactory
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import

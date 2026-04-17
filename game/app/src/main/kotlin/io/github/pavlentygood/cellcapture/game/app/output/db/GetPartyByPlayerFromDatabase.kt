@@ -1,8 +1,8 @@
 package io.github.pavlentygood.cellcapture.game.app.output.db
 
 import arrow.core.getOrElse
-import io.github.pavlentygood.cellcapture.game.domain.*
 import io.github.pavlentygood.cellcapture.game.app.usecase.port.GetPartyByPlayer
+import io.github.pavlentygood.cellcapture.game.domain.*
 import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.kernel.domain.base.Version

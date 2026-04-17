@@ -2,12 +2,12 @@ package io.github.pavlentygood.cellcapture.lobby.app.integration
 
 import io.github.pavlentygood.cellcapture.kernel.common.with
 import io.github.pavlentygood.cellcapture.kernel.domain.partyId
+import io.github.pavlentygood.cellcapture.lobby.app.input.rest.GetPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
-import io.github.pavlentygood.cellcapture.lobby.app.input.rest.GetPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTY_BY_ID
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

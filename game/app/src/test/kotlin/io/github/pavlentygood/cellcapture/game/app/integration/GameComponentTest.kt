@@ -2,12 +2,12 @@ package io.github.pavlentygood.cellcapture.game.app.integration
 
 import io.github.pavlentygood.cellcapture.game.app.integration.config.BaseKafkaTest
 import io.github.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
+import io.github.pavlentygood.cellcapture.game.app.output.db.GetPartyByPlayerFromDatabase
 import io.github.pavlentygood.cellcapture.game.app.partyStartedMessage
 import io.github.pavlentygood.cellcapture.game.domain.Party
 import io.github.pavlentygood.cellcapture.game.domain.Point
 import io.github.pavlentygood.cellcapture.game.domain.capturedCellCount
 import io.github.pavlentygood.cellcapture.game.domain.point
-import io.github.pavlentygood.cellcapture.game.app.output.db.GetPartyByPlayerFromDatabase
 import io.github.pavlentygood.cellcapture.game.restapi.API_V1_PLAYERS_CELLS
 import io.github.pavlentygood.cellcapture.game.restapi.API_V1_PLAYERS_DICES
 import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi.Request

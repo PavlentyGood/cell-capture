@@ -5,12 +5,12 @@ import io.github.pavlentygood.cellcapture.kernel.domain.PartyId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerName
 import io.github.pavlentygood.cellcapture.kernel.domain.base.Version
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyDto
+import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PlayerDto
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.Player
 import io.github.pavlentygood.cellcapture.lobby.domain.PlayerLimit
 import io.github.pavlentygood.cellcapture.lobby.domain.restoreParty
-import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PartyDto
-import io.github.pavlentygood.cellcapture.lobby.app.output.db.dto.PlayerDto
 
 fun mapPartyToDomain(dto: PartyDto): Party =
     restoreParty(

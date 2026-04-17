@@ -2,9 +2,9 @@ package io.github.pavlentygood.cellcapture.game.app.usecase
 
 import arrow.core.Either
 import arrow.core.left
-import io.github.pavlentygood.cellcapture.game.domain.*
 import io.github.pavlentygood.cellcapture.game.app.usecase.port.GetPartyByPlayer
 import io.github.pavlentygood.cellcapture.game.app.usecase.port.SaveParty
+import io.github.pavlentygood.cellcapture.game.domain.*
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 class RollDicesUseCase(

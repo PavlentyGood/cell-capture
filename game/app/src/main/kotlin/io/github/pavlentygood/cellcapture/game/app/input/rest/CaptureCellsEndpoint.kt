@@ -1,6 +1,8 @@
 package io.github.pavlentygood.cellcapture.game.app.input.rest
 
 import arrow.core.flatMap
+import io.github.pavlentygood.cellcapture.game.app.usecase.CaptureCellsUseCase
+import io.github.pavlentygood.cellcapture.game.app.usecase.CaptureCellsUseCaseError
 import io.github.pavlentygood.cellcapture.game.domain.Area
 import io.github.pavlentygood.cellcapture.game.domain.Point
 import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi
@@ -8,8 +10,6 @@ import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi.ErrorType
 import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi.ErrorType.*
 import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi.Request
 import io.github.pavlentygood.cellcapture.game.restapi.ErrorResponse
-import io.github.pavlentygood.cellcapture.game.app.usecase.CaptureCellsUseCase
-import io.github.pavlentygood.cellcapture.game.app.usecase.CaptureCellsUseCaseError
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

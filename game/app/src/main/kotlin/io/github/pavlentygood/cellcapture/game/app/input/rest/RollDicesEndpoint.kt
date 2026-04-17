@@ -1,13 +1,13 @@
 package io.github.pavlentygood.cellcapture.game.app.input.rest
 
+import io.github.pavlentygood.cellcapture.game.app.usecase.RollDicesUseCase
+import io.github.pavlentygood.cellcapture.game.app.usecase.RollDicesUseCaseError
 import io.github.pavlentygood.cellcapture.game.domain.RolledDices
 import io.github.pavlentygood.cellcapture.game.restapi.ErrorResponse
 import io.github.pavlentygood.cellcapture.game.restapi.RestException
 import io.github.pavlentygood.cellcapture.game.restapi.RollDicesApi
 import io.github.pavlentygood.cellcapture.game.restapi.RollDicesApi.*
 import io.github.pavlentygood.cellcapture.game.restapi.RollDicesApi.ErrorType.*
-import io.github.pavlentygood.cellcapture.game.app.usecase.RollDicesUseCase
-import io.github.pavlentygood.cellcapture.game.app.usecase.RollDicesUseCaseError
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

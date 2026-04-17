@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 import io.github.pavlentygood.cellcapture.kernel.domain.partyId
 import io.github.pavlentygood.cellcapture.kernel.domain.playerId
+import io.github.pavlentygood.cellcapture.lobby.app.input.rest.StartPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.lobby.app.integration.config.IntegrationConfig
 import io.github.pavlentygood.cellcapture.lobby.app.output.db.OutboxRepository
@@ -14,7 +15,6 @@ import io.github.pavlentygood.cellcapture.lobby.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.lobby.domain.Party
 import io.github.pavlentygood.cellcapture.lobby.domain.party
 import io.github.pavlentygood.cellcapture.lobby.domain.player
-import io.github.pavlentygood.cellcapture.lobby.app.input.rest.StartPartyEndpoint
 import io.github.pavlentygood.cellcapture.lobby.restapi.API_V1_PARTIES_START
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe

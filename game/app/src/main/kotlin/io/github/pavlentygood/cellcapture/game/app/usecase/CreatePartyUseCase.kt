@@ -3,11 +3,11 @@ package io.github.pavlentygood.cellcapture.game.app.usecase
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import io.github.pavlentygood.cellcapture.game.app.usecase.port.GetPartyByPlayer
+import io.github.pavlentygood.cellcapture.game.app.usecase.port.SaveParty
 import io.github.pavlentygood.cellcapture.game.domain.CreateParty
 import io.github.pavlentygood.cellcapture.game.domain.Party
 import io.github.pavlentygood.cellcapture.game.domain.PartyInfo
-import io.github.pavlentygood.cellcapture.game.app.usecase.port.GetPartyByPlayer
-import io.github.pavlentygood.cellcapture.game.app.usecase.port.SaveParty
 
 class CreatePartyUseCase(
     private val getPartyByPlayer: GetPartyByPlayer,
