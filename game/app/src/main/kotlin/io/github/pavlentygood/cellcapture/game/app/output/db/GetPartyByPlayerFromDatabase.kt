@@ -48,7 +48,7 @@ class GetPartyByPlayerFromDatabase(
         return jdbcTemplate.query(sql, params, playerMapper)
     }
 
-    private fun getCells(partyId: UUID): Array<Array<Cell>> {
+    private fun getCells(partyId: UUID): List<List<Cell>> {
         val sql = "select * from cells where party_id = :party_id"
         val params = mapOf("party_id" to partyId)
         val cells = createCells()

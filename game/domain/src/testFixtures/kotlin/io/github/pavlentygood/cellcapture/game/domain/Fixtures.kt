@@ -77,25 +77,23 @@ fun dices(firstValue: Int, secondValue: Int) =
         second = Dice.from(secondValue).get()
     )
 
-fun field(cells: Array<Array<Cell>> = cells()) =
-    Field(
-        cells = cells
-    )
+fun field(cells: List<List<Cell>> = cells()) =
+    Field(cells = cells)
 
 fun cell(playerId: PlayerId, x: Int, y: Int) =
     Cell(playerId, x, y)
 
-fun cells(): Array<Array<Cell>> =
+fun cells(): MutableList<MutableList<Cell>> =
     createCells()
 
-fun Array<Array<Cell>>.setCell(playerId: PlayerId, x: Int, y: Int) {
+fun MutableList<MutableList<Cell>>.setCell(playerId: PlayerId, x: Int, y: Int) {
     this[y][x] = Cell(playerId, x, y)
 }
 
-fun Array<Array<Cell>>.capturedCells(): List<Cell> =
+fun List<List<Cell>>.capturedCells(): List<Cell> =
     flatten().filter { it.playerId != Field.nonePlayerId }
 
-fun Array<Array<Cell>>.capturedCellCount() =
+fun List<List<Cell>>.capturedCellCount() =
     capturedCells().count()
 
 fun partyInfo(

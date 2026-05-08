@@ -9,7 +9,7 @@ class CompletedParty(
     id: PartyId,
     version: Version,
     override val dices: Dices,
-    override val cells: Array<Array<Cell>>,
+    override val cells: List<List<Cell>>,
     override val ownerId: PlayerId,
     override val currentPlayerId: PlayerId,
     override val players: List<Player>
