@@ -13,8 +13,9 @@ class FieldTest {
         val playerId = playerId()
         val area = area(distanceToEdges = 1)
 
-        val cells = cells()
-        cells.setCell(playerId, area.from.x - 1, area.from.y)
+        val cells = cells(
+            captured = listOf(Cell(playerId, area.from.x - 1, area.from.y))
+        )
 
         val field = field(cells = cells)
 
@@ -41,8 +42,9 @@ class FieldTest {
     private fun checkCaptureWithInaccessibleArea(area: Area, x: Int, y: Int) {
         val otherPlayerId = playerId()
 
-        val cells = cells()
-        cells.setCell(otherPlayerId, x, y)
+        val cells = cells(
+            captured = listOf(Cell(otherPlayerId, x, y))
+        )
 
         val field = field(cells = cells)
 
@@ -55,13 +57,14 @@ class FieldTest {
     fun `capture - inaccessible area when not touch own cell`() {
         val playerId = playerId()
         val area = area(distanceToEdges = 2)
-
-        val cells = cells()
-        cells.setCell(playerId, area.from.x - 2, area.from.y)
-        cells.setCell(playerId, area.from.x, area.from.y - 2)
-        cells.setCell(playerId, area.to.x + 2, area.to.y)
-        cells.setCell(playerId, area.to.x, area.to.y + 2)
-
+        val cells = cells(
+            captured = listOf(
+                Cell(playerId, area.from.x - 2, area.from.y),
+                Cell(playerId, area.from.x, area.from.y - 2),
+                Cell(playerId, area.to.x + 2, area.to.y),
+                Cell(playerId, area.to.x, area.to.y + 2)
+            )
+        )
         val field = field(cells = cells)
 
         field.capture(playerId, area) shouldBeLeft InaccessibleArea

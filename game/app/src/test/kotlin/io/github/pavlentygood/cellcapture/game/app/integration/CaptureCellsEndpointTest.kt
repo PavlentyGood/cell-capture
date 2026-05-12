@@ -48,11 +48,8 @@ internal class CaptureCellsEndpointTest : BasePostgresTest {
             x = 5,
             y = 4
         )
-        val cells = cells()
-        cells.setCell(
-            playerId = player.id,
-            x = point.x,
-            y = point.y
+        val cells = cells(
+            captured = listOf(Cell(player.id, point.x, point.y))
         )
         val party = party(
             owner = nextPlayer,
@@ -165,11 +162,8 @@ internal class CaptureCellsEndpointTest : BasePostgresTest {
             x = 2,
             y = 3
         )
-        val cells = cells()
-        cells.setCell(
-            playerId = player.id,
-            x = point.x,
-            y = point.y
+        val cells = cells(
+            captured = listOf(Cell(player.id, point.x, point.y))
         )
         val party = party(
             currentPlayer = player,

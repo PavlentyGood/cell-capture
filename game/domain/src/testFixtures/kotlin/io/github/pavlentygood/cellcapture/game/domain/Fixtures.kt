@@ -83,12 +83,13 @@ fun field(cells: List<List<Cell>> = cells()) =
 fun cell(playerId: PlayerId, x: Int, y: Int) =
     Cell(playerId, x, y)
 
-fun cells(): MutableList<MutableList<Cell>> =
-    createCells()
-
-fun MutableList<MutableList<Cell>>.setCell(playerId: PlayerId, x: Int, y: Int) {
-    this[y][x] = Cell(playerId, x, y)
-}
+fun cells(
+    captured: List<Cell> = listOf()
+): MutableList<MutableList<Cell>> =
+    createCells().let { cells ->
+        captured.forEach { cells[it.y][it.x] = it }
+        cells
+    }
 
 fun List<List<Cell>>.capturedCells(): List<Cell> =
     flatten().filter { it.playerId != Field.nonePlayerId }
