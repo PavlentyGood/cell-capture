@@ -57,6 +57,7 @@ subprojects {
         withType<KotlinCompile> {
             compilerOptions {
                 jvmTarget = JvmTarget.valueOf("JVM_${Version.java}")
+                freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
             }
         }
 
