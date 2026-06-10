@@ -12,7 +12,7 @@ class Field internal constructor(
 ) {
     private val cells = cells.map { it.toMutableList() }.toMutableList()
 
-    fun getCells() = cells.toList()
+    fun getCells() = cells.map { it.toList() }.toList()
 
     fun capture(playerId: PlayerId, area: Area) =
         if (area.isAnyCellCaptured() || !area.isTouchOwnCell(playerId)) {
