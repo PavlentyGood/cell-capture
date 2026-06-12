@@ -2,32 +2,10 @@ package io.github.pavlentygood.cellcapture.game.domain
 
 import io.github.pavlentygood.cellcapture.kernel.domain.playerId
 import io.kotest.assertions.arrow.core.shouldBeLeft
-import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class FieldTest {
-
-    @Test
-    fun `capture cells`() {
-        val playerId = playerId()
-        val area = area(distanceToEdges = 1)
-
-        val cells = cells(
-            captured = listOf(Cell(playerId, area.from.x - 1, area.from.y))
-        )
-
-        val field = field(cells = cells)
-
-        field.capture(playerId, area) shouldBeRight Unit
-
-        field.getCells()[area.from.y][area.from.x].playerId shouldBe playerId
-        field.getCells()[area.from.y][area.to.x].playerId shouldBe playerId
-        field.getCells()[area.to.y][area.from.x].playerId shouldBe playerId
-        field.getCells()[area.to.y][area.to.x].playerId shouldBe playerId
-
-        field.getCells().capturedCellCount() shouldBe (area.xDistance() + 1) * (area.yDistance() + 1) + 1
-    }
 
     @Test
     fun `capture - inaccessible area when cell already captured`() {

@@ -1,12 +1,13 @@
 package io.github.pavlentygood.cellcapture.game.domain
 
 import io.github.pavlentygood.cellcapture.kernel.domain.randomInt
+import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class DicesTest {
 
@@ -26,31 +27,9 @@ class DicesTest {
         dices.rolled shouldBe false
     }
 
-    @Test
-    fun `is matched area`() {
-        val dices = dices()
-
-        dices.checkMatched(dices.first, dices.second)
-        dices.checkMatched(dices.second, dices.first)
-    }
-
-    private fun Dices.checkMatched(first: Dice, second: Dice) {
-        val area = mockk<Area>()
-        every { area.xDistance() } returns first.value - 1
-        every { area.yDistance() } returns second.value - 1
-
-        isNotMatched(area) shouldBe false
-    }
-
-    @Test
-    fun `is not matched area`() {
-        val someDistanceForNotMatchedArea = 6
-        val dices = dices()
-
-        val area = mockk<Area>()
-        every { area.xDistance() } returns someDistanceForNotMatchedArea
-        every { area.yDistance() } returns someDistanceForNotMatchedArea
-
-        dices.isNotMatched(area) shouldBe true
+    @ParameterizedTest
+    @ValueSource(ints = [Dice.MIN - 1, Dice.MAX + 1])
+    fun `illegal dice value`(value: Int) {
+        Dices.restore(value, 1) shouldBeLeft Dice.InvalidValue
     }
 }

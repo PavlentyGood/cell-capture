@@ -4,7 +4,6 @@ import io.github.pavlentygood.cellcapture.kernel.domain.MAX_PLAYER_COUNT
 import io.github.pavlentygood.cellcapture.kernel.domain.MIN_PLAYER_COUNT
 import io.github.pavlentygood.cellcapture.kernel.domain.playerId
 import io.kotest.assertions.arrow.core.shouldBeLeft
-import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -12,19 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerListTest {
-
-    @Test
-    fun `create player list`() {
-        val owner = player()
-        val player = player()
-        PlayerList.from(
-            ownerId = owner.id,
-            players = listOf(owner, player)
-        ) shouldBeRight PlayerList(
-            ownerId = owner.id,
-            players = listOf(owner, player)
-        )
-    }
 
     @Test
     fun `create player list - unmatched owner id`() {

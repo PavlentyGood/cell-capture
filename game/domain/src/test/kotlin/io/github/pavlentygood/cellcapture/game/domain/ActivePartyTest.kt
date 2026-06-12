@@ -1,7 +1,5 @@
 package io.github.pavlentygood.cellcapture.game.domain
 
-import arrow.core.left
-import arrow.core.right
 import io.github.pavlentygood.cellcapture.kernel.domain.playerId
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -53,13 +51,13 @@ class ActivePartyTest {
 
     @Test
     fun `capture cells`() {
-        val area = area()
         val player = player()
         val nextPlayer = player()
-
-        val field = mockk<Field>()
-        every { field.capture(player.id, area) } returns Unit.right()
-
+        val area = area(distanceToEdges = 1)
+        val cells = cells(
+            captured = listOf(Cell(player.id, area.from.x - 1, area.from.y))
+        )
+        val field = field(cells = cells)
         val party = party(
             dices = dicesFor(area),
             field = field,
@@ -72,6 +70,11 @@ class ActivePartyTest {
         party.popEvents() shouldContainExactly listOf(CellsCapturedEvent(party.id, player.id, area))
         party.dices shouldBe Dices.notRolled()
         party.currentPlayerId shouldBe nextPlayer.id
+        party.cells[area.from.y][area.from.x].playerId shouldBe player.id
+        party.cells[area.from.y][area.to.x].playerId shouldBe player.id
+        party.cells[area.to.y][area.from.x].playerId shouldBe player.id
+        party.cells[area.to.y][area.to.x].playerId shouldBe player.id
+        party.cells.capturedCellCount() shouldBe (area.xDistance() + 1) * (area.yDistance() + 1) + 1
     }
 
     @Test
@@ -99,11 +102,8 @@ class ActivePartyTest {
     @Test
     fun `capture cells - mismatched area`() {
         val area = area()
+        val dices = dices()
         val player = player()
-
-        val dices = mockk<Dices>()
-        every { dices.notRolled } returns false
-        every { dices.isNotMatched(area) } returns true
 
         val party = party(
             dices = dices,
@@ -115,18 +115,19 @@ class ActivePartyTest {
     }
 
     @Test
-    fun `capture cells - inaccessible area`() {
+    fun `capture cells - inaccessible area because selected cell already captured`() {
         val area = area()
-        val player = player()
-        val field = mockk<Field>()
         val dices = dicesFor(area)
+        val player = player()
+        val cells = cells(
+            captured = listOf(Cell(player.id, area.from.x, area.from.y))
+        )
+        val field = field(cells = cells)
         val party = party(
             dices = dices,
             field = field,
             currentPlayer = player
         )
-
-        every { field.capture(player.id, area) } returns InaccessibleArea.left()
 
         party.capture(player.id, area) shouldBeLeft InaccessibleArea
         party.popEvents().isEmpty() shouldBe true
