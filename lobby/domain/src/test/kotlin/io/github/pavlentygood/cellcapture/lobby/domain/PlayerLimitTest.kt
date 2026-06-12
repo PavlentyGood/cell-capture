@@ -21,7 +21,7 @@ class PlayerLimitTest {
 
     @ParameterizedTest
     @ValueSource(ints = [MIN_PLAYER_COUNT - 1, MAX_PLAYER_COUNT + 1])
-    fun `create player limit - illegal`(limit: Int) {
+    fun `create player limit - illegal value`(limit: Int) {
         PlayerLimit.from(limit) shouldBeLeft IllegalPlayerLimit
     }
 

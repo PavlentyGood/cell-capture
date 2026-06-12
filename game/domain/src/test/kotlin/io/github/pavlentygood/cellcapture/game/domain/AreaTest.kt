@@ -8,7 +8,7 @@ import kotlin.math.abs
 class AreaTest {
 
     @Test
-    fun `create area - sort points`() {
+    fun `points order not matter`() {
         val p1 = point(3, 5)
         val p2 = point(7, 5)
         val p3 = point(7, 9)
@@ -29,7 +29,7 @@ class AreaTest {
     }
 
     @Test
-    fun `x distance`() {
+    fun `calculate distance by x coordinate`() {
         val x = randomInt()
         val distance = randomInt(from = -1000)
         val area = Area.from(
@@ -47,7 +47,7 @@ class AreaTest {
     }
 
     @Test
-    fun `y distance`() {
+    fun `calculate distance by y coordinate`() {
         val y = randomInt()
         val distance = randomInt(from = -1000)
         val area = Area.from(

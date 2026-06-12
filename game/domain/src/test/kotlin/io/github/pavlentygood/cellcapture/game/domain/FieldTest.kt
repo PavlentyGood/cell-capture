@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class FieldTest {
 
     @Test
-    fun `capture - inaccessible area when cell already captured`() {
+    fun `capture - inaccessible area because selected cell already captured`() {
         val area = area()
 
         checkCaptureWithInaccessibleArea(area, area.from.x, area.from.y)
@@ -32,7 +32,7 @@ class FieldTest {
     }
 
     @Test
-    fun `capture - inaccessible area when not touch own cell`() {
+    fun `capture - inaccessible area because not touch own cell`() {
         val playerId = playerId()
         val area = area(distanceToEdges = 2)
         val cells = cells(
