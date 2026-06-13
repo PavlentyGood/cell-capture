@@ -14,13 +14,17 @@ import org.springframework.web.bind.annotation.RestController
 
 @AnalyzeClasses(
     packages = ["io.github.pavlentygood.cellcapture.game"],
-    importOptions = [Fitness.DoNotIncludeAppPackage::class]
+    importOptions = [
+        Fitness.DoNotIncludeConfig::class,
+        ImportOption.DoNotIncludeTests::class,
+        ImportOption.DoNotIncludeGradleTestFixtures::class
+    ]
 )
 class Fitness {
 
-    class DoNotIncludeAppPackage : ImportOption {
+    class DoNotIncludeConfig : ImportOption {
         override fun includes(location: Location) =
-            !location.contains("io/github/pavlentygood/cellcapture/game/app/")
+            !location.contains("io/github/pavlentygood/cellcapture/game/app/config")
     }
 
     /**
@@ -40,9 +44,10 @@ class Fitness {
         onionArchitecture()
             .domainModels("io.github.pavlentygood.cellcapture.game.domain..")
             .domainServices("io.github.pavlentygood.cellcapture.game.domain..")
-            .applicationServices("io.github.pavlentygood.cellcapture.game.usecase..")
-            .adapter("rest", "io.github.pavlentygood.cellcapture.game.rest..")
-            .adapter("persistence", "io.github.pavlentygood.cellcapture.game.persistence..")
+            .applicationServices("io.github.pavlentygood.cellcapture.game.app.usecase..")
+            .adapter("rest", "io.github.pavlentygood.cellcapture.game.app.input.rest..")
+            .adapter("listening", "io.github.pavlentygood.cellcapture.game.app.input.listening..")
+            .adapter("db", "io.github.pavlentygood.cellcapture.game.app.output.db..")
 
     /**
      * Доменная модель имеет минимальное количество зависимостей
@@ -67,12 +72,12 @@ class Fitness {
     @ArchTest
     val useCaseDependencies =
         classes()
-            .that().resideInAnyPackage("io.github.pavlentygood.cellcapture.game.usecase..")
+            .that().resideInAnyPackage("io.github.pavlentygood.cellcapture.game.app.usecase..")
             .should().onlyDependOnClassesThat()
             .resideInAnyPackage(
                 "io.github.pavlentygood.cellcapture.kernel.domain..",
                 "io.github.pavlentygood.cellcapture.game.domain..",
-                "io.github.pavlentygood.cellcapture.game.usecase..",
+                "io.github.pavlentygood.cellcapture.game.app.usecase..",
                 "java..",
                 "kotlin..",
                 "arrow.core..",
@@ -85,7 +90,7 @@ class Fitness {
     @ArchTest
     val endpointNaming =
         classes()
-            .that().resideInAPackage("io.github.pavlentygood.cellcapture.game.rest..")
+            .that().resideInAPackage("io.github.pavlentygood.cellcapture.game.app.input.rest..")
             .and().areAnnotatedWith(RestController::class.java)
             .should().haveSimpleNameEndingWith("Endpoint")
 
@@ -122,7 +127,7 @@ class Fitness {
     @ArchTest
     val singleMethodInPort =
         classes()
-            .that().resideInAPackage("io.github.pavlentygood.cellcapture.game.usecase.port..")
+            .that().resideInAPackage("io.github.pavlentygood.cellcapture.game.app.usecase.port..")
             .should(haveSinglePublicMethod())
 
     /**
@@ -133,6 +138,6 @@ class Fitness {
         classes()
             .that().resideInAnyPackage(
                 "io.github.pavlentygood.cellcapture.game.domain..",
-                "io.github.pavlentygood.cellcapture.game.usecase.."
+                "io.github.pavlentygood.cellcapture.game.app.usecase.."
             ).should(notThrowAnyException())
 }

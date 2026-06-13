@@ -53,9 +53,7 @@ class CreateParty {
         val cells = createCells()
 
         generateStartCells(playerList.playerIds)
-            .forEach { cell ->
-                cells[cell.y][cell.x] = Cell(cell.playerId, cell.x, cell.y)
-            }
+            .forEach { cell -> cells[cell.y][cell.x] = cell }
 
         return Field(cells)
     }

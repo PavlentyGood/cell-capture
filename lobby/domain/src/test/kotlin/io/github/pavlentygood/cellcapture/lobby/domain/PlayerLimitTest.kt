@@ -21,24 +21,8 @@ class PlayerLimitTest {
 
     @ParameterizedTest
     @ValueSource(ints = [MIN_PLAYER_COUNT - 1, MAX_PLAYER_COUNT + 1])
-    fun `create player limit - illegal`(limit: Int) {
+    fun `create player limit - illegal value`(limit: Int) {
         PlayerLimit.from(limit) shouldBeLeft IllegalPlayerLimit
-    }
-
-    @Test
-    fun `is reached`() {
-        val playerCount = randomPlayerCount()
-        PlayerLimit.from(playerCount).onRight {
-            it.isReached(playerCount) shouldBe true
-        }
-    }
-
-    @Test
-    fun `is not reached`() {
-        val playerCount = randomPlayerCount()
-        PlayerLimit.from(playerCount + 1).onRight {
-            it.isReached(playerCount) shouldBe false
-        }
     }
 
     private fun randomPlayerCount() =

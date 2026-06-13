@@ -2,13 +2,15 @@ package io.github.pavlentygood.cellcapture.tests.e2e
 
 import io.github.pavlentygood.cellcapture.game.domain.Point
 import io.github.pavlentygood.cellcapture.game.domain.point
-import io.github.pavlentygood.cellcapture.game.rest.api.CaptureCellsApi
-import io.github.pavlentygood.cellcapture.game.rest.api.RollDicesApi
+import io.github.pavlentygood.cellcapture.game.restapi.CaptureCellsApi
+import io.github.pavlentygood.cellcapture.game.restapi.RollDicesApi
 import io.github.pavlentygood.cellcapture.kernel.domain.playerName
-import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyRequest
-import io.github.pavlentygood.cellcapture.lobby.rest.api.CreatePartyResponse
-import io.github.pavlentygood.cellcapture.lobby.rest.api.JoinPlayerRequest
-import io.github.pavlentygood.cellcapture.tests.e2e.client.*
+import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.CreatePartyResponse
+import io.github.pavlentygood.cellcapture.lobby.restapi.JoinPlayerRequest
+import io.github.pavlentygood.cellcapture.lobby.restapi.PartyResponse
+import io.github.pavlentygood.cellcapture.tests.e2e.client.GameRestClient
+import io.github.pavlentygood.cellcapture.tests.e2e.client.LobbyRestClient
 import io.kotest.assertions.nondeterministic.eventually
 import io.kotest.assertions.nondeterministic.eventuallyConfig
 import io.kotest.common.runBlocking
@@ -25,8 +27,8 @@ import java.util.*
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-typealias LobbyPartyResponse = io.github.pavlentygood.cellcapture.lobby.rest.api.PartyResponse
-typealias GamePartyResponse = io.github.pavlentygood.cellcapture.game.rest.api.PartyResponse
+typealias LobbyPartyResponse = PartyResponse
+typealias GamePartyResponse = io.github.pavlentygood.cellcapture.game.restapi.PartyResponse
 
 @EnableFeignClients(basePackages = ["io.github.pavlentygood.cellcapture.tests.e2e.client"])
 @SpringBootTest(
@@ -39,19 +41,9 @@ typealias GamePartyResponse = io.github.pavlentygood.cellcapture.game.rest.api.P
 class E2eTest {
 
     @Autowired
-    lateinit var createParty: CreatePartyClient
+    lateinit var lobbyRestClient: LobbyRestClient
     @Autowired
-    lateinit var joinPlayer: JoinPlayerClient
-    @Autowired
-    lateinit var startParty: StartPartyClient
-    @Autowired
-    lateinit var rollDices: RollDicesClient
-    @Autowired
-    lateinit var captureCells: CaptureCellsClient
-    @Autowired
-    lateinit var getLobbyParty: GetLobbyPartyClient
-    @Autowired
-    lateinit var getGameParty: GetGamePartyClient
+    lateinit var gameRestClient: GameRestClient
 
     private val ownerStartCell = point(x = 0, y = 0)
     private val startCellCount = 2
@@ -83,14 +75,14 @@ class E2eTest {
     }
 
     private fun createParty(): CreatePartyResponse =
-        createParty(
+        lobbyRestClient.createParty(
             CreatePartyRequest(
                 ownerName = playerName().toStringValue()
             )
         ).body!!
 
     private fun joinPlayer(partyId: UUID): Int =
-        joinPlayer(
+        lobbyRestClient.joinPlayer(
             partyId = partyId,
             request = JoinPlayerRequest(
                 name = playerName().toStringValue()
@@ -98,18 +90,18 @@ class E2eTest {
         ).body!!.id
 
     private fun startParty(ownerId: Int) =
-        startParty.invoke(ownerId)
+        lobbyRestClient.startParty(ownerId)
 
     private fun rollDices(ownerId: Int): RollDicesApi.DicesResponse =
         runBlocking {
             eventually(
                 eventuallyConfig {
-                    duration = 5.minutes
+                    duration = 2.minutes
                     initialDelay = 5.seconds
                     interval = 5.seconds
                 }
             ) {
-                rollDices.invoke(ownerId).body!!.dices
+                gameRestClient.rollDices(ownerId).body!!.dices
             }
         }
 
@@ -126,15 +118,15 @@ class E2eTest {
             first = CaptureCellsApi.Request.Point(x = x1, y = y1),
             second = CaptureCellsApi.Request.Point(x = x2, y = y2)
         )
-        captureCells.invoke(
+        gameRestClient.captureCells(
             playerId = playerId,
             request = request
         )
     }
 
     private fun getLobbyParty(partyId: UUID): LobbyPartyResponse =
-        getLobbyParty.invoke(partyId).body!!
+        lobbyRestClient.getParty(partyId).body!!
 
     private fun getGameParty(playerId: Int): GamePartyResponse =
-        getGameParty.invoke(playerId).body!!
+        gameRestClient.getParty(playerId).body!!
 }

@@ -47,7 +47,7 @@ class PartyTest {
     }
 
     @Test
-    fun `join player - limit`() {
+    fun `join player - player limit reached`() {
         val owner = player()
         val player = player()
         val party = party(

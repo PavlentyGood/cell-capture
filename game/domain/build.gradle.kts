@@ -16,4 +16,5 @@ dependencies {
     testImplementation(testFixtures(project(Module.kernelDomain)))
 
     testFixturesImplementation(testFixtures(project(Module.kernelDomain)))
+    testFixturesImplementation(Lib.arrow)
 }

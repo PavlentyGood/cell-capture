@@ -1,0 +1,23 @@
+package io.github.pavlentygood.cellcapture.lobby.restapi
+
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import java.util.*
+
+fun interface CreatePartyApi {
+
+    @PostMapping(API_V1_PARTIES)
+    fun createParty(
+        @RequestBody request: CreatePartyRequest
+    ): ResponseEntity<CreatePartyResponse>
+}
+
+data class CreatePartyRequest(
+    val ownerName: String
+)
+
+data class CreatePartyResponse(
+    val id: UUID,
+    val ownerId: Int
+)

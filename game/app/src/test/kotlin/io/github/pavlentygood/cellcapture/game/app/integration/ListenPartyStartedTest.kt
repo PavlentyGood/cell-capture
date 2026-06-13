@@ -3,8 +3,8 @@ package io.github.pavlentygood.cellcapture.game.app.integration
 import io.github.pavlentygood.cellcapture.game.app.integration.config.BaseKafkaTest
 import io.github.pavlentygood.cellcapture.game.app.integration.config.BasePostgresTest
 import io.github.pavlentygood.cellcapture.game.app.partyStartedMessage
-import io.github.pavlentygood.cellcapture.game.rest.api.API_V1_PLAYERS_PARTY
-import io.github.pavlentygood.cellcapture.game.rest.endpoint.with
+import io.github.pavlentygood.cellcapture.game.restapi.API_V1_PLAYERS_PARTY
+import io.github.pavlentygood.cellcapture.kernel.common.with
 import io.kotest.assertions.nondeterministic.eventually
 import io.kotest.assertions.nondeterministic.eventuallyConfig
 import kotlinx.coroutines.runBlocking

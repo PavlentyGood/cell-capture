@@ -8,9 +8,11 @@ import io.github.pavlentygood.cellcapture.game.domain.Field.Companion.nonePlayer
 import io.github.pavlentygood.cellcapture.kernel.domain.PlayerId
 
 class Field internal constructor(
-    private val cells: Array<Array<Cell>>
+    cells: List<List<Cell>>
 ) {
-    fun getCells() = cells.copyOf()
+    private val cells = cells.map { it.toMutableList() }.toMutableList()
+
+    fun getCells() = cells.map { it.toList() }.toList()
 
     fun capture(playerId: PlayerId, area: Area) =
         if (area.isAnyCellCaptured() || !area.isTouchOwnCell(playerId)) {
@@ -77,9 +79,9 @@ class Field internal constructor(
     }
 }
 
-fun createCells(): Array<Array<Cell>> =
-    Array(HEIGHT) { y ->
-        Array(WIDTH) { x ->
+fun createCells(): MutableList<MutableList<Cell>> =
+    MutableList(HEIGHT) { y ->
+        MutableList(WIDTH) { x ->
             Cell(nonePlayerId, x, y)
         }
     }

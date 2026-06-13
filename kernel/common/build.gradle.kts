@@ -5,4 +5,6 @@ tasks.jar {
 dependencies {
     implementation(Lib.kotlinReflect)
     implementation(Lib.slf4jApi)
+
+    testFixturesImplementation(Lib.jacksonKotlin)
 }

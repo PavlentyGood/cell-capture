@@ -14,7 +14,7 @@ fun restoreParty(
     version: Version,
     completed: Boolean,
     dices: Dices,
-    cells: Array<Array<Cell>>,
+    cells: List<List<Cell>>,
     players: List<Player>,
     currentPlayerId: PlayerId,
     ownerId: PlayerId

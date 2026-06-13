@@ -1,9 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id(Plugin.jvm) version Version.kotlin apply false
     id(Plugin.detekt) version Version.detekt
-    id(Plugin.docker) version Version.docker
 }
 
 subprojects {
@@ -19,7 +19,6 @@ subprojects {
         plugin("java-test-fixtures")
         plugin(Plugin.jvm)
         plugin(Plugin.detekt)
-        plugin(Plugin.docker)
     }
 
     detekt {
@@ -49,32 +48,16 @@ subprojects {
             violationRules {
                 rule {
                     limit {
-                        /*
-                        В проекте иерархия модулей, но не в каждом модуле есть тесты по причине применения классической школы тестирования.
-                        Jacoco проверяет покрытие тестами в каждом модуле по отдельности, поэтому проверку проходят не все модули.
-                        Необходимо настроить gradle и jacoco так, чтобы тестовое покрытие проверялось всквозную, а не по-модульно,
-                        либо избавиться от многомодульности
-                         */
-                        minimum = BigDecimal("0.0")
+                        minimum = BigDecimal("0.9")
                     }
                 }
             }
-            classDirectories.setFrom(
-                files(classDirectories.files.map {
-                    fileTree(it) {
-                        exclude(listOf(
-                            "**/**Application**",
-                            "**/persistence/**",
-                            "**/kernel/domain/base/**"
-                        ))
-                    }
-                })
-            )
         }
 
         withType<KotlinCompile> {
-            kotlinOptions {
-                jvmTarget = "17"
+            compilerOptions {
+                jvmTarget = JvmTarget.valueOf("JVM_${Version.java}")
+                freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
             }
         }
 
