@@ -23,6 +23,7 @@
   - [Fitness functions (архитектурные тесты)](#fitness-functions-архитектурные-тесты)
 - [Качество кода и архитектуры](#качество-кода-и-архитектуры)
 - [Референсные проекты](#референсные-проекты)
+- [ADR](#adr)
 - [Дальнейшие планы](#дальнейшие-планы)
 
 ## Технологический стек
@@ -177,6 +178,10 @@ gradle :tests:test
 - демонстрационное приложение от StringConcat (Kotlin): https://github.com/stringconcat/ddd_practice
 - демонстрационное приложение "eShop" от Microsoft (C#): https://github.com/dotnet/eShop
 - репозиторий для книги "Get Your Hands Dirty on Clean Architecture" by Tom Hombergs (Java): https://github.com/thombergs/buckpal
+
+## ADR
+
+Важные решения зафиксированы в [ADR.md](ADR.md)
 
 ## Дальнейшие планы
 
