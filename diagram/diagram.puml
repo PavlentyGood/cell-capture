@@ -1,0 +1,18 @@
+@startuml
+skinparam componentStyle rectangle
+
+actor "User" as User
+[Lobby Service] as Lobby
+database "PostgreSQL\n(Lobby DB)" as LobbyDB
+[Game Service] as Game
+database "PostgreSQL\n(Game DB)" as GameDB
+queue "Kafka\ntopic: party-started" as Kafka
+
+User --> Lobby : REST API
+User --> Game : REST API
+Lobby -down-> LobbyDB : SQL
+Game -down-> GameDB : SQL
+Lobby --> Kafka : publish event
+Kafka --> Game : consume event
+
+@enduml

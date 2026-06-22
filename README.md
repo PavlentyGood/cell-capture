@@ -1,6 +1,7 @@
 # Cell Capture
 
-Демонстрационное backend-приложение на Kotlin с применением Domain-Driven Design и Clean Architecture.  
+Демонстрационное backend-приложение на Kotlin
+с применением Domain-Driven Design, Clean Architecture и Детройтской школы тестирования.  
 Приложение представляет собой REST API для многопользовательской пошаговой игры.  
 
 ## Содержание
@@ -15,6 +16,8 @@
   - [Clean Architecture](#clean-architecture)
   - [Модули](#модули)
   - [Подмодули в каждом ограниченном контексте](#подмодули-в-каждом-ограниченном-контексте)
+  - [Диаграмма компонентов](#диаграмма-компонентов)
+  - [ADR](#adr)
 - [Сборка ограниченных контекстов](#сборка-ограниченных-контекстов)
 - [Тесты](#тесты)
   - [Unit-тесты](#unit-тесты)
@@ -23,7 +26,6 @@
   - [Fitness functions (архитектурные тесты)](#fitness-functions-архитектурные-тесты)
 - [Качество кода и архитектуры](#качество-кода-и-архитектуры)
 - [Референсные проекты](#референсные-проекты)
-- [ADR](#adr)
 - [Дальнейшие планы](#дальнейшие-планы)
 
 ## Технологический стек
@@ -112,6 +114,16 @@
 - restapi - интерфейсы с REST API
 - app - включает конфигурацию, юзкейсы, входные и выходные адаптеры
 
+### Диаграмма компонентов
+
+Исходник диаграммы находится в [diagram.puml](diagram/diagram.puml)
+
+![diagram image](diagram/diagram.png)
+
+### ADR
+
+Важные решения зафиксированы в [ADR.md](ADR.md)
+
 ## Сборка ограниченных контекстов
 
 ```bash
@@ -178,10 +190,6 @@ gradle :tests:test
 - демонстрационное приложение от StringConcat (Kotlin): https://github.com/stringconcat/ddd_practice
 - демонстрационное приложение "eShop" от Microsoft (C#): https://github.com/dotnet/eShop
 - репозиторий для книги "Get Your Hands Dirty on Clean Architecture" by Tom Hombergs (Java): https://github.com/thombergs/buckpal
-
-## ADR
-
-Важные решения зафиксированы в [ADR.md](ADR.md)
 
 ## Дальнейшие планы
 
