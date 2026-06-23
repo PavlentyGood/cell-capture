@@ -6,8 +6,6 @@ import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.jupiter.api.Test
 
 class ActivePartyTest {
@@ -53,13 +51,14 @@ class ActivePartyTest {
     fun `capture cells`() {
         val player = player()
         val nextPlayer = player()
-        val area = area(distanceToEdges = 1)
+        val area = area(fromX = 1, fromY = 1, toX = 3, toY = 2)
+        val dices = dices(area.xDistance() + 1, area.yDistance() + 1)
         val cells = cells(
             captured = listOf(Cell(player.id, area.from.x - 1, area.from.y))
         )
         val field = field(cells = cells)
         val party = party(
-            dices = dicesFor(area),
+            dices = dices,
             field = field,
             currentPlayer = player,
             otherPlayers = listOf(player, nextPlayer)
@@ -116,8 +115,8 @@ class ActivePartyTest {
 
     @Test
     fun `capture cells - inaccessible area because selected cell already captured`() {
-        val area = area()
-        val dices = dicesFor(area)
+        val area = area(fromX = 1, fromY = 1, toX = 3, toY = 2)
+        val dices = dices(area.xDistance() + 1, area.yDistance() + 1)
         val player = player()
         val cells = cells(
             captured = listOf(Cell(player.id, area.from.x, area.from.y))
@@ -132,10 +131,4 @@ class ActivePartyTest {
         party.capture(player.id, area) shouldBeLeft InaccessibleArea
         party.popEvents().isEmpty() shouldBe true
     }
-
-    private fun dicesFor(area: Area) =
-        mockk<Dices>().also {
-            every { it.notRolled } returns false
-            every { it.isNotMatched(area) } returns false
-        }
 }
