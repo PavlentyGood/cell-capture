@@ -11,4 +11,11 @@ include("game:domain")
 include("game:restapi")
 include("game:app")
 
+include("field-editor:domain")
+include("field-editor:app")
+
 include("tests")
+
+include("ai:domain")
+include("ai:restapi")
+include("ai:app")
