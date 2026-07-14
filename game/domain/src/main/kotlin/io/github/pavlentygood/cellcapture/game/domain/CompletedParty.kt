@@ -13,7 +13,7 @@ class CompletedParty(
     override val ownerId: PlayerId,
     override val currentPlayerId: PlayerId,
     override val players: List<Player>
-) : Party(id, version) {
+) : Party(id, version, events = listOf()) {
 
     override val completed = true
 

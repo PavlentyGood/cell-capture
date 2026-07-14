@@ -1,16 +1,21 @@
 package io.github.pavlentygood.cellcapture.kernel.domain.base
 
-abstract class AggregateRoot<T, E : DomainEvent> protected constructor(
-    id: T,
-    version: Version
-) : DomainEntity<T>(id) {
+abstract class AggregateRoot<ID, EVENT : DomainEvent> protected constructor(
+    id: ID,
+    version: Version,
+    events: List<EVENT>,
+) : DomainEntity<ID>(id) {
 
     var version: Version = version
         private set
 
-    private val events = mutableListOf<E>()
+    private val events = mutableListOf<EVENT>()
 
-    protected fun addEvent(event: E) {
+    init {
+        events.forEach { addEvent(it) }
+    }
+
+    protected fun addEvent(event: EVENT) {
         if (events.isEmpty()) {
             version = version.next()
         }

@@ -10,24 +10,33 @@ class AggregateRootTest {
 
     @Test
     fun `aggregate event works`() {
-        val aggregate = TestAggregate(id = 777, version = version(5))
+        val id = 777
+        val aggregate = TestAggregate(
+            id = id,
+            version = version(5),
+            events = listOf(TestAggregateCreatedEvent(id))
+        )
 
         aggregate.testCommand()
 
         aggregate.version shouldBe version(6)
-        aggregate.popEvents() shouldContainExactly listOf(TestCommandInvokedEvent(777))
+        aggregate.popEvents() shouldContainExactly
+                listOf(TestAggregateCreatedEvent(id), TestCommandInvokedEvent(id))
         aggregate.popEvents() shouldHaveSize 0
     }
 }
 
 class TestAggregate(
     id: Int,
-    version: Version
-) : AggregateRoot<Int, DomainEvent>(id, version) {
+    version: Version,
+    events: List<TestAggregateEvent>
+) : AggregateRoot<Int, TestAggregateEvent>(id, version, events) {
 
     fun testCommand() {
         addEvent(TestCommandInvokedEvent(aggregateId = id))
     }
 }
 
-data class TestCommandInvokedEvent(val aggregateId: Int) : DomainEvent
+sealed interface TestAggregateEvent : DomainEvent
+data class TestAggregateCreatedEvent(val aggregateId: Int) : TestAggregateEvent
+data class TestCommandInvokedEvent(val aggregateId: Int) : TestAggregateEvent
