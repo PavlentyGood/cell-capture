@@ -17,11 +17,7 @@ class ActiveParty internal constructor(
     override val ownerId: PlayerId,
     currentPlayerId: PlayerId,
     override val players: List<Player>
-) : Party(id, version) {
-
-    init {
-        events.forEach { addEvent(it) }
-    }
+) : Party(id, version, events) {
 
     override val completed = false
 

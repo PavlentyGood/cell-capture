@@ -19,11 +19,7 @@ class Party internal constructor(
     players: List<Player>,
     val playerLimit: PlayerLimit,
     val ownerId: PlayerId
-) : AggregateRoot<PartyId, PartyEvent>(id, version) {
-
-    init {
-        events.forEach { addEvent(it) }
-    }
+) : AggregateRoot<PartyId, PartyEvent>(id, version, events) {
 
     var started = started
         private set

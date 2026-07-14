@@ -8,8 +8,9 @@ import io.github.pavlentygood.cellcapture.kernel.domain.base.Version
 
 sealed class Party(
     id: PartyId,
-    version: Version
-) : AggregateRoot<PartyId, PartyEvent>(id, version) {
+    version: Version,
+    events: List<PartyEvent>,
+) : AggregateRoot<PartyId, PartyEvent>(id, version, events) {
 
     abstract val completed: Boolean
     abstract val ownerId: PlayerId
