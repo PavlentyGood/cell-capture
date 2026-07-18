@@ -5,10 +5,10 @@ description: Применять, когда надо работать с тес�
 
 # правила
 
-- работаем по детройтской школе тестирования.
+- работай по детройтской школе тестирования.
 - названия методов пиши в виде фактов в настоящем времени без технических деталей.
 
-# примеры доменных тестов. следуй их стилистике
+# примеры доменных тестов
 
-- тест на агрегат: io.github.pavlentygood.cellcapture.lobby.domain.PartyTest
-- тест на VO: io.github.pavlentygood.cellcapture.lobby.domain.PlayerLimitTest
+- находятся в модуле ai в каталоге тестов в пакете io.github.pavlentygood.cellcapture.ai.domain
+- следуй их стилистике

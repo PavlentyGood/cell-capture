@@ -5,12 +5,11 @@ description: Применять, когда надо работать c объе
 
 # правила
 
-- работаем по DDD (Value Objects, Aggregates).
-- используем Either.
-- у всех иммутабельных объектов проставлять data class.
+- работай по DDD (Value Objects, Aggregates, Events).
+- используй Either.
+- у всех иммутабельных объектов ставь data class.
 
-# примеры доменных объектов. следуй их стилистике
+# примеры доменных объектов
 
-- агрегат: io.github.pavlentygood.cellcapture.lobby.domain.Party
-- VO: io.github.pavlentygood.cellcapture.lobby.domain.PlayerLimit
-- VO: io.github.pavlentygood.cellcapture.kernel.domain.PartyId
+- находятся в модуле ai в пакете io.github.pavlentygood.cellcapture.ai.domain
+- следуй их стилистике
