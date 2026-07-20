@@ -11,5 +11,6 @@ description: Применять, когда надо работать c объе
 
 # примеры доменных объектов
 
-- находятся в модуле ai в пакете io.github.pavlentygood.cellcapture.ai.domain
-- следуй их стилистике
+- расположение (main): ai/domain/src/main/kotlin/io/github/pavlentygood/cellcapture/ai/domain/**/*.kt
+- отдавай этот glob в paths при поиске через search_file / search_symbol
+- следуй стилистике примеров

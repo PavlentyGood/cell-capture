@@ -10,5 +10,6 @@ description: Применять, когда надо работать с тес�
 
 # примеры доменных тестов
 
-- находятся в модуле ai в каталоге тестов в пакете io.github.pavlentygood.cellcapture.ai.domain
-- следуй их стилистике
+- расположение (test): ai/domain/src/test/kotlin/io/github/pavlentygood/cellcapture/ai/domain/**/*.kt
+- отдавай этот glob в paths при поиске через search_file / search_symbol
+- следуй стилистике примеров
