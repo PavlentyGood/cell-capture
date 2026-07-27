@@ -25,7 +25,7 @@ dependencies {
     implementation(Lib.springBootStarterWeb)
     implementation(Lib.springCloudStarterStreamKafka)
 
-    implementation(Lib.springBootStarterJdbc)
+    implementation(Lib.springBootStarterDataJdbc)
     implementation(Lib.postgresql)
     implementation(Lib.flywayPostgresql)
 
