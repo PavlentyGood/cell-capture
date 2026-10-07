@@ -4,7 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import io.github.pavlentygood.cellcapture.kernel.domain.base.DomainError
 
-const val MAX_FOREST_NAME_LENGTH = 100
+const val MAX_FOREST_NAME_LENGTH = 50
 
 data class ForestName private constructor(
     val value: String

@@ -11,7 +11,8 @@ tasks {
 }
 
 dependencies {
-    implementation(project(":ai:domain"))
+    implementation(project(Module.aiDomain))
+    implementation(project(Module.aiRestApi))
     implementation(project(Module.kernelDomain))
     implementation(project(Module.kernelCommon))
 
@@ -42,6 +43,5 @@ dependencies {
 
     testImplementation(testFixtures(project(Module.kernelDomain)))
     testImplementation(testFixtures(project(Module.kernelCommon)))
-
-    testFixturesImplementation(testFixtures(project(Module.kernelDomain)))
+    testImplementation(testFixtures(project(Module.aiDomain)))
 }

@@ -21,4 +21,17 @@ class ForestTest {
         forest.version shouldBe version(1)
         forest.popEvents() shouldContainExactly listOf(ForestCreated(id, name))
     }
+
+    @Test
+    fun `restore forest`() {
+        val id = forestId()
+        val name = forestName()
+
+        val forest = restoreForest(id, version(2), name)
+
+        forest.id shouldBe id
+        forest.name shouldBe name
+        forest.version shouldBe version(2)
+        forest.popEvents() shouldContainExactly emptyList()
+    }
 }

@@ -3,7 +3,7 @@ package io.github.pavlentygood.cellcapture.ai.domain
 import io.github.pavlentygood.cellcapture.kernel.domain.base.AggregateRoot
 import io.github.pavlentygood.cellcapture.kernel.domain.base.Version
 
-class Forest private constructor(
+class Forest internal constructor(
     id: ForestId,
     version: Version,
     events: List<ForestEvent>,

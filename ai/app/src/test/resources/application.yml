@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    function:
+      definition: forestCreated
+    stream:
+      bindings:
+        forestCreated-out-0:
+          destination: forest-created
+        forestCreated-in-0:
+          destination: forest-created
+          group: test
+      kafka:
+        binder:
+          brokers: ${KAFKA_BOOTSTRAP_SERVERS}
+        bindings:
+          forestCreated-out-0:
+            producer:
+              sync: true
+              configuration:
+                delivery.timeout.ms: 2000
+                request.timeout.ms: 2000

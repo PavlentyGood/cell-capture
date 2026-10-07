@@ -17,4 +17,5 @@ include("field-editor:app")
 include("tests")
 
 include("ai:domain")
+include("ai:restapi")
 include("ai:app")

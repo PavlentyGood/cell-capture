@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class ForestNameTest {
 
-    val forestNameMaxLength = 100
+    val forestNameMaxLength = 50
 
     @Test
     fun `forest name exposes value`() {
