@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  cloud:
+    stream:
+      bindings:
+        forestCreated-out-0:
+          destination: forest-created
+      kafka:
+        binder:
+          brokers: ${KAFKA_BOOTSTRAP_SERVERS}
+        bindings:
+          forestCreated-out-0:
+            producer:
+              sync: true
+              configuration:
+                delivery.timeout.ms: 2000
+                request.timeout.ms: 2000
+
+  task:
+    scheduling:
+      pool:
+        size: 5

@@ -4,6 +4,7 @@ object Module {
     private const val kernel = ":kernel"
     private const val lobby = ":lobby"
     private const val game = ":game"
+    private const val ai = ":ai"
 
     const val kernelDomain = "$kernel:domain"
     const val kernelCommon = "$kernel:common"
@@ -15,6 +16,10 @@ object Module {
     const val gameDomain = "$game:domain"
     const val gameRestApi = "$game:restapi"
     const val gameApp = "$game:app"
+
+    const val aiDomain = "$ai:domain"
+    const val aiRestApi = "$ai:restapi"
+    const val aiApp = "$ai:app"
 }
 
 object Version {
